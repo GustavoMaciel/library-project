@@ -3,8 +3,8 @@ package br.edu.ufcg.virtus.library.service;
 import br.edu.ufcg.virtus.library.core.dto.PageDTO;
 import br.edu.ufcg.virtus.library.core.dto.SearchDTO;
 import br.edu.ufcg.virtus.library.exception.BusinessException;
-import br.edu.ufcg.virtus.library.model.Book;
-import br.edu.ufcg.virtus.library.repository.BookRepository;
+import br.edu.ufcg.virtus.library.model.Author;
+import br.edu.ufcg.virtus.library.repository.AuthorRepository;
 import br.edu.ufcg.virtus.library.util.BeanUtils;
 import br.edu.ufcg.virtus.library.util.TranslatorUtil;
 import org.springframework.data.domain.Page;
@@ -14,40 +14,39 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class BookService {
+public class AuthorService {
 
-    private final BookRepository repository;
+    private final AuthorRepository repository;
 
-    public BookService(BookRepository repository) {
+    public AuthorService(AuthorRepository repository) {
         this.repository = repository;
     }
 
     @Transactional(readOnly = true)
-    public Book getOne(Long id) throws BusinessException {
+    public Author getOne(Long id) throws BusinessException {
         return repository.findById(id).orElseThrow(() -> new BusinessException(TranslatorUtil.ITEM_NOT_FOUND));
     }
 
     @Transactional(readOnly = true)
-    public List<Book> findAll() {
+    public List<Author> findAll() {
         return StreamSupport.stream(repository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public PageDTO findPaginated(SearchDTO searchDTO) {
         Pageable pageable = createPageRequest(searchDTO);
-        Page<Book> jpaPage = repository.findAll(pageable);
+        Page<Author> jpaPage = repository.findAll(pageable);
         return pageDTOFromJPAPage(jpaPage);
     }
 
     @Transactional
     public void delete(Long id) throws BusinessException {
-        Book model = repository.findById(id).orElseThrow(() -> new BusinessException(TranslatorUtil.ITEM_NOT_FOUND));
+        Author model = repository.findById(id).orElseThrow(() -> new BusinessException(TranslatorUtil.ITEM_NOT_FOUND));
         repository.delete(model);
     }
 
@@ -58,39 +57,36 @@ public class BookService {
         }
     }
 
-    private void validateInsert(Book model) throws BusinessException {
-        Date currentDate = new Date();
-        if (model.getPublicationDate().before(currentDate)) {
-            throw new BusinessException("book.publicationDate.invalid");
+    private void validateInsert(Author model) throws BusinessException {
+        // SonarLint
+        if (repository.existsByName(model.getName())) {
+            throw new BusinessException("author.name.exists");
         }
     }
 
     @Transactional
-    public Book insert(Book model) throws BusinessException {
+    public Author insert(Author model) throws BusinessException {
         this.validateInsert(model);
         return repository.save(model);
     }
 
-    private void validateUpdate(Book model, Long id) throws BusinessException {
-        Book dbModel = repository.findById(id).orElseThrow(() -> new BusinessException(TranslatorUtil.ITEM_NOT_FOUND));
-        if (!dbModel.getPublicationDate().equals(model.getPublicationDate())) {
-            throw new BusinessException("book.publicationDate.immutable");
-        }
+    private void validateUpdate(Author model, Long id) throws BusinessException {
+        // SonarLint
     }
 
     @Transactional
-    public Book update(Book newModel, Long id) throws BusinessException {
+    public Author update(Author newModel, Long id) throws BusinessException {
         this.validateUpdate(newModel, id);
         return update(newModel, id, false);
     }
 
     @Transactional
-    public Book patch(Book newModel, Long id) throws BusinessException {
+    public Author patch(Author newModel, Long id) throws BusinessException {
         return update(newModel, id, true);
     }
 
-    private Book update(Book newModel, Long id, boolean isPatch) throws BusinessException {
-        Book dbModel = repository.findById(id).orElseThrow(() -> new BusinessException(TranslatorUtil.ITEM_NOT_FOUND));
+    private Author update(Author newModel, Long id, boolean isPatch) throws BusinessException {
+        Author dbModel = repository.findById(id).orElseThrow(() -> new BusinessException(TranslatorUtil.ITEM_NOT_FOUND));
         if(!dbModel.getId().equals(newModel.getId())) {
             throw new BusinessException(TranslatorUtil.ITEM_UPDATE_INCONSISTENT);
         }
@@ -102,7 +98,7 @@ public class BookService {
         return repository.save(dbModel);
     }
 
-    private PageDTO pageDTOFromJPAPage(Page<Book> jpaPage) {
+    private PageDTO pageDTOFromJPAPage(Page<Author> jpaPage) {
         PageDTO page = new PageDTO();
         page.setItems(jpaPage.getContent());
         page.setCurrentPage(jpaPage.getPageable().getPageNumber());

@@ -5,15 +5,15 @@ import br.edu.ufcg.virtus.library.dto.simple.BookSimpleDTO;
 import java.util.List;
 
 public class AuthorDTO {
-    private Integer id;
+    private Long id;
     private String name;
     private List<BookSimpleDTO> books;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

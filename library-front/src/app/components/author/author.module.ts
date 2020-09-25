@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthorListComponent } from './author-list/author-list.component';
 import { AuthorEditComponent } from './author-edit/author-edit.component';
 import { AuthorViewComponent } from './author-view/author-view.component';
+import { SharedModule } from '../../shared/shared.module';
 
 const routes: Routes = [
   {
@@ -29,7 +30,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    RouterModule
+    RouterModule,
+    SharedModule
   ],
   exports: [AuthorListComponent, AuthorEditComponent, AuthorViewComponent]
 })
