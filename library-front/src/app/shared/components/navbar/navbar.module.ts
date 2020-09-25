@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CrudService } from './services/crud.service';
+import { NavbarComponent } from './navbar.component';
 import { RouterModule } from '@angular/router';
 
 
+
 @NgModule({
-  declarations: [],
+  declarations: [NavbarComponent],
   imports: [
     CommonModule,
     RouterModule
   ],
-  providers: [CrudService]
+  exports: [NavbarComponent]
 })
-export class SharedModule { }
+export class NavbarModule { }
