@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { RouterModule } from '@angular/router';
+import { NavbarModule } from 'src/app/shared/components/navbar/navbar.module';
 
 
 
@@ -9,7 +10,8 @@ import { RouterModule } from '@angular/router';
   declarations: [HomeComponent],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    NavbarModule
   ],
   exports: [HomeComponent],
   providers: [HomeComponent]
