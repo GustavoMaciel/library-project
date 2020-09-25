@@ -7,7 +7,7 @@ export const AppRoutes: Routes = [
     component: HomeComponent,
     children: [
       {
-        path: 'author',
+        path: 'authors',
         loadChildren: () => import('src/app/components/author/author.module').then(m => m.AuthorModule)
       },
       {

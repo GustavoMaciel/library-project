@@ -1,20 +1,40 @@
 <div class="row">
   <div class="col-md-10 offset-md-1">
-    <div id="table">
-      <table class="table table-hover">
+
+    <div class="d-flex justify-content-center" *ngIf="loading">
+      Loading content...
+    </div>
+
+    <div id="table" *ngIf="!loading">
+      <table class="table table-hover" *ngIf="isEmpty() else emptyList">
         <thead>
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Name</th>
+          <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of items">
-          <th scope="row">1</th>
-          <td>{{item.name}}</td>
-        </tr>
+          <tr *ngFor="let item of items">
+            <th scope="row">{{item.id}}</th>
+            <td>{{item.name}}</td>
+            <td>
+              <button (click)="view(item)" class="btn btn-primary mr-2">View</button>
+              <button (click)="edit(item)" class="btn btn-secondary mr-2">Edit</button>
+              <button (click)="setRemove(item)" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                Delete
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
+      <ng-template #emptyList>
+        <div class="d-flex justify-content-center">
+          No item found
+        </div>
+      </ng-template>
     </div>
   </div>
 </div>
+
+<app-delete-confirmation (onOk)="remove()"></app-delete-confirmation>

@@ -12,11 +12,11 @@ const routes: Routes = [
     component: AuthorListComponent
   },
   {
-    path: 'edit:id',
+    path: 'edit/:id',
     component: AuthorEditComponent
   },
   {
-    path: 'view:id',
+    path: 'view/:id',
     component: AuthorViewComponent
   },
   {
