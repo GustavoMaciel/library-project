@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class BookListComponent implements OnInit {
 
   books: any[] = [];
+  itemToRemove: any;
 
   constructor(
     private crudService: CrudService,
@@ -42,8 +43,14 @@ export class BookListComponent implements OnInit {
     this.router.navigate(['books/view', id]);
   }
 
-  delete(id: number): void {
-    //TO DO: Modal confirmation delete
+  delete(): void {
+    this.crudService.delete('/books', this.itemToRemove).subscribe(result => {
+      this.getItems();
+    });
+  }
+
+  confirmDelete(book: any): void {
+    this.itemToRemove = book;
   }
 
 }

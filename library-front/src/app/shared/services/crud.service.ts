@@ -36,7 +36,7 @@ export class CrudService {
   }
 
   delete(url, body) {
-    return this.http.delete(`${this.baseUrl}/${url}`, body);
+    return this.http.delete(`${this.baseUrl}/${url}/${body.id}`);
   }
 
   protected getHeaders(): HttpHeaders {

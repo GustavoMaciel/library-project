@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { BookViewComponent } from './book-view/book-view.component';
 import { BookEditComponent } from './book-edit/book-edit.component';
 import { BookListComponent } from './book-list/book-list.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   {
@@ -15,11 +18,11 @@ const routes: Routes = [
     component: BookEditComponent
   },
   {
-    path: 'edit:id',
+    path: 'edit/:id',
     component: BookEditComponent
   },
   {
-    path: 'view:id',
+    path: 'view/:id',
     component: BookViewComponent
   }
 ];
@@ -29,7 +32,10 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    RouterModule
+    RouterModule,
+    SharedModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [BookViewComponent, BookEditComponent, BookListComponent]
 })
