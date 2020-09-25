@@ -7,27 +7,33 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CrudService {
 
+  baseUrl = 'http://localhost:8080';
+
   constructor(
     private http: HttpClient
   ) { }
 
-  get(url: string) {
-    return this.http.get(url);
+  getAll(url: string) {
+    return this.http.get(`${this.baseUrl}/${url}`);
+  }
+
+  getOne(url, id) {
+    return this.http.get(`${this.baseUrl}/${url}/${id}`);
   }
 
   post(url, body) {
-    return this.http.post(url, body);
+    return this.http.post(`${this.baseUrl}/${url}`, body);
   }
 
   update(url, body) {
-    return this.http.put(url, body);
+    return this.http.put(`${this.baseUrl}/${url}`, body);
   }
 
   updatePartial(url, body) {
-    return this.http.patch(url, body);
+    return this.http.patch(`${this.baseUrl}/${url}`, body);
   }
 
   delete(url, body) {
-    return this.http.delete(url, body);
+    return this.http.delete(`${this.baseUrl}/${url}`, body);
   }
 }
