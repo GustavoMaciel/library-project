@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -57,13 +58,29 @@ public class BookService {
         }
     }
 
+    private void validateInsert(Book model) throws BusinessException {
+        Date currentDate = new Date();
+        if (model.getPublicationDate().before(currentDate)) {
+            throw new BusinessException("book.publicationDate.invalid");
+        }
+    }
+
     @Transactional
     public Book insert(Book model) throws BusinessException {
+        this.validateInsert(model);
         return repository.save(model);
+    }
+
+    private void validateUpdate(Book model, Long id) throws BusinessException {
+        Book dbModel = repository.findById(id).orElseThrow(() -> new BusinessException(TranslatorUtil.ITEM_NOT_FOUND));
+        if (!dbModel.getPublicationDate().equals(model.getPublicationDate())) {
+            throw new BusinessException("book.publicationDate.immutable");
+        }
     }
 
     @Transactional
     public Book update(Book newModel, Long id) throws BusinessException {
+        this.validateUpdate(newModel, id);
         return update(newModel, id, false);
     }
 
