@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-delete-confirmation',
@@ -9,8 +9,9 @@ export class DeleteConfirmationComponent implements OnInit, OnDestroy {
 
   @Output()
   onOk = new EventEmitter<any>();
+
   @ViewChild('closeButton', null)
-  closeButton: any;
+  closeButton: ElementRef;
 
   constructor() { }
 
@@ -27,7 +28,8 @@ export class DeleteConfirmationComponent implements OnInit, OnDestroy {
   }
 
   closeModal() {
-    this.closeButton.elementRef.click();
+    this.closeButton.nativeElement.click();
+    console.log(this.closeButton);
   }
 
   onDeleteOk() {
