@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 })
 export class CrudService {
 
-  baseUrl = 'http://localhost:8080/library';
+  private baseUrl = 'http://localhost:8080/library';
 
   constructor(
     private http: HttpClient

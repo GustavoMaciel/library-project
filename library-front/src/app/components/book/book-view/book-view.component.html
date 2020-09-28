@@ -1,1 +1,59 @@
-<p>book-view works!</p>
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h5 class="card-title">View a Book</h5>
+    </div>
+    <div class="card-body" *ngIf="item">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name"><b>Name</b></label>
+                    <input disabled [(ngModel)]="item.name" type="text" class="form-control" id="name">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="date"><b>Publication Date</b></label>
+                    <input disabled type="date" [value]="item.publicationDate" class="form-control" id="date">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="synopsis"><b>Synopsis</b></label>
+                    <textarea disabled [(ngModel)]="item.synopsis" class="form-control" id="synopsis"
+                        rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label><b>Authors</b></label>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of item.authors">
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.name }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-primary" type="button" (click)="backToList()">Back</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
