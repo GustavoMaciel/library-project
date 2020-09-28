@@ -9,12 +9,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AuthorListComponent implements OnInit {
 
-  loading = false;
-  items: any[] = [];
-  pageSize = 10;
-  currentPage = 0;
-  totalRecords = 0;
-  totalPages = 0;
+  loading: boolean;
+  items: any[];
+  pageSize: number;
+  currentPage: number;
+  totalRecords: number;
+  totalPages: number;
   removeItem: any;
 
   constructor(private service: CrudService,
@@ -22,11 +22,22 @@ export class AuthorListComponent implements OnInit {
               private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.initProperties();
     this.listItems();
   }
 
+  initProperties() {
+    this.loading = false;
+    this.items = [];
+    this.pageSize = 10;
+    this.currentPage = 0;
+    this.totalRecords = 0;
+    this.totalPages = 0;
+    this.removeItem = null;
+  }
+
   getServiceURL(): string {
-    return `http://localhost:8080/library/authors`
+    return `authors`
   }
 
   getRouterURL(): string {
@@ -35,7 +46,7 @@ export class AuthorListComponent implements OnInit {
 
   listItems() {
     this.loading = true;
-    this.service.get(this.getServiceURL()).subscribe((res: any) => {
+    this.service.getAll(this.getServiceURL()).subscribe((res: any) => {
       this.items = res.items;
       this.pageSize = res.pageSize;
       this.currentPage = res.currentPage;
@@ -47,8 +58,8 @@ export class AuthorListComponent implements OnInit {
     })
   }
 
-  isEmpty() {
-    return this.items.length > 0;
+  get listIsEmpty() {
+    return this.items.length < 0;
   }
 
   view(item: any) {
@@ -57,6 +68,10 @@ export class AuthorListComponent implements OnInit {
 
   edit(item: any) {
     return this.router.navigate([this.getRouterURL(), 'edit', item.id]);
+  }
+
+  create() {
+    return this.router.navigate([this.getRouterURL(), 'create']);
   }
 
   setRemove(item: any) {

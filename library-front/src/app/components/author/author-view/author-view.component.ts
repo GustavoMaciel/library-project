@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CrudService } from '../../../shared/services/crud.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-author-view',
@@ -7,9 +9,52 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthorViewComponent implements OnInit {
 
-  constructor() { }
+  loading: boolean;
+  author: any;
+
+  constructor(private crudService: CrudService,
+              private activatedRoute: ActivatedRoute,
+              private router: Router) {
+  }
+
+  hasBooks(author) {
+    return author.books && author.books.length > 0
+  }
 
   ngOnInit() {
+    this.initProperties();
+    this.fetchItem();
+  }
+
+  initProperties() {
+    this.loading = false;
+    this.author = {}
+  }
+
+  getUrlParam(param: string) {
+    return this.activatedRoute.snapshot.paramMap.get(param);
+  }
+
+  fetchItem() {
+    this.loading = true;
+    this.crudService.getOne(this.getServiceUrl(), this.getUrlParam('id')).subscribe((res: any) => {
+      this.author = res;
+      this.loading = false;
+    }, (err: any) => {
+      this.loading = false;
+    })
+  }
+
+  backToList() {
+    return this.router.navigate([this.getRouterUrl()]);
+  }
+
+  getServiceUrl(): string {
+    return `authors`;
+  }
+
+  getRouterUrl(): string {
+    return `authors`;
   }
 
 }

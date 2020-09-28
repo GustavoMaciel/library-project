@@ -9,8 +9,6 @@ export class DeleteConfirmationComponent implements OnInit, OnDestroy {
 
   @Output()
   onOk = new EventEmitter<any>();
-  @ViewChild('closeButton', null)
-  closeButton: any;
 
   constructor() { }
 
@@ -19,15 +17,14 @@ export class DeleteConfirmationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    window.removeEventListener('popstate', this.closeModal);
+    // window.removeEventListener('popstate', this.closeModal);
   }
 
   listenForPop() {
-    window.addEventListener('popstate', this.closeModal)
+    // window.addEventListener('popstate', this.closeModal)
   }
 
   closeModal() {
-    this.closeButton.elementRef.click();
   }
 
   onDeleteOk() {
