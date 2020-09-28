@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-delete-confirmation',
@@ -17,11 +17,9 @@ export class DeleteConfirmationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // window.removeEventListener('popstate', this.closeModal);
   }
 
   listenForPop() {
-    // window.addEventListener('popstate', this.closeModal)
   }
 
   closeModal() {

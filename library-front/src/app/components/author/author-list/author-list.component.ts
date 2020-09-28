@@ -37,7 +37,7 @@ export class AuthorListComponent implements OnInit {
   }
 
   getServiceURL(): string {
-    return `authors`
+    return `authors`;
   }
 
   getRouterURL(): string {
@@ -51,11 +51,11 @@ export class AuthorListComponent implements OnInit {
       this.pageSize = res.pageSize;
       this.currentPage = res.currentPage;
       this.totalRecords = res.totalRecords;
-      this.totalPages = res.totalPages
+      this.totalPages = res.totalPages;
       this.loading = false;
     }, (err: any) => {
       this.loading = false;
-    })
+    });
   }
 
   get listIsEmpty() {

@@ -30,16 +30,20 @@
                         <td>{{ book.id }}</td>
                         <td>{{ book.name }}</td>
                         <td>{{ book.synopsis }}</td>
-                        <td>{{ book.publicationDate | date:'dd/MM/yyyy' }}</td>
-                        <td>{{ book.author.name }}</td>
+                        <td>{{ book.publicationDate | date:'dd/MM/yyyy':'UTC' }}</td>
+                        <td>
+                            <div *ngFor="let author of book.authors" >
+                                {{ author.name }}
+                            </div>
+                        </td>
                         <td align="center">
-                            <button class="btn bg-transparent" type="button" (click)="view(item.id)">
+                            <button class="btn bg-transparent" type="button" (click)="view(book.id)">
                                 <i class="material-icons">visibility</i>
                             </button>
-                            <button class="btn bg-transparent" type="button" (click)="edit(item.id)">
+                            <button class="btn bg-transparent" type="button" (click)="edit(book.id)">
                                 <i class="material-icons text-primary">create</i>
                             </button>
-                            <button class="btn bg-transparent" type="button" (click)="delete(item.id)" >
+                            <button class="btn bg-transparent" type="button" (click)="confirmDelete(book)" data-toggle="modal" data-target="#exampleModal">
                                 <i class="material-icons text-danger">delete</i>
                             </button>
                         </td>
@@ -49,3 +53,5 @@
         </div>
     </div>
 </div>
+
+<app-delete-confirmation (onOk)="delete()" ></app-delete-confirmation>

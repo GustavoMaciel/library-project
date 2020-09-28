@@ -60,7 +60,7 @@ public class BookService {
 
     private void validateInsert(Book model) throws BusinessException {
         Date currentDate = new Date();
-        if (model.getPublicationDate().before(currentDate)) {
+        if (model.getPublicationDate().after(currentDate)) {
             throw new BusinessException("book.publicationDate.invalid");
         }
     }

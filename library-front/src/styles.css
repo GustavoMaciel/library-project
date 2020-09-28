@@ -1,6 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~material-icons/iconfont/material-icons.css';
 
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+@import '~ngx-toastr/toastr';
+
+
 .row {
     margin-right: 0 !important;
     margin-left: 0 !important;
