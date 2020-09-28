@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CrudService } from 'src/app/shared/services/crud.service';
 import { Router } from '@angular/router';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
   selector: 'app-book-list',
@@ -10,20 +11,41 @@ import { Router } from '@angular/router';
 export class BookListComponent implements OnInit {
 
   books: any[] = [];
-  itemToRemove: any;
+  removeItem: any;
+  pageSize = 10;
+  currentPage = 0;
+  totalRecords = 0;
+  totalPages = 0;
+  loading = false;
 
   constructor(
     private crudService: CrudService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
-    this.getItems();
+    this.listItems();
   }
 
-  getItems(): void {
-    this.crudService.getAll('books').subscribe((result: any) => {
-      this.books = result.items;
+  getServiceURL(): string {
+    return 'books';
+  }
+
+  getRouterURL(): string {
+    return 'books';
+  }
+
+  listItems(): void {
+    this.crudService.getAll(this.getServiceURL()).subscribe((res: any) => {
+      this.books = res.items;
+      this.pageSize = res.pageSize;
+      this.currentPage = res.currentPage;
+      this.totalRecords = res.totalRecords;
+      this.totalPages = res.totalPages;
+      this.loading = false;
+    }, (err) => {
+      this.loading = false;
     });
   }
 
@@ -44,13 +66,18 @@ export class BookListComponent implements OnInit {
   }
 
   delete(): void {
-    this.crudService.delete('/books', this.itemToRemove).subscribe(result => {
-      this.getItems();
+    this.crudService.delete('/books', this.removeItem).subscribe(result => {
+      this.postDelete();
     });
   }
 
   confirmDelete(book: any): void {
-    this.itemToRemove = book;
+    this.removeItem = book;
+  }
+
+  postDelete(): void {
+    this.listItems();
+    this.notificationService.deletedSucess();
   }
 
 }

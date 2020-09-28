@@ -30,7 +30,7 @@
                         <td>{{ book.id }}</td>
                         <td>{{ book.name }}</td>
                         <td>{{ book.synopsis }}</td>
-                        <td>{{ book.publicationDate | date:'dd/MM/yyyy' }}</td>
+                        <td>{{ book.publicationDate | date:'dd/MM/yyyy':'UTC' }}</td>
                         <td>
                             <div *ngFor="let author of book.authors" >
                                 {{ author.name }}

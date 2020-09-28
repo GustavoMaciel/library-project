@@ -28,11 +28,11 @@ export class CrudService {
   }
 
   update(url, body) {
-    return this.http.put(`${this.baseUrl}/${url}`, body);
+    return this.http.put(`${this.baseUrl}/${url}/${body.id}`, body);
   }
 
   updatePartial(url, body) {
-    return this.http.patch(`${this.baseUrl}/${url}`, body);
+    return this.http.patch(`${this.baseUrl}/${url}/${body.id}`, body);
   }
 
   delete(url, body) {
