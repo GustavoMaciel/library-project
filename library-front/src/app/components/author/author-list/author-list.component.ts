@@ -26,7 +26,7 @@ export class AuthorListComponent implements OnInit {
   }
 
   getServiceURL(): string {
-    return `http://localhost:8080/library/authors`
+    return `authors`;
   }
 
   getRouterURL(): string {
@@ -35,16 +35,16 @@ export class AuthorListComponent implements OnInit {
 
   listItems() {
     this.loading = true;
-    this.service.get(this.getServiceURL()).subscribe((res: any) => {
+    this.service.getAll(this.getServiceURL()).subscribe((res: any) => {
       this.items = res.items;
       this.pageSize = res.pageSize;
       this.currentPage = res.currentPage;
       this.totalRecords = res.totalRecords;
-      this.totalPages = res.totalPages
+      this.totalPages = res.totalPages;
       this.loading = false;
     }, (err: any) => {
       this.loading = false;
-    })
+    });
   }
 
   isEmpty() {

@@ -4,7 +4,7 @@ import { CrudService } from './services/crud.service';
 import { RouterModule } from '@angular/router';
 import { DeleteConfirmationComponent } from './components/delete-confirmation/delete-confirmation.component';
 import { LoadingComponent } from './components/loading/loading.component';
-
+import { NotificationService } from './services/notification.service';
 
 @NgModule({
   declarations: [DeleteConfirmationComponent, LoadingComponent],
@@ -16,6 +16,6 @@ import { LoadingComponent } from './components/loading/loading.component';
     DeleteConfirmationComponent,
     LoadingComponent
   ],
-  providers: [CrudService]
+  providers: [CrudService, NotificationService]
 })
 export class SharedModule { }

@@ -9,6 +9,8 @@ import { AppRoutes } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { ToastrModule } from 'ngx-toastr';
+
 
 @NgModule({
   declarations: [
@@ -21,6 +23,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot(AppRoutes),
+    ToastrModule.forRoot({
+      progressBar: true,
+      closeButton: true,
+      maxOpened: 1,
+      autoDismiss: true,
+      preventDuplicates: true
+    }), // ToastrModule added
   ],
   providers: [],
   exports: [RouterModule],
