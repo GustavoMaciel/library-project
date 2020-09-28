@@ -11,7 +11,7 @@ export const AppRoutes: Routes = [
         loadChildren: () => import('src/app/components/author/author.module').then(m => m.AuthorModule)
       },
       {
-        path: 'book',
+        path: 'books',
         loadChildren: () => import('src/app/components/book/book.module').then(m => m.BookModule)
       }
     ]
