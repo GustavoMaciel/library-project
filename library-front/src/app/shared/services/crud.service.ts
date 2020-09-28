@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 
 @Injectable({
@@ -15,7 +15,8 @@ export class CrudService {
 
   getAll(url: string) {
     return this.http.get(`${this.baseUrl}/${url}`, {
-      headers: this.getHeaders()
+      headers: this.getHeaders(),
+      params: this.getParams()
     });
   }
 
@@ -42,6 +43,13 @@ export class CrudService {
   protected getHeaders(): HttpHeaders {
     const httpHeaders = new HttpHeaders();
     httpHeaders.set('Access-Control-Allow-Origin', '*');
+    httpHeaders.set('lang', 'en_US')
     return httpHeaders;
+  }
+
+  protected getParams(): HttpParams {
+    const params = new HttpParams();
+    params.set('lang', 'en_US');
+    return params;
   }
 }

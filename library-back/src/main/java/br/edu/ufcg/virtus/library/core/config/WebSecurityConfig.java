@@ -26,7 +26,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
-        slr.setDefaultLocale(new Locale("pt", "BR"));
+        slr.setDefaultLocale(new Locale("en", "US"));
         return slr;
     }
 

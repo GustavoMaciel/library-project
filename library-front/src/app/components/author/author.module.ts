@@ -5,6 +5,8 @@ import { AuthorListComponent } from './author-list/author-list.component';
 import { AuthorEditComponent } from './author-edit/author-edit.component';
 import { AuthorViewComponent } from './author-view/author-view.component';
 import { SharedModule } from '../../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 const routes: Routes = [
   {
@@ -31,7 +33,9 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     RouterModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule,
+    NgSelectModule
   ],
   exports: [AuthorListComponent, AuthorEditComponent, AuthorViewComponent]
 })
