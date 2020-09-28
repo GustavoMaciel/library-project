@@ -3,6 +3,7 @@ package br.edu.ufcg.virtus.library.service;
 import br.edu.ufcg.virtus.library.core.dto.PageDTO;
 import br.edu.ufcg.virtus.library.core.dto.SearchDTO;
 import br.edu.ufcg.virtus.library.exception.BusinessException;
+import br.edu.ufcg.virtus.library.model.Author;
 import br.edu.ufcg.virtus.library.model.Book;
 import br.edu.ufcg.virtus.library.repository.BookRepository;
 import br.edu.ufcg.virtus.library.util.BeanUtils;
@@ -23,9 +24,11 @@ import java.util.stream.StreamSupport;
 public class BookService {
 
     private final BookRepository repository;
+    private final AuthorService authorService;
 
-    public BookService(BookRepository repository) {
+    public BookService(BookRepository repository, AuthorService authorService) {
         this.repository = repository;
+        this.authorService = authorService;
     }
 
     @Transactional(readOnly = true)
@@ -66,8 +69,18 @@ public class BookService {
     }
 
     @Transactional
+    public void preInsert(Book model) throws BusinessException {
+        for(Author author: model.getAuthors()) {
+            if (author.getId() == null) {
+                authorService.insert(author);
+            }
+        }
+    }
+
+    @Transactional
     public Book insert(Book model) throws BusinessException {
         this.validateInsert(model);
+        this.preInsert(model);
         return repository.save(model);
     }
 

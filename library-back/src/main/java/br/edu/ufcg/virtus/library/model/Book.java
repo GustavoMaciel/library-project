@@ -26,7 +26,7 @@ public class Book {
     @Column(name = "publication_date", columnDefinition = "DATE default NOW()")
     private Date publicationDate;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
     @JoinTable(name = "author_book",
             joinColumns = {@JoinColumn(name = "book_id")},
             inverseJoinColumns = {@JoinColumn(name = "author_id")})
