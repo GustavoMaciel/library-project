@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between">
-        <h5 class="card-title">Create a Book</h5>
+        <h5 class="card-title">{{ isEditMode ? 'Edit' : 'Create' }} a Book</h5>
         <div class="card-header-elements">
             <button class="btn btn-primary d-flex" type="button" (click)="backToList()">
                 <i class="material-icons mr-1">keyboard_backspace</i>
