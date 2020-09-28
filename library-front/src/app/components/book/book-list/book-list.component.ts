@@ -36,6 +36,10 @@ export class BookListComponent implements OnInit {
     return 'books';
   }
 
+  postGetItems(): void {
+    console.log(this.books);
+  }
+
   listItems(): void {
     this.crudService.getAll(this.getServiceURL()).subscribe((res: any) => {
       this.books = res.items;
@@ -44,6 +48,7 @@ export class BookListComponent implements OnInit {
       this.totalRecords = res.totalRecords;
       this.totalPages = res.totalPages;
       this.loading = false;
+      this.postGetItems();
     }, (err) => {
       this.loading = false;
     });

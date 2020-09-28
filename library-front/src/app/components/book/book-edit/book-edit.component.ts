@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { isNullOrUndefined } from 'util';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CrudService } from 'src/app/shared/services/crud.service';
@@ -41,11 +41,11 @@ export class BookEditComponent implements OnInit {
     return 'books';
   }
 
-  updatePartial() {
-    return false;
+  updatePartial(): boolean {
+    return true;
   }
 
-  initForm() {
+  initForm(): void {
     this.form = this.formBuilder.group({
       id: this.formBuilder.control(undefined, []),
       name: this.formBuilder.control(undefined, [Validators.required]),
@@ -55,12 +55,12 @@ export class BookEditComponent implements OnInit {
     });
   }
 
-  getItem() {
+  getItem(): void {
     if (this.isEditMode) {
       const paramId = this.getParamId();
       this.crudService.getOne('books', paramId).subscribe(result => {
         this.book = result;
-        this.getFormControlFromObject(this.form.controls, this.book);
+        this.postGetItem();
       });
     }
   }
@@ -82,7 +82,7 @@ export class BookEditComponent implements OnInit {
     return controls;
   }
 
-  backToList() {
+  backToList(): void {
     this.router.navigate(['books']);
   }
 
@@ -92,7 +92,7 @@ export class BookEditComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.isEditMode) {
       this.update();
     } else {
@@ -100,7 +100,7 @@ export class BookEditComponent implements OnInit {
     }
   }
 
-  insert() {
+  insert(): void {
     this.preInsert();
     this.crudService.post(this.getServiceURL(), this.form.value).subscribe((res: any) => {
       this.loading = false;
@@ -108,10 +108,11 @@ export class BookEditComponent implements OnInit {
       this.backToList();
     }, (err) => {
       this.loading = false;
+      this.notificationService.error();
     });
   }
 
-  update() {
+  update(): void {
     this.loading = true;
     this.preUpdate();
     if (this.updatePartial()) {
@@ -121,6 +122,7 @@ export class BookEditComponent implements OnInit {
         this.backToList();
       }, (err) => {
         this.loading = false;
+        this.notificationService.error();
       });
     } else {
       this.crudService.update(this.getServiceURL(), this.form.value).subscribe((res: any) => {
@@ -129,6 +131,7 @@ export class BookEditComponent implements OnInit {
         this.backToList();
       }, (err) => {
         this.loading = false;
+        this.notificationService.error();
       });
     }
   }
@@ -145,5 +148,8 @@ export class BookEditComponent implements OnInit {
     this.notificationService.insertedSuccess();
   }
 
-
+  postGetItem(): void {
+    this.getFormControlFromObject(this.form.controls, this.book);
+    this.form.get('publicationDate').setValue(new Date(this.book.publicationDate).toISOString().slice(0, 10));
+  }
 }
