@@ -8,6 +8,8 @@ import { SharedModule } from '../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AuthorMasterDetailComponent } from './author-master-detail/author-master-detail.component';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { BookModule } from '../book/book.module';
 
 const routes: Routes = [
   {
@@ -40,7 +42,9 @@ const routes: Routes = [
     RouterModule,
     SharedModule,
     ReactiveFormsModule,
-    NgSelectModule
+    NgSelectModule,
+    NgxSmartModalModule.forChild(),
+    BookModule
   ],
   exports: [AuthorListComponent, AuthorEditComponent, AuthorViewComponent]
 })

@@ -7,4 +7,5 @@ import { NgxSmartModalService } from 'ngx-smart-modal';
 export class ModalService extends NgxSmartModalService {
 
   public static DELETE_MODAL_ID = 'deleteModal';
+  public static BOOK_SIMPLE_EDIT_ID = 'bookSimpleEdit';
 }

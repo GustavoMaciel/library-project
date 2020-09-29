@@ -5,8 +5,20 @@
 
 @import '~ngx-toastr/toastr';
 
+@import "~ngx-smart-modal/ngx-smart-modal";
+
 
 .row {
     margin-right: 0 !important;
     margin-left: 0 !important;
+}
+
+.custom-card-title {
+  margin-bottom: 0 !important;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.hover-link:hover {
+  cursor: pointer;
 }

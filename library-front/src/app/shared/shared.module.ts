@@ -6,12 +6,14 @@ import { DeleteConfirmationComponent } from './components/delete-confirmation/de
 import { LoadingComponent } from './components/loading/loading.component';
 import { NotificationService } from './services/notification.service';
 import { ModalService } from './services/modal.service';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 @NgModule({
   declarations: [DeleteConfirmationComponent, LoadingComponent],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    NgxSmartModalModule.forChild()
   ],
   exports: [
     DeleteConfirmationComponent,

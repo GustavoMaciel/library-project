@@ -9,6 +9,8 @@ import { BookViewComponent } from './book-view/book-view.component';
 import { BookEditComponent } from './book-edit/book-edit.component';
 import { BookListComponent } from './book-list/book-list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { BookSimpleEditComponent } from './book-simple-edit/book-simple-edit.component';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 const routes: Routes = [
   {
@@ -30,16 +32,17 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [BookViewComponent, BookEditComponent, BookListComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    RouterModule,
-    SharedModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NgSelectModule
-  ],
-  exports: [BookViewComponent, BookEditComponent, BookListComponent]
+  declarations: [BookViewComponent, BookEditComponent, BookListComponent, BookSimpleEditComponent],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        RouterModule,
+        SharedModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgSelectModule,
+        NgxSmartModalModule.forChild()
+    ],
+  exports: [BookViewComponent, BookEditComponent, BookListComponent, BookSimpleEditComponent]
 })
 export class BookModule { }

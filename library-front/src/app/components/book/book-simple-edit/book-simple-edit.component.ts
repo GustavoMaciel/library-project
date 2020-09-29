@@ -7,18 +7,17 @@ import { isNullOrUndefined } from "util";
 import { ModalService } from '../../../shared/services/modal.service';
 
 @Component({
-  selector: 'app-author-master-detail',
-  templateUrl: './author-master-detail.component.html',
-  styleUrls: ['./author-master-detail.component.css']
+  selector: 'app-book-simple-edit',
+  templateUrl: './book-simple-edit.component.html',
+  styleUrls: ['./book-simple-edit.component.css']
 })
-export class AuthorMasterDetailComponent implements OnInit {
+export class BookSimpleEditComponent implements OnInit {
 
   isEditMode: boolean;
   form: FormGroup;
-  book: any;
-  books: any = [];
-  selectedBooks = [];
+  book: any = {};
   loading = false;
+  identifier = ModalService.BOOK_SIMPLE_EDIT_ID;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -30,55 +29,49 @@ export class AuthorMasterDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isEditMode = !isNullOrUndefined(this.getParamId());
+    this.isEditMode = this.book.id != null
     this.initForm();
     this.getItem();
-    this.getBooks();
+  }
+
+  initProperties() {
+    this.book = {};
+    this.loading = false;
   }
 
   getServiceURL(): string {
-    return 'authors';
+    return 'books';
   }
 
   getRouterURL(): string {
-    return 'authors';
+    return 'books';
   }
 
-  updatePartial() {
+  updatePartial(): boolean {
     return true;
   }
 
-  initForm() {
+  initForm(): void {
     this.form = this.formBuilder.group({
       id: this.formBuilder.control(undefined, []),
       name: this.formBuilder.control(undefined, [Validators.required]),
-      books: this.formBuilder.control(undefined, []),
-      selectedBook: this.formBuilder.control(undefined, [])
+      synopsis: this.formBuilder.control(undefined, [Validators.required]),
+      publicationDate: this.formBuilder.control(undefined, [Validators.required]),
     });
   }
 
-  get selectedBookControl () {
-    return this.form.get('selectedBook');
-  }
-
-  get booksControl() {
-    return this.form.get('books');
-  }
-
-  getItem() {
+  getItem(): void {
     if (this.isEditMode) {
       const paramId = this.getParamId();
-      this.crudService.getOne(this.getServiceURL(), paramId).subscribe(result => {
+      this.crudService.getOne('books', paramId).subscribe(result => {
         this.book = result;
-        this.getFormControlFromObject(this.form.controls, this.book);
-      }, (err: any) => {
-        this.notificationService.errorMessage(err.error ? err.error.message : err.message);
+        this.postGetItem();
       });
     }
   }
 
   getParamId(): string {
-    return this.activatedRoute.snapshot.paramMap.get('id');
+    return this.book.id;
   }
 
   getFormControlFromObject(controls, obj): any {
@@ -94,17 +87,11 @@ export class AuthorMasterDetailComponent implements OnInit {
     return controls;
   }
 
-  backToList() {
-    this.router.navigate([this.getRouterURL()]).then(_res => {});
+  backToList(): void {
+    this.router.navigate(['books']);
   }
 
-  getBooks(): void {
-    this.crudService.getAll('books').subscribe((res: any) => {
-      this.books = res.items;
-    });
-  }
-
-  onSubmit() {
+  onSubmit(): void {
     if (this.isEditMode) {
       this.update();
     } else {
@@ -112,18 +99,19 @@ export class AuthorMasterDetailComponent implements OnInit {
     }
   }
 
-  insert() {
+  insert(): void {
     this.preInsert();
     this.crudService.post(this.getServiceURL(), this.form.value).subscribe((res: any) => {
       this.loading = false;
       this.postInsert();
       this.backToList();
-    }, (_err) => {
+    }, (err) => {
       this.loading = false;
+      this.notificationService.error();
     });
   }
 
-  update() {
+  update(): void {
     this.loading = true;
     this.preUpdate();
     if (this.updatePartial()) {
@@ -131,23 +119,23 @@ export class AuthorMasterDetailComponent implements OnInit {
         this.loading = false;
         this.postUpdate();
         this.backToList();
-      }, (_err) => {
+      }, (err) => {
         this.loading = false;
+        this.notificationService.error();
       });
     } else {
       this.crudService.update(this.getServiceURL(), this.form.value).subscribe((res: any) => {
         this.loading = false;
         this.postUpdate();
         this.backToList();
-      }, (_err) => {
+      }, (err) => {
         this.loading = false;
+        this.notificationService.error();
       });
     }
   }
 
-  preInsert(): void {
-    this.booksControl.setValue(this.selectedBooks);
-  }
+  preInsert(): void { }
 
   preUpdate(): void { }
 
@@ -159,17 +147,23 @@ export class AuthorMasterDetailComponent implements OnInit {
     this.notificationService.insertedSuccess();
   }
 
-  onBookSelected(book): void {
-    this.selectedBooks.push(book);
-    this.selectedBookControl.setValue(undefined);
+  postGetItem(): void {
+    this.getFormControlFromObject(this.form.controls, this.book);
+    this.form.get('publicationDate').setValue(new Date(this.book.publicationDate).toISOString().slice(0, 10));
   }
 
-  removeBook(book): void {
-    this.selectedBooks = this.selectedBooks.filter(_book => _book !== book)
+  openModal() {
+    this.book = this.modalService.getModalData(this.identifier);
   }
 
-  openCreateBookModal() {
-    this.modalService.open(ModalService.BOOK_SIMPLE_EDIT_ID);
+  closeModal() {
+    this.modalService.close(this.identifier);
+    this.resetComponent();
   }
 
+  resetComponent() {
+    this.form.reset();
+    this.initProperties();
+    this.ngOnInit();
+  }
 }
