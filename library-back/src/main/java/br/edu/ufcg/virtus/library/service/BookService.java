@@ -8,6 +8,7 @@ import br.edu.ufcg.virtus.library.model.Book;
 import br.edu.ufcg.virtus.library.repository.BookRepository;
 import br.edu.ufcg.virtus.library.util.BeanUtils;
 import br.edu.ufcg.virtus.library.util.TranslatorUtil;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +27,7 @@ public class BookService {
     private final BookRepository repository;
     private final AuthorService authorService;
 
-    public BookService(BookRepository repository, AuthorService authorService) {
+    public BookService(BookRepository repository, @Lazy AuthorService authorService) {
         this.repository = repository;
         this.authorService = authorService;
     }
