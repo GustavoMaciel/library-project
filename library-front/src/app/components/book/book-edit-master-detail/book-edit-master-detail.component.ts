@@ -155,4 +155,9 @@ export class BookEditMasterDetailComponent implements OnInit {
     this.modalService.open(ModalService.CREATE_AUTHOR_MODAL);
   }
 
+  newAuthorSubmitted(author: any) {
+    this.selectedAuthors.push(author);
+    this.form.get('authors').setValue(this.selectedAuthors);
+  }
+
 }

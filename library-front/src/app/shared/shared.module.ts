@@ -12,7 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BookSimpleEditComponent } from './components/book-simple-edit/book-simple-edit.component';
 
 @NgModule({
-  declarations: [DeleteConfirmationComponent, LoadingComponent, CreateAuthorModalComponent],
+  declarations: [DeleteConfirmationComponent, LoadingComponent, CreateAuthorModalComponent, BookSimpleEditComponent],
   imports: [
     CommonModule,
     RouterModule,
