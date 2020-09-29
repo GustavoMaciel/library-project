@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-header d-flex justify-content-between">
-    <div *ngIf="!isEditMode" class="card-title d-flex align-items-center">Create an Author</div>
-    <div *ngIf="isEditMode" class="card-title d-flex align-items-center">Edit an Author</div>
+    <div *ngIf="!isEditMode" class="custom-card-title d-flex align-items-center">Create an Author</div>
+    <div *ngIf="isEditMode" class="custom-card-title d-flex align-items-center">Edit an Author</div>
     <div class="card-header-elements">
       <button class="btn btn-primary d-flex" type="button" (click)="backToList()">
         <i class="material-icons mr-1">keyboard_backspace</i>
@@ -32,7 +32,7 @@
                              placeholder="Select a book" formControlName="selectedBook" (change)="onBookSelected($event)">
                   </ng-select>
                 </div>
-                <button class="btn btn-primary d-flex" type="button">
+                <button (click)="openCreateBookModal()" class="btn btn-primary d-flex" type="button">
                   <i class="material-icons mr-1">add</i>
                   Create New
                 </button>
@@ -75,3 +75,5 @@
     </form>
   </div>
 </div>
+
+<app-book-simple-edit (onSubmitEvent)="newBookSubmitted($event)"></app-book-simple-edit>

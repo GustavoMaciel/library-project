@@ -71,9 +71,11 @@ public class BookService {
 
     @Transactional
     public void preInsert(Book model) throws BusinessException {
-        for(Author author: model.getAuthors()) {
-            if (author.getId() == null) {
-                authorService.insert(author);
+        if (model.getAuthors() != null) {
+            for(Author author: model.getAuthors()) {
+                if (author.getId() == null) {
+                    authorService.insert(author);
+                }
             }
         }
     }

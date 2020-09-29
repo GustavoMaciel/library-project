@@ -9,6 +9,7 @@ import { ModalService } from './services/modal.service';
 import { CreateAuthorModalComponent } from './components/create-author-modal/create-author-modal.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BookSimpleEditComponent } from './components/book-simple-edit/book-simple-edit.component';
 
 @NgModule({
   declarations: [DeleteConfirmationComponent, LoadingComponent, CreateAuthorModalComponent],
@@ -23,7 +24,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DeleteConfirmationComponent,
     LoadingComponent,
     CreateAuthorModalComponent,
-    NgxSmartModalModule
+    NgxSmartModalModule,
+    BookSimpleEditComponent
   ],
   providers: [CrudService, NotificationService, ModalService]
 })

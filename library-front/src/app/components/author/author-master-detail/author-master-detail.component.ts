@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CrudService } from '../../../shared/services/crud.service';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { isNullOrUndefined } from "util";
+import { ModalService } from '../../../shared/services/modal.service';
 
 @Component({
   selector: 'app-author-master-detail',
@@ -24,7 +25,8 @@ export class AuthorMasterDetailComponent implements OnInit {
     private formBuilder: FormBuilder,
     private crudService: CrudService,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private modalService: ModalService
   ) { }
 
   ngOnInit() {
@@ -116,7 +118,7 @@ export class AuthorMasterDetailComponent implements OnInit {
       this.loading = false;
       this.postInsert();
       this.backToList();
-    }, (err) => {
+    }, (_err) => {
       this.loading = false;
     });
   }
@@ -129,7 +131,7 @@ export class AuthorMasterDetailComponent implements OnInit {
         this.loading = false;
         this.postUpdate();
         this.backToList();
-      }, (err) => {
+      }, (_err) => {
         this.loading = false;
       });
     } else {
@@ -137,7 +139,7 @@ export class AuthorMasterDetailComponent implements OnInit {
         this.loading = false;
         this.postUpdate();
         this.backToList();
-      }, (err) => {
+      }, (_err) => {
         this.loading = false;
       });
     }
@@ -166,4 +168,11 @@ export class AuthorMasterDetailComponent implements OnInit {
     this.selectedBooks = this.selectedBooks.filter(_book => _book !== book)
   }
 
+  openCreateBookModal() {
+    this.modalService.open(ModalService.BOOK_SIMPLE_EDIT_ID);
+  }
+
+  newBookSubmitted(book: any) {
+    this.selectedBooks.push(book);
+  }
 }

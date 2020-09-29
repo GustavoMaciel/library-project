@@ -10,8 +10,6 @@ import { BookEditComponent } from './book-edit/book-edit.component';
 import { BookListComponent } from './book-list/book-list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BookEditMasterDetailComponent } from './book-edit-master-detail/book-edit-master-detail.component';
-import { NgxSmartModalModule } from 'ngx-smart-modal';
-import { ModalService } from 'src/app/shared/services/modal.service';
 
 const routes: Routes = [
   {

@@ -9,4 +9,6 @@ export class ModalService extends NgxSmartModalService {
   public static DELETE_MODAL_ID = 'deleteModal';
 
   public static CREATE_AUTHOR_MODAL = 'authorModal';
+  
+  public static BOOK_SIMPLE_EDIT_ID = 'bookSimpleEdit';
 }
