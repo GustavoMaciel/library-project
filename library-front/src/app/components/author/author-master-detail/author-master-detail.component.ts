@@ -143,7 +143,9 @@ export class AuthorMasterDetailComponent implements OnInit {
     }
   }
 
-  preInsert(): void { }
+  preInsert(): void {
+    this.booksControl.setValue(this.selectedBooks);
+  }
 
   preUpdate(): void { }
 
