@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { DeleteConfirmationComponent } from './components/delete-confirmation/delete-confirmation.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { NotificationService } from './services/notification.service';
+import { ModalService } from './services/modal.service';
 
 @NgModule({
   declarations: [DeleteConfirmationComponent, LoadingComponent],
@@ -16,6 +17,6 @@ import { NotificationService } from './services/notification.service';
     DeleteConfirmationComponent,
     LoadingComponent
   ],
-  providers: [CrudService, NotificationService]
+  providers: [CrudService, NotificationService, ModalService]
 })
 export class SharedModule { }
