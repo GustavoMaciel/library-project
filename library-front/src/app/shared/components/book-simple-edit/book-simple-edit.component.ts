@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CrudService } from '../../../shared/services/crud.service';
-import { NotificationService } from '../../../shared/services/notification.service';
-import { isNullOrUndefined } from "util";
-import { ModalService } from '../../../shared/services/modal.service';
+import { ModalService } from '../../services/modal.service';
+import { CrudService } from '../../services/crud.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-book-simple-edit',
@@ -18,6 +17,8 @@ export class BookSimpleEditComponent implements OnInit {
   book: any = {};
   loading = false;
   identifier = ModalService.BOOK_SIMPLE_EDIT_ID;
+  @Output()
+  onSubmitEvent = new EventEmitter<any>();
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -40,10 +41,6 @@ export class BookSimpleEditComponent implements OnInit {
   }
 
   getServiceURL(): string {
-    return 'books';
-  }
-
-  getRouterURL(): string {
     return 'books';
   }
 
@@ -101,14 +98,9 @@ export class BookSimpleEditComponent implements OnInit {
 
   insert(): void {
     this.preInsert();
-    this.crudService.post(this.getServiceURL(), this.form.value).subscribe((res: any) => {
-      this.loading = false;
-      this.postInsert();
-      this.backToList();
-    }, (err) => {
-      this.loading = false;
-      this.notificationService.error();
-    });
+    this.onSubmitEvent.emit(this.form.value);
+    this.loading = false;
+    this.postInsert();
   }
 
   update(): void {
@@ -144,7 +136,7 @@ export class BookSimpleEditComponent implements OnInit {
   }
 
   postInsert(): void {
-    this.notificationService.insertedSuccess();
+    this.closeModal();
   }
 
   postGetItem(): void {

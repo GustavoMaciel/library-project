@@ -172,4 +172,7 @@ export class AuthorMasterDetailComponent implements OnInit {
     this.modalService.open(ModalService.BOOK_SIMPLE_EDIT_ID);
   }
 
+  newBookSubmitted(book: any) {
+    this.selectedBooks.push(book);
+  }
 }

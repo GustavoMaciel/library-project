@@ -43,8 +43,7 @@ const routes: Routes = [
     SharedModule,
     ReactiveFormsModule,
     NgSelectModule,
-    NgxSmartModalModule.forChild(),
-    BookModule
+    NgxSmartModalModule.forChild()
   ],
   exports: [AuthorListComponent, AuthorEditComponent, AuthorViewComponent]
 })

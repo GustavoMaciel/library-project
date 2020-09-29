@@ -37,7 +37,6 @@ export class BookListComponent implements OnInit {
   }
 
   postGetItems(): void {
-    console.log(this.books);
   }
 
   listItems(): void {
