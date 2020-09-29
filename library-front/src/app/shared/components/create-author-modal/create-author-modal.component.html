@@ -1,0 +1,22 @@
+<ngx-smart-modal [dismissable]="true" customClass="nsm-dialog-animation-ttb nsm-centered" identifier="authorModal"
+    id="authorModal" [closable]="true" (onAnyCloseEvent)="close()">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="smart-modal-content">
+            <div class="smart-modal-header">
+                <h5 class="smart-modal-title">Create Author</h5>
+            </div>
+            <div class="smart-modal-body">
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input formControlName="name" type="text" class="form-control" id="name" placeholder="Enter a name">
+                </div>
+
+            </div>
+            <div class="smart-modal-footer">
+                <button class="btn btn-secondary" (click)="close()">Close</button>
+                <button class="btn btn-success" [disabled]="!form.valid" type="submit">Create</button>
+            </div>
+        </div>
+    </form>
+</ngx-smart-modal>
