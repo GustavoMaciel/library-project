@@ -1,0 +1,7 @@
+.book-select {
+  min-width: 200px;
+}
+
+.hover-link:hover {
+  cursor: pointer;
+}

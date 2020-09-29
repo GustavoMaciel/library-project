@@ -43,7 +43,6 @@ export class CrudService {
   protected getHeaders(): HttpHeaders {
     const httpHeaders = new HttpHeaders();
     httpHeaders.set('Access-Control-Allow-Origin', '*');
-    httpHeaders.set('lang', 'en_US')
     return httpHeaders;
   }
 

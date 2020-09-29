@@ -1,0 +1,77 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between">
+    <div *ngIf="!isEditMode" class="card-title d-flex align-items-center">Create an Author</div>
+    <div *ngIf="isEditMode" class="card-title d-flex align-items-center">Edit an Author</div>
+    <div class="card-header-elements">
+      <button class="btn btn-primary d-flex" type="button" (click)="backToList()">
+        <i class="material-icons mr-1">keyboard_backspace</i>
+        Back
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="row justify-content-around">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input formControlName="name" type="text" class="form-control" id="name"
+                   placeholder="Enter a name">
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between">
+              <div class="card-title d-flex align-items-center">Books</div>
+              <div class="d-flex">
+                <div class="book-select mr-2">
+                  <ng-select [items]="books" bindLabel="name" [multiple]="false" [typeToSearchText]="'Select a book'"
+                             placeholder="Select a book" formControlName="selectedBook" (change)="onBookSelected($event)">
+                  </ng-select>
+                </div>
+                <button class="btn btn-primary d-flex" type="button">
+                  <i class="material-icons mr-1">add</i>
+                  Create New
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <table class="table" *ngIf="selectedBooks.length > 0 else noItemsSelected">
+                <thead>
+                  <th>Name</th>
+                  <th></th>
+                </thead>
+
+                <tbody>
+                  <tr *ngFor="let book of selectedBooks">
+                    <td>{{book.name}}</td>
+                    <td class="text-right text-danger">
+                      <i class="material-icons hover-link" (click)="removeBook(book)">close</i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <ng-template #noItemsSelected>
+                <div class="d-flex justify-content-center">
+                  No items selected.
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-success" type="submit" [disabled]="!form.valid">Submit</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

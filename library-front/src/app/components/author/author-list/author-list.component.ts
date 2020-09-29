@@ -74,6 +74,10 @@ export class AuthorListComponent implements OnInit {
     return this.router.navigate([this.getRouterURL(), 'create']);
   }
 
+  createMasterDetail() {
+    return this.router.navigate([this.getRouterURL(), 'create', 'master-detail']);
+  }
+
   setRemove(item: any) {
     this.removeItem = item;
     // this.remove();

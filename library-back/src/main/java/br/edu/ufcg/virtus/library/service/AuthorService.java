@@ -4,6 +4,7 @@ import br.edu.ufcg.virtus.library.core.dto.PageDTO;
 import br.edu.ufcg.virtus.library.core.dto.SearchDTO;
 import br.edu.ufcg.virtus.library.exception.BusinessException;
 import br.edu.ufcg.virtus.library.model.Author;
+import br.edu.ufcg.virtus.library.model.Book;
 import br.edu.ufcg.virtus.library.repository.AuthorRepository;
 import br.edu.ufcg.virtus.library.util.BeanUtils;
 import br.edu.ufcg.virtus.library.util.TranslatorUtil;
@@ -22,9 +23,11 @@ import java.util.stream.StreamSupport;
 public class AuthorService {
 
     private final AuthorRepository repository;
+    private final BookService bookService;
 
-    public AuthorService(AuthorRepository repository) {
+    public AuthorService(AuthorRepository repository, BookService bookService) {
         this.repository = repository;
+        this.bookService = bookService;
     }
 
     @Transactional(readOnly = true)
@@ -65,13 +68,27 @@ public class AuthorService {
     }
 
     @Transactional
+    public void preInsert(Author model) throws BusinessException {
+        for(Book book: model.getBooks()) {
+            if (book.getId() == null) {
+                bookService.insert(book);
+            }
+        }
+    }
+
+    @Transactional
     public Author insert(Author model) throws BusinessException {
         this.validateInsert(model);
+        preInsert(model);
         return repository.save(model);
     }
 
     private void validateUpdate(Author model, Long id) throws BusinessException {
-        // SonarLint
+        Author dbModel = this.repository.findById(id).orElseThrow(() -> new BusinessException(TranslatorUtil.ITEM_NOT_FOUND));
+        if (!dbModel.getName().equals(model.getName()) && repository.existsByName(model.getName())) {
+            throw new BusinessException("author.name.exists");
+        }
+
     }
 
     @Transactional
