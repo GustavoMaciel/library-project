@@ -7,6 +7,7 @@ import { AuthorViewComponent } from './author-view/author-view.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AuthorMasterDetailComponent } from './author-master-detail/author-master-detail.component';
 
 const routes: Routes = [
   {
@@ -24,11 +25,15 @@ const routes: Routes = [
   {
     path: 'create',
     component: AuthorEditComponent
+  },
+  {
+    path: 'create/master-detail',
+    component: AuthorMasterDetailComponent
   }
 ];
 
 @NgModule({
-  declarations: [AuthorListComponent, AuthorEditComponent, AuthorViewComponent],
+  declarations: [AuthorListComponent, AuthorEditComponent, AuthorViewComponent, AuthorMasterDetailComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

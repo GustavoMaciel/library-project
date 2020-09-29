@@ -1,10 +1,14 @@
 <div class="card">
   <div class="card-header d-flex align-items-center justify-content-between">
     <div class="card-title d-flex align-items-center">Authors</div>
-    <div class="card-header-elements">
-      <button class="btn btn-primary d-flex" type="button" (click)="create()">
+    <div class="card-header-elements d-flex">
+      <button class="btn btn-primary d-flex mr-2" type="button" (click)="create()">
         <i class="material-icons mr-1">add</i>
         Create
+      </button>
+      <button class="btn btn-primary d-flex" type="button" (click)="createMasterDetail()">
+        <i class="material-icons mr-1">add</i>
+        Create Master-Detail
       </button>
     </div>
   </div>
