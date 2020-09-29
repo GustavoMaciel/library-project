@@ -1,0 +1,17 @@
+::ng-deep #authorModal {
+    max-width: 1000px !important;
+}
+
+::ng-deep .nsm-content {
+    width: 1000px !important;
+}
+
+.smart-modal-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.smart-modal-header {
+    margin-bottom: 20px;
+}

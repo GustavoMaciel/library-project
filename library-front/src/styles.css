@@ -5,6 +5,7 @@
 
 @import '~ngx-toastr/toastr';
 
+@import "~ngx-smart-modal/ngx-smart-modal";
 
 .row {
     margin-right: 0 !important;

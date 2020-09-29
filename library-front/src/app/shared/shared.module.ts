@@ -6,16 +6,24 @@ import { DeleteConfirmationComponent } from './components/delete-confirmation/de
 import { LoadingComponent } from './components/loading/loading.component';
 import { NotificationService } from './services/notification.service';
 import { ModalService } from './services/modal.service';
+import { CreateAuthorModalComponent } from './components/create-author-modal/create-author-modal.component';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [DeleteConfirmationComponent, LoadingComponent],
+  declarations: [DeleteConfirmationComponent, LoadingComponent, CreateAuthorModalComponent],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxSmartModalModule.forRoot()
   ],
   exports: [
     DeleteConfirmationComponent,
-    LoadingComponent
+    LoadingComponent,
+    CreateAuthorModalComponent,
+    NgxSmartModalModule
   ],
   providers: [CrudService, NotificationService, ModalService]
 })
