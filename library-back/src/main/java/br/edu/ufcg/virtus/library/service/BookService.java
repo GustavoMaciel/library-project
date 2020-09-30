@@ -45,7 +45,7 @@ public class BookService {
     @Transactional(readOnly = true)
     public PageDTO findPaginated(SearchDTO searchDTO) {
         Pageable pageable = createPageRequest(searchDTO);
-        Page<Book> jpaPage = repository.findAll(pageable);
+        Page<Book> jpaPage = repository.findAll(searchDTO, pageable);
         return pageDTOFromJPAPage(jpaPage);
     }
 

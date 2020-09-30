@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
+import java.util.List;
 
 @RestController
 @RequestMapping("author-book-associations")
@@ -32,15 +33,15 @@ public class AuthorBookController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<AuthorBookDTO> update(@PathVariable Long id, @RequestBody AuthorBookDTO newAuthorDTO) throws BusinessException {
-        AuthorBook newAuthor = MappingUtil.mapTo(newAuthorDTO, AuthorBook.class);
-        return ResponseEntity.ok(MappingUtil.mapTo(service.update(newAuthor, id), AuthorBookDTO.class));
+    public ResponseEntity<AuthorBookDTO> update(@PathVariable Long id, @RequestBody AuthorBookDTO newAuthorBookDTO) throws BusinessException {
+        AuthorBook newAuthorBook = MappingUtil.mapTo(newAuthorBookDTO, AuthorBook.class);
+        return ResponseEntity.ok(MappingUtil.mapTo(service.update(newAuthorBook, id), AuthorBookDTO.class));
     }
 
     @PatchMapping(path = "/{id}")
-    public ResponseEntity<AuthorBookDTO> patch(@PathVariable Long id, @RequestBody AuthorBookDTO newAuthorDTO) throws BusinessException {
-        AuthorBook newAuthor = MappingUtil.mapTo(newAuthorDTO, AuthorBook.class);
-        return ResponseEntity.ok(MappingUtil.mapTo(service.patch(newAuthor, id), AuthorBookDTO.class));
+    public ResponseEntity<AuthorBookDTO> patch(@PathVariable Long id, @RequestBody AuthorBookDTO newAuthorBookDTO) throws BusinessException {
+        AuthorBook newAuthorBook = MappingUtil.mapTo(newAuthorBookDTO, AuthorBook.class);
+        return ResponseEntity.ok(MappingUtil.mapTo(service.patch(newAuthorBook, id), AuthorBookDTO.class));
     }
 
     @GetMapping(path = "/{id}")
@@ -49,9 +50,15 @@ public class AuthorBookController {
     }
 
     @PostMapping
-    public ResponseEntity<AuthorBookDTO> insert(@RequestBody AuthorBookDTO bookDTO) throws BusinessException {
-        AuthorBook model = service.insert(MappingUtil.mapTo(bookDTO, AuthorBook.class));
+    public ResponseEntity<AuthorBookDTO> insert(@RequestBody AuthorBookDTO authorBookDTO) throws BusinessException {
+        AuthorBook model = service.insert(MappingUtil.mapTo(authorBookDTO, AuthorBook.class));
         return ResponseEntity.status(HttpStatus.CREATED).body(MappingUtil.mapTo(model, AuthorBookDTO.class));
+    }
+
+    @PostMapping(value = "multiple")
+    public ResponseEntity<List<AuthorBookDTO>> insertMultiple(@RequestBody List<AuthorBookDTO> authorBookDTO) throws BusinessException {
+        List<AuthorBook> insertedModels = service.insertMultiple(MappingUtil.mapToList(authorBookDTO, AuthorBook.class));
+        return ResponseEntity.status(HttpStatus.CREATED).body(MappingUtil.mapToList(insertedModels, AuthorBookDTO.class));
     }
 
     @GetMapping

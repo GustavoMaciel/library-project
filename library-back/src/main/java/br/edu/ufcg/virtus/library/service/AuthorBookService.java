@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -40,7 +41,7 @@ public class AuthorBookService {
     @Transactional(readOnly = true)
     public PageDTO findPaginated(SearchDTO searchDTO) {
         Pageable pageable = createPageRequest(searchDTO);
-        Page<AuthorBook> jpaPage = repository.findAll(pageable);
+        Page<AuthorBook> jpaPage = repository.findAll(searchDTO, pageable);
         return pageDTOFromJPAPage(jpaPage);
     }
 
@@ -71,6 +72,15 @@ public class AuthorBookService {
         this.validateInsert(model);
         preInsert(model);
         return repository.save(model);
+    }
+
+    @Transactional
+    public List<AuthorBook> insertMultiple(List<AuthorBook> models) throws BusinessException {
+        List<AuthorBook> insertedModels = new ArrayList<>();
+        for (AuthorBook model: models) {
+            insertedModels.add(this.insert(model));
+        }
+        return insertedModels;
     }
 
     private void validateUpdate(AuthorBook model, Long id) throws BusinessException {

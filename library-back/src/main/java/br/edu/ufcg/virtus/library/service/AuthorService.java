@@ -43,7 +43,7 @@ public class AuthorService {
     @Transactional(readOnly = true)
     public PageDTO findPaginated(SearchDTO searchDTO) {
         Pageable pageable = createPageRequest(searchDTO);
-        Page<Author> jpaPage = repository.findAll(pageable);
+        Page<Author> jpaPage = repository.findAll(searchDTO, pageable);
         return pageDTOFromJPAPage(jpaPage);
     }
 
