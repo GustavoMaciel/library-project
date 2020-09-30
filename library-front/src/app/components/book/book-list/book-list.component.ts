@@ -84,4 +84,8 @@ export class BookListComponent implements OnInit {
     this.notificationService.deletedSucess();
   }
 
+  createMasterDetail() {
+    this.router.navigate(['books/create/master-detail']);
+  }
+
 }

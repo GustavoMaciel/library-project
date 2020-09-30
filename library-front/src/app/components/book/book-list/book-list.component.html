@@ -2,9 +2,13 @@
     <div class="card-header d-flex justify-content-between">
         <h5 class="card-title">Books</h5>
         <div class="card-header-elements">
-            <button class="btn btn-primary d-flex" type="button" (click)="create()">
+            <button class="btn btn-primary d-flex mr-1" type="button" (click)="create()">
                 <i class="material-icons mr-1">add</i>
                 Create
+            </button>
+            <button class="btn btn-primary d-flex" type="button" (click)="createMasterDetail()">
+                <i class="material-icons mr-1">add</i>
+                Create Master-Detail
             </button>
         </div>
     </div>
@@ -32,7 +36,7 @@
                         <td>{{ book.synopsis }}</td>
                         <td>{{ book.publicationDate | date:'dd/MM/yyyy':'UTC' }}</td>
                         <td>
-                            <div *ngFor="let author of book.authors" >
+                            <div *ngFor="let author of book.authors">
                                 {{ author.name }}
                             </div>
                         </td>
@@ -43,7 +47,8 @@
                             <button class="btn bg-transparent" type="button" (click)="edit(book.id)">
                                 <i class="material-icons text-primary">create</i>
                             </button>
-                            <button class="btn bg-transparent" type="button" (click)="confirmDelete(book)" data-toggle="modal" data-target="#exampleModal">
+                            <button class="btn bg-transparent" type="button" (click)="confirmDelete(book)"
+                                data-toggle="modal" data-target="#exampleModal">
                                 <i class="material-icons text-danger">delete</i>
                             </button>
                         </td>
@@ -54,4 +59,4 @@
     </div>
 </div>
 
-<app-delete-confirmation (onOk)="delete()" ></app-delete-confirmation>
+<app-delete-confirmation (onOk)="delete()"></app-delete-confirmation>

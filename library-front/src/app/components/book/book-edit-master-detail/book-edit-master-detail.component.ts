@@ -137,9 +137,7 @@ export class BookEditMasterDetailComponent implements OnInit {
     }
   }
 
-  preInsert(): void {
-    
-  }
+  preInsert(): void { }
 
   preUpdate(): void { }
 
