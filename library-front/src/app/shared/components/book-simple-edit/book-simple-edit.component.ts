@@ -30,7 +30,7 @@ export class BookSimpleEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isEditMode = this.book.id != null
+    this.isEditMode = this.book.id !== null;
     this.initForm();
     this.getItem();
   }
