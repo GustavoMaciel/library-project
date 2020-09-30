@@ -1,0 +1,34 @@
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h5 class="card-title">Associate Author Book</h5>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Authors</label>
+                        <ng-select [items]="authors" bindLabel="name" [multiple]="true"
+                            formControlName="authors" [typeToSearchText]="'Digite para buscar'"
+                            placeholder="Enter a name"></ng-select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Books</label>
+                        <ng-select [items]="books" bindLabel="name" [multiple]="true"
+                            formControlName="books" [typeToSearchText]="'Digite para buscar'"
+                            placeholder="Enter a name"></ng-select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-success" type="submit" [disabled]="!form.valid">Associate</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
