@@ -28,7 +28,7 @@ public class CustomCorsFilter extends OncePerRequestFilter {
         response.setHeader("Access-Control-Expose-Headers",
                 "Access-Control-Allow-Origin, Access-Control-Request-Method, Accept, Content-Type");
         response.setHeader("Access-Control-Allow-Headers",
-                "Origin, Content-Type, Accept, X-Requested-With, Authorization");
+                "Origin, Content-Type, Accept, X-Requested-With, Authorization, lang");
         response.setContentType("application/json");
 
         if (request.getMethod().equals(HttpMethod.OPTIONS.toString())) {

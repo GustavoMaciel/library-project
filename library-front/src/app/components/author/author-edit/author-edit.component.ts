@@ -15,8 +15,9 @@ export class AuthorEditComponent implements OnInit {
 
   isEditMode: boolean;
   form: FormGroup;
-  book: any;
+  author: any;
   books: any = [];
+  booksLoading = false;
   loading = false;
 
   constructor(
@@ -31,7 +32,7 @@ export class AuthorEditComponent implements OnInit {
     this.isEditMode = !isNullOrUndefined(this.getParamId());
     this.initForm();
     this.getItem();
-    this.getBooks();
+    this.searchBooks('');
   }
 
   getServiceURL(): string {
@@ -58,8 +59,8 @@ export class AuthorEditComponent implements OnInit {
     if (this.isEditMode) {
       const paramId = this.getParamId();
       this.crudService.getOne(this.getServiceURL(), paramId).subscribe(result => {
-        this.book = result;
-        this.getFormControlFromObject(this.form.controls, this.book);
+        this.author = result;
+        this.getFormControlFromObject(this.form.controls, this.author);
       }, (err: any) => {
         this.notificationService.errorMessage(err.error ? err.error.message : err.message);
       });
@@ -87,12 +88,6 @@ export class AuthorEditComponent implements OnInit {
     this.router.navigate([this.getRouterURL()]).then(_res => {});
   }
 
-  getBooks(): void {
-    this.crudService.getAll('books').subscribe((res: any) => {
-      this.books = res.items;
-    });
-  }
-
   onSubmit() {
     if (this.isEditMode) {
       this.update();
@@ -103,7 +98,7 @@ export class AuthorEditComponent implements OnInit {
 
   insert() {
     this.preInsert();
-    this.crudService.post(this.getServiceURL(), this.form.value).subscribe((res: any) => {
+    this.crudService.post(this.getServiceURL(), this.form.value).subscribe((_res: any) => {
       this.loading = false;
       this.postInsert();
       this.backToList();
@@ -116,7 +111,7 @@ export class AuthorEditComponent implements OnInit {
     this.loading = true;
     this.preUpdate();
     if (this.updatePartial()) {
-      this.crudService.updatePartial(this.getServiceURL(), this.form.value).subscribe((res: any) => {
+      this.crudService.updatePartial(this.getServiceURL(), this.form.value).subscribe((_res: any) => {
         this.loading = false;
         this.postUpdate();
         this.backToList();
@@ -124,7 +119,7 @@ export class AuthorEditComponent implements OnInit {
         this.loading = false;
       });
     } else {
-      this.crudService.update(this.getServiceURL(), this.form.value).subscribe((res: any) => {
+      this.crudService.update(this.getServiceURL(), this.form.value).subscribe((_res: any) => {
         this.loading = false;
         this.postUpdate();
         this.backToList();
@@ -146,4 +141,23 @@ export class AuthorEditComponent implements OnInit {
     this.notificationService.insertedSuccess();
   }
 
+  searchBooks(term: any) {
+    this.booksLoading = true;
+    const filter = this.generateFilter(term);
+    this.crudService.getAll('books', filter).subscribe((res: any) => {
+      this.books = res.items;
+      this.booksLoading = false;
+    })
+  }
+
+  generateFilter(term: any) {
+    return {
+      search: term.term,
+      pageSize: 10,
+      currentPage: 0,
+      sort: {
+        order: "ASC"
+      }
+    }
+  }
 }

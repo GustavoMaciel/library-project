@@ -22,10 +22,9 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="name">Books</label>
-            <!-- <input type="text" class="form-control" id="name" placeholder="Enter a name"> -->
-            <ng-select [items]="books" bindLabel="name" [multiple]="true"
-                       formControlName="books" [typeToSearchText]="'Type to search'"
-                       placeholder="Type to search"></ng-select>
+            <ng-select [items]="books" bindLabel="name" [multiple]="true" formControlName="books" [loading]="booksLoading"
+                       [typeToSearchText]="'Type to search'" placeholder="Type to search" (search)="searchBooks($event)">
+            </ng-select>
           </div>
         </div>
       </div>

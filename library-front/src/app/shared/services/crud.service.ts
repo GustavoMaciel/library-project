@@ -13,15 +13,17 @@ export class CrudService {
     private http: HttpClient
   ) { }
 
-  getAll(url: string) {
+  getAll(url: string, pagination: any = {currentPage: 0, pageSize: 10, search: ''}, filters: any[] = []) {
     return this.http.get(`${this.baseUrl}/${url}`, {
       headers: this.getHeaders(),
-      params: this.getParams()
+      params: this.getParams(pagination, filters)
     });
   }
 
   getOne(url, id) {
-    return this.http.get(`${this.baseUrl}/${url}/${id}`);
+    return this.http.get(`${this.baseUrl}/${url}/${id}`, {
+      params: this.getDefaultParams()
+    });
   }
 
   post(url, body) {
@@ -43,12 +45,19 @@ export class CrudService {
   protected getHeaders(): HttpHeaders {
     const httpHeaders = new HttpHeaders();
     httpHeaders.set('Access-Control-Allow-Origin', '*');
+    httpHeaders.set('lang', 'pt')
     return httpHeaders;
   }
 
-  protected getParams(): HttpParams {
-    const params = new HttpParams();
-    params.set('lang', 'en_US');
-    return params;
+  protected getDefaultParams() {
+    return new HttpParams().set('lang', 'en_US');
+  }
+
+  protected getParams(pagination, filters): HttpParams {
+    let filter = JSON.stringify(Object.assign(pagination, {filters: filters}))
+    filter = filter != null ? filter : '';
+    return new HttpParams()
+      .set('filters', filter)
+      .set('lang', 'en_US');
   }
 }
