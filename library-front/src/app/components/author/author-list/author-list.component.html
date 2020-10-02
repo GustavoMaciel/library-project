@@ -2,11 +2,11 @@
   <div class="card-header d-flex align-items-center justify-content-between">
     <div class="card-title d-flex align-items-center">Authors</div>
     <div class="card-header-elements d-flex">
-      <button class="btn btn-primary d-flex mr-2" type="button" (click)="create()">
+      <button id="createButton" class="btn btn-primary d-flex mr-2" type="button" (click)="create()">
         <i class="material-icons mr-1">add</i>
         Create
       </button>
-      <button class="btn btn-primary d-flex" type="button" (click)="createMasterDetail()">
+      <button id="createMasterDetailButton" class="btn btn-primary d-flex" type="button" (click)="createMasterDetail()">
         <i class="material-icons mr-1">add</i>
         Create Master-Detail
       </button>
@@ -28,17 +28,17 @@
         <tr align="center" *ngIf="listIsEmpty">
           <td colspan="100">No authors found.</td>
         </tr>
-        <tr *ngFor="let author of items">
-          <td>{{ author.id }}</td>
-          <td>{{ author.name }}</td>
+        <tr *ngFor="let author of items; let i = index">
+          <td id="idAuthor-{{i}}">{{ author.id }}</td>
+          <td id="nameAuthor-{{i}}">{{ author.name }}</td>
           <td align="center">
-            <button class="btn bg-transparent" type="button" (click)="view(author)">
+            <button id="viewAuthor-{{i}}" class="btn bg-transparent" type="button" (click)="view(author)">
               <i class="material-icons">visibility</i>
             </button>
-            <button class="btn bg-transparent" type="button" (click)="edit(author)">
+            <button id="editAuthor-{{i}}" class="btn bg-transparent" type="button" (click)="edit(author)">
               <i class="material-icons text-primary">create</i>
             </button>
-            <button class="btn bg-transparent" type="button" (click)="setRemove(author)" data-toggle="modal" data-target="#exampleModal">
+            <button id="deleteAuthor-{{i}}" class="btn bg-transparent" type="button" (click)="setRemove(author)" data-toggle="modal" data-target="#exampleModal">
               <i class="material-icons text-danger">delete</i>
             </button>
           </td>
