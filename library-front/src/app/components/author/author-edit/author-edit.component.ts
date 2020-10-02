@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CrudService } from '../../../shared/services/crud.service';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { isNullOrUndefined } from "util";
+import { AuthorURL } from 'src/app/shared/url/url.domain';
 
 @Component({
   selector: 'app-author-edit',
@@ -35,7 +36,7 @@ export class AuthorEditComponent implements OnInit {
   }
 
   getServiceURL(): string {
-    return 'authors';
+    return AuthorURL.BASE;
   }
 
   getRouterURL(): string {

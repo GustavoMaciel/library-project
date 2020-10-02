@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { SERVER_URL } from '../url/url.domain';
 
 
 @Injectable({
@@ -7,37 +8,35 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 })
 export class CrudService {
 
-  private baseUrl = 'http://localhost:8080/library';
-
   constructor(
     private http: HttpClient
   ) { }
 
   getAll(url: string) {
-    return this.http.get(`${this.baseUrl}/${url}`, {
+    return this.http.get(`${SERVER_URL}/${url}`, {
       headers: this.getHeaders(),
       params: this.getParams()
     });
   }
 
   getOne(url, id) {
-    return this.http.get(`${this.baseUrl}/${url}/${id}`);
+    return this.http.get(`${SERVER_URL}/${url}/${id}`);
   }
 
   post(url, body) {
-    return this.http.post(`${this.baseUrl}/${url}`, body);
+    return this.http.post(`${SERVER_URL}/${url}`, body);
   }
 
   update(url, body) {
-    return this.http.put(`${this.baseUrl}/${url}/${body.id}`, body);
+    return this.http.put(`${SERVER_URL}/${url}/${body.id}`, body);
   }
 
   updatePartial(url, body) {
-    return this.http.patch(`${this.baseUrl}/${url}/${body.id}`, body);
+    return this.http.patch(`${SERVER_URL}/${url}/${body.id}`, body);
   }
 
   delete(url, body) {
-    return this.http.delete(`${this.baseUrl}/${url}/${body.id}`);
+    return this.http.delete(`${SERVER_URL}/${url}/${body.id}`);
   }
 
   protected getHeaders(): HttpHeaders {
