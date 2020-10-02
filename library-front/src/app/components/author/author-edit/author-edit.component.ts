@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrudService } from '../../../shared/services/crud.service';
 import { NotificationService } from '../../../shared/services/notification.service';
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined } from 'util';
 import { AuthorURL } from 'src/app/shared/url/url.domain';
 
 @Component({
@@ -86,7 +86,7 @@ export class AuthorEditComponent implements OnInit {
   }
 
   backToList() {
-    this.router.navigate([this.getRouterURL()]).then(_res => {});
+    this.router.navigate([this.getRouterURL()]).then(res => {});
   }
 
   onSubmit() {
@@ -99,7 +99,7 @@ export class AuthorEditComponent implements OnInit {
 
   insert() {
     this.preInsert();
-    this.crudService.post(this.getServiceURL(), this.form.value).subscribe((_res: any) => {
+    this.crudService.post(this.getServiceURL(), this.form.value).subscribe((res: any) => {
       this.loading = false;
       this.postInsert();
       this.backToList();
@@ -112,7 +112,7 @@ export class AuthorEditComponent implements OnInit {
     this.loading = true;
     this.preUpdate();
     if (this.updatePartial()) {
-      this.crudService.updatePartial(this.getServiceURL(), this.form.value).subscribe((_res: any) => {
+      this.crudService.updatePartial(this.getServiceURL(), this.form.value).subscribe((res: any) => {
         this.loading = false;
         this.postUpdate();
         this.backToList();
@@ -120,7 +120,7 @@ export class AuthorEditComponent implements OnInit {
         this.loading = false;
       });
     } else {
-      this.crudService.update(this.getServiceURL(), this.form.value).subscribe((_res: any) => {
+      this.crudService.update(this.getServiceURL(), this.form.value).subscribe((res: any) => {
         this.loading = false;
         this.postUpdate();
         this.backToList();
@@ -148,7 +148,7 @@ export class AuthorEditComponent implements OnInit {
     this.crudService.getAll('books', filter).subscribe((res: any) => {
       this.books = res.items;
       this.booksLoading = false;
-    })
+    });
   }
 
   generateFilter(term: any) {
@@ -157,8 +157,8 @@ export class AuthorEditComponent implements OnInit {
       pageSize: 10,
       currentPage: 0,
       sort: {
-        order: "ASC"
+        order: 'ASC'
       }
-    }
+    };
   }
 }
