@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CrudService } from 'src/app/shared/services/crud.service';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/shared/services/notification.service';
+import { BookURL } from 'src/app/shared/url/url.domain';
 
 @Component({
   selector: 'app-book-list',
@@ -29,7 +30,7 @@ export class BookListComponent implements OnInit {
   }
 
   getServiceURL(): string {
-    return 'books';
+    return BookURL.BASE;
   }
 
   getRouterURL(): string {

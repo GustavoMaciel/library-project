@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CrudService } from '../../../shared/services/crud.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../../shared/services/notification.service';
+import { AuthorURL } from 'src/app/shared/url/url.domain';
 
 @Component({
   selector: 'app-author-view',
@@ -53,7 +54,7 @@ export class AuthorViewComponent implements OnInit {
   }
 
   getServiceUrl(): string {
-    return `authors`;
+    return AuthorURL.BASE;
   }
 
   getRouterUrl(): string {

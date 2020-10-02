@@ -5,6 +5,7 @@ import { CrudService } from '../../../shared/services/crud.service';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { isNullOrUndefined } from "util";
 import { ModalService } from '../../../shared/services/modal.service';
+import { AuthorURL } from 'src/app/shared/url/url.domain';
 
 @Component({
   selector: 'app-author-master-detail',
@@ -38,7 +39,7 @@ export class AuthorMasterDetailComponent implements OnInit {
   }
 
   getServiceURL(): string {
-    return 'authors';
+    return AuthorURL.BASE;
   }
 
   getRouterURL(): string {
