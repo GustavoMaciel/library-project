@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CrudService } from '../../../shared/services/crud.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthorURL } from 'src/app/shared/url/url.domain';
 
 @Component({
   selector: 'app-author-list',
@@ -37,7 +38,7 @@ export class AuthorListComponent implements OnInit {
   }
 
   getServiceURL(): string {
-    return `authors`;
+    return AuthorURL.BASE;
   }
 
   getRouterURL(): string {

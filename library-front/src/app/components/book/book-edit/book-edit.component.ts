@@ -4,6 +4,7 @@ import { isNullOrUndefined } from 'util';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CrudService } from 'src/app/shared/services/crud.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
+import { BookURL } from 'src/app/shared/url/url.domain';
 
 @Component({
   selector: 'app-book-edit',
@@ -34,7 +35,7 @@ export class BookEditComponent implements OnInit {
   }
 
   getServiceURL(): string {
-    return 'books';
+    return BookURL.BASE;
   }
 
   getRouterURL(): string {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CrudService } from 'src/app/shared/services/crud.service';
+import { BookURL } from 'src/app/shared/url/url.domain';
 
 @Component({
   selector: 'app-book-view',
@@ -22,7 +23,7 @@ export class BookViewComponent implements OnInit {
   }
 
   getServiceURL(): string {
-    return 'books';
+    return BookURL.BASE;
   }
 
   getRouterURL(): string {
