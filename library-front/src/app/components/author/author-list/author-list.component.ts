@@ -17,6 +17,7 @@ export class AuthorListComponent implements OnInit {
   totalRecords: number;
   totalPages: number;
   removeItem: any;
+  currentSearch: string;
 
   constructor(private service: CrudService,
               private router: Router,
@@ -35,6 +36,7 @@ export class AuthorListComponent implements OnInit {
     this.totalRecords = 0;
     this.totalPages = 0;
     this.removeItem = null;
+    this.currentSearch = '';
   }
 
   getServiceURL(): string {
@@ -47,7 +49,7 @@ export class AuthorListComponent implements OnInit {
 
   listItems() {
     this.loading = true;
-    this.service.getAll(this.getServiceURL()).subscribe((res: any) => {
+    this.service.getAll(this.getServiceURL(), this.generatePagination()).subscribe((res: any) => {
       this.items = res.items;
       this.pageSize = res.pageSize;
       this.currentPage = res.currentPage;
@@ -57,6 +59,14 @@ export class AuthorListComponent implements OnInit {
     }, (err: any) => {
       this.loading = false;
     });
+  }
+
+  generatePagination() {
+    return {
+      currentPage: this.currentPage,
+      pageSize: this.pageSize,
+      search: this.currentSearch
+    }
   }
 
   get listIsEmpty() {
@@ -90,5 +100,10 @@ export class AuthorListComponent implements OnInit {
     this.removeItem = null;
     }, (error: any) => {
     })
+  }
+
+  searchEvent(searchText: any) {
+    this.currentSearch = searchText;
+    this.listItems();
   }
 }

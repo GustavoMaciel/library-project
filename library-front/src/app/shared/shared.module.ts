@@ -10,9 +10,10 @@ import { CreateAuthorModalComponent } from './components/create-author-modal/cre
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BookSimpleEditComponent } from './components/book-simple-edit/book-simple-edit.component';
+import { SimpleSearchComponent } from './components/simple-search/simple-search.component';
 
 @NgModule({
-  declarations: [DeleteConfirmationComponent, LoadingComponent, CreateAuthorModalComponent, BookSimpleEditComponent],
+  declarations: [DeleteConfirmationComponent, LoadingComponent, CreateAuthorModalComponent, BookSimpleEditComponent, SimpleSearchComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -20,12 +21,13 @@ import { BookSimpleEditComponent } from './components/book-simple-edit/book-simp
     ReactiveFormsModule,
     NgxSmartModalModule.forRoot()
   ],
-  exports: [
-    DeleteConfirmationComponent,
-    LoadingComponent,
-    CreateAuthorModalComponent,
-    BookSimpleEditComponent
-  ],
+    exports: [
+        DeleteConfirmationComponent,
+        LoadingComponent,
+        CreateAuthorModalComponent,
+        BookSimpleEditComponent,
+        SimpleSearchComponent
+    ],
   providers: [CrudService, NotificationService, ModalService]
 })
 export class SharedModule { }

@@ -2,6 +2,8 @@
   <div class="card-header d-flex align-items-center justify-content-between">
     <div class="card-title d-flex align-items-center">Authors</div>
     <div class="card-header-elements d-flex">
+      <app-simple-search (searchEvent)="searchEvent($event)" [pageSize]="pageSize" [currentPage]="currentPage">
+      </app-simple-search>
       <button id="createButton" class="btn btn-primary d-flex mr-2" type="button" (click)="create()">
         <i class="material-icons mr-1">add</i>
         Create

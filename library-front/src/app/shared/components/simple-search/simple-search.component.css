@@ -1,0 +1,14 @@
+.simple-search {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.simple-search input {
+  padding-right: 25px;
+}
+
+.simple-search i {
+  position: absolute;
+  right: 2px;
+}
