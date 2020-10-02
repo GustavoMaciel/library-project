@@ -29,7 +29,8 @@
               <div class="d-flex">
                 <div class="book-select mr-2">
                   <ng-select [items]="books" bindLabel="name" [multiple]="false" [typeToSearchText]="'Select a book'"
-                             placeholder="Select a book" formControlName="selectedBook" (change)="onBookSelected($event)">
+                             placeholder="Select a book" formControlName="selectedBook" (change)="onBookSelected($event)"
+                             [loading]="booksLoading" (search)="searchBooks($event)">
                   </ng-select>
                 </div>
                 <button (click)="openCreateBookModal()" class="btn btn-primary d-flex" type="button">

@@ -24,7 +24,6 @@ import { BookSimpleEditComponent } from './components/book-simple-edit/book-simp
     DeleteConfirmationComponent,
     LoadingComponent,
     CreateAuthorModalComponent,
-    NgxSmartModalModule,
     BookSimpleEditComponent
   ],
   providers: [CrudService, NotificationService, ModalService]
