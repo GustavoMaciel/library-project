@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-md-12 d-flex align-items-center">
+        <div class="paginator-info" role="status" aria-live="polite">
+            <div class="total-records">
+                {{ totalRecords === 1 ? totalRecords + ' resultado encontrado' : totalRecords + ' resultados encontrados' }}
+            </div>
+            <div class="show-page">
+                Exibindo página {{currentPage}} de
+                {{totalPages}}
+            </div>
+        </div>
+        <div class="d-flex ml-auto">
+            <div class="mr-3">
+                <select (change)="pageSizeChange($event.target.value)" class="custom-select">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item" [ngClass]="currentPage === firstPage ? 'disabled' : ''">
+                        <button class="page-link prev-next" (click)="changeToFirstPage()" type="button">
+                            <i class="material-icons">chevron_left</i>
+                        </button>
+                    </li>
+                    <li *ngFor="let page of pages" [ngClass]="page == currentPage ? 'active' : ''" class="page-item">
+                        <button class="page-link" type="button" (click)="changePage(page)">{{page}}</button></li>
+                    <li class="page-item" [ngClass]="currentPage === totalPages ? 'disabled' : ''">
+                        <button class="page-link prev-next" type="button" (click)="changeToLastPage()">
+                            <i class="material-icons">chevron_right</i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

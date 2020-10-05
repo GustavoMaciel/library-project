@@ -1,0 +1,9 @@
+.prev-next {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}
+
+.prev-next i {
+    font-size: 20px;
+}
