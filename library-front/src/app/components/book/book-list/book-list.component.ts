@@ -41,7 +41,12 @@ export class BookListComponent implements OnInit {
   }
 
   listItems(): void {
-    this.crudService.getAll(this.getServiceURL()).subscribe((res: any) => {
+    const pag = {
+     currentPage: this.currentPage,
+     pageSize: this.pageSize,
+    };
+
+    this.crudService.getAll(this.getServiceURL(), pag).subscribe((res: any) => {
       this.books = res.items;
       this.pageSize = res.pageSize;
       this.currentPage = res.currentPage;
@@ -87,6 +92,17 @@ export class BookListComponent implements OnInit {
 
   createMasterDetail() {
     this.router.navigate(['books/create/master-detail']);
+  }
+
+  onChangePaginator(page: number) {
+    this.currentPage = page - 1;
+    this.listItems();
+  }
+
+  onChangePageSize(pageSize: number) {
+    this.pageSize = pageSize;
+    this.currentPage = 0;
+    this. listItems();
   }
 
 }

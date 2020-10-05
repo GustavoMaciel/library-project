@@ -10,6 +10,7 @@ import { BookEditComponent } from './book-edit/book-edit.component';
 import { BookListComponent } from './book-list/book-list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BookEditMasterDetailComponent } from './book-edit-master-detail/book-edit-master-detail.component';
+import { PaginationModule } from 'src/app/shared/components/pagination/pagination.module';
 
 const routes: Routes = [
   {
@@ -44,6 +45,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     NgSelectModule,
+    PaginationModule
   ],
   exports: [BookViewComponent, BookEditComponent, BookListComponent, BookEditMasterDetailComponent]
 })

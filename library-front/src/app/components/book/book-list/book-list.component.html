@@ -57,6 +57,12 @@
             </table>
         </div>
     </div>
+    <div class="card-footer">
+        <div class="datatable-footer" [hidden]="listIsEmpty">
+            <app-pagination [totalRecords]="totalRecords" [setTotalPages]="totalPages"
+                (pageChanged)="onChangePaginator($event)" (pageSizeChanged)="onChangePageSize($event)"></app-pagination>
+        </div>
+    </div>
 </div>
 
 <app-delete-confirmation (onOk)="delete()"></app-delete-confirmation>
