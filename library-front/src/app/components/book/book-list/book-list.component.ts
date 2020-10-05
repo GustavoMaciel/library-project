@@ -42,6 +42,7 @@ export class BookListComponent implements OnInit {
   }
 
   listItems(): void {
+    this.loading = true;
     this.crudService.getAll(this.getServiceURL(), this.generatePagination()).subscribe((res: any) => {
       this.books = res.items;
       this.pageSize = res.pageSize;

@@ -20,10 +20,11 @@ export class AuthorListComponent implements OnInit {
   removeItem: any;
   currentSearch: string;
 
-  constructor(private service: CrudService,
-              private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private notificationService: NotificationService) { }
+  constructor(
+    private service: CrudService,
+    private router: Router,
+    private notificationService: NotificationService
+  ) { }
 
   ngOnInit() {
     this.initProperties();
@@ -68,7 +69,7 @@ export class AuthorListComponent implements OnInit {
       currentPage: this.currentPage,
       pageSize: this.pageSize,
       search: this.currentSearch
-    }
+    };
   }
 
   get listIsEmpty() {
@@ -96,15 +97,27 @@ export class AuthorListComponent implements OnInit {
   }
 
   remove() {
-    this.service.delete(`${this.getServiceURL()}/${this.removeItem.id}`, {}).subscribe(_res => {
+    this.service.delete(`${this.getServiceURL()}/${this.removeItem.id}`, {}).subscribe(res => {
       this.listItems();
-    this.removeItem = null;
+      this.removeItem = null;
     }, (err: any) => {
       this.notificationService.errorMessage(err.error ? err.error.message : err.message, 'Delete Error');
-    })
+    });
   }
 
-  searchEvent(searchText: any) {
+  onChangePaginator(page: number): void {
+    this.currentPage = page - 1;
+    this.listItems();
+  }
+
+  onChangePageSize(pageSize: number): void {
+    this.pageSize = pageSize;
+    this.currentPage = 0;
+    this.listItems();
+  }
+
+  onSearch(searchText: string): void {
+    this.currentPage = 0;
     this.currentSearch = searchText;
     this.listItems();
   }

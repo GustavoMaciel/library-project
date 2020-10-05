@@ -2,7 +2,7 @@
   <div class="card-header d-flex align-items-center justify-content-between">
     <div class="card-title d-flex align-items-center">Authors</div>
     <div class="card-header-elements d-flex">
-      <app-simple-search (searchEvent)="searchEvent($event)" [pageSize]="pageSize" [currentPage]="currentPage">
+      <app-simple-search (searchEvent)="onSearch($event)" [pageSize]="pageSize" [currentPage]="currentPage">
       </app-simple-search>
       <button id="createButton" class="btn btn-primary d-flex mr-2" type="button" (click)="create()">
         <i class="material-icons mr-1">add</i>
@@ -20,33 +20,40 @@
       <app-loading [loading]="loading"></app-loading>
       <table *ngIf="!loading" class="table table-hover">
         <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Name</th>
-          <th class="text-center">Actions</th>
-        </tr>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th class="text-center">Actions</th>
+          </tr>
         </thead>
         <tbody>
-        <tr align="center" *ngIf="listIsEmpty">
-          <td colspan="100">No authors found.</td>
-        </tr>
-        <tr *ngFor="let author of items; let i = index">
-          <td id="idAuthor-{{i}}">{{ author.id }}</td>
-          <td id="nameAuthor-{{i}}">{{ author.name }}</td>
-          <td align="center">
-            <button id="viewAuthor-{{i}}" class="btn bg-transparent" type="button" (click)="view(author)">
-              <i class="material-icons">visibility</i>
-            </button>
-            <button id="editAuthor-{{i}}" class="btn bg-transparent" type="button" (click)="edit(author)">
-              <i class="material-icons text-primary">create</i>
-            </button>
-            <button id="deleteAuthor-{{i}}" class="btn bg-transparent" type="button" (click)="setRemove(author)" data-toggle="modal" data-target="#exampleModal">
-              <i class="material-icons text-danger">delete</i>
-            </button>
-          </td>
-        </tr>
+          <tr align="center" *ngIf="listIsEmpty">
+            <td colspan="100">No authors found.</td>
+          </tr>
+          <tr *ngFor="let author of items; let i = index">
+            <td id="idAuthor-{{i}}">{{ author.id }}</td>
+            <td id="nameAuthor-{{i}}">{{ author.name }}</td>
+            <td align="center">
+              <button id="viewAuthor-{{i}}" class="btn bg-transparent" type="button" (click)="view(author)">
+                <i class="material-icons">visibility</i>
+              </button>
+              <button id="editAuthor-{{i}}" class="btn bg-transparent" type="button" (click)="edit(author)">
+                <i class="material-icons text-primary">create</i>
+              </button>
+              <button id="deleteAuthor-{{i}}" class="btn bg-transparent" type="button" (click)="setRemove(author)"
+                data-toggle="modal" data-target="#exampleModal">
+                <i class="material-icons text-danger">delete</i>
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="datatable-footer" [hidden]="listIsEmpty">
+      <app-pagination [totalRecords]="totalRecords" [setTotalPages]="totalPages"
+        (pageChanged)="onChangePaginator($event)" (pageSizeChanged)="onChangePageSize($event)"></app-pagination>
     </div>
   </div>
 </div>

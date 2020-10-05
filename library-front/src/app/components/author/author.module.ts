@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AuthorMasterDetailComponent } from './author-master-detail/author-master-detail.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
-import { BookModule } from '../book/book.module';
+import { PaginationModule } from 'src/app/shared/components/pagination/pagination.module';
 
 const routes: Routes = [
   {
@@ -43,7 +43,8 @@ const routes: Routes = [
     SharedModule,
     ReactiveFormsModule,
     NgSelectModule,
-    NgxSmartModalModule.forChild()
+    NgxSmartModalModule.forChild(),
+    PaginationModule
   ],
   exports: [AuthorListComponent, AuthorEditComponent, AuthorViewComponent]
 })
