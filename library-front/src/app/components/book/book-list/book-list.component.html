@@ -2,6 +2,8 @@
     <div class="card-header d-flex justify-content-between">
         <h5 class="card-title">Books</h5>
         <div class="card-header-elements">
+            <app-simple-search [pageSize]="pageSize" [currentPage]="currentPage" (searchEvent)="onSearch($event)">
+            </app-simple-search>
             <button class="btn btn-primary d-flex mr-1" type="button" (click)="create()">
                 <i class="material-icons mr-1">add</i>
                 Create

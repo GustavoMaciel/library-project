@@ -44,7 +44,7 @@ export class CrudService {
   protected getHeaders(): HttpHeaders {
     const httpHeaders = new HttpHeaders();
     httpHeaders.set('Access-Control-Allow-Origin', '*');
-    httpHeaders.set('lang', 'pt')
+    httpHeaders.set('lang', 'pt');
     return httpHeaders;
   }
 
@@ -53,7 +53,7 @@ export class CrudService {
   }
 
   protected getParams(pagination, filters): HttpParams {
-    let filter = JSON.stringify(Object.assign(pagination, {filters: filters}))
+    let filter = JSON.stringify(Object.assign(pagination, { filters }));
     filter = filter != null ? filter : '';
     return new HttpParams()
       .set('filters', filter)

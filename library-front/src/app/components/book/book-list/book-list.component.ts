@@ -17,6 +17,7 @@ export class BookListComponent implements OnInit {
   currentPage = 0;
   totalRecords = 0;
   totalPages = 0;
+  currentSearch = '';
   loading = false;
 
   constructor(
@@ -41,12 +42,7 @@ export class BookListComponent implements OnInit {
   }
 
   listItems(): void {
-    const pag = {
-     currentPage: this.currentPage,
-     pageSize: this.pageSize,
-    };
-
-    this.crudService.getAll(this.getServiceURL(), pag).subscribe((res: any) => {
+    this.crudService.getAll(this.getServiceURL(), this.generatePagination()).subscribe((res: any) => {
       this.books = res.items;
       this.pageSize = res.pageSize;
       this.currentPage = res.currentPage;
@@ -90,19 +86,33 @@ export class BookListComponent implements OnInit {
     this.notificationService.deletedSucess();
   }
 
-  createMasterDetail() {
+  createMasterDetail(): void {
     this.router.navigate(['books/create/master-detail']);
   }
 
-  onChangePaginator(page: number) {
+  onChangePaginator(page: number): void {
     this.currentPage = page - 1;
     this.listItems();
   }
 
-  onChangePageSize(pageSize: number) {
+  onChangePageSize(pageSize: number): void {
     this.pageSize = pageSize;
     this.currentPage = 0;
-    this. listItems();
+    this.listItems();
+  }
+
+  onSearch(searchText: string): void {
+    this.currentPage = 0;
+    this.currentSearch = searchText;
+    this.listItems();
+  }
+
+  generatePagination(): object {
+    return {
+      currentPage: this.currentPage,
+      pageSize: this.pageSize,
+      search: this.currentSearch
+    };
   }
 
 }
