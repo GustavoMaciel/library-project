@@ -15,6 +15,9 @@ export const SUBMIT_BUTTON = 'submitButton';
 export const BACK_BUTTON = 'backButton';
 export const CLOSE_BUTTON = 'closeButton';
 export const CONFIRM_BUTTON = 'confirmButton';
+export const TOAST_SUCCESS = '.toast-success'
+export const TOAST_ERROR = '.toast-error'
+export const TOAST_MESSAGE = '.toast-message'
 export const VISUAL_WAIT = 2000;
 
 // AUTHOR
