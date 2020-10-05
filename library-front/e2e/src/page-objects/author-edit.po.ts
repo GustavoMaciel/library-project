@@ -29,30 +29,11 @@ export class AuthorEditPageObject extends BasePageObject {
     }
 
     async selectFirstFromBooks() {
-      return this.selectFromBooks(true);
+      return this.selectFromNgSelect(BOOK_SELECT_AUTHOR_ID, true);
     }
 
     async selectFromBooks(first: boolean = true, text: string = '') {
-      await this.waitForPresence(this.booksNgSelect, 'Ng select not found');
-      await this.waitToBeClickable(this.booksNgSelect, 'Ng select not clickable');
-      await this.booksNgSelect.click();
-      await this.waitForPresence(element.all(by.css('.ng-option')), 'ng-option not found');
-      await this.selectNgSelectOption(first, text);
-      await browser.sleep(VISUAL_WAIT);
-    }
-
-    async selectNgSelectOption(first: boolean = false, text: string = '') {
-      const options = element.all(by.css('.ng-option'));
-      if (first) {
-        return options.first().click();
-      } else {
-        for (const el of await options.getWebElements()) {
-          if ((await el.getText()).toLowerCase().indexOf(text.toLowerCase()) > -1) {
-            return el.click();
-          }
-        }
-      }
-      fail('No element was found');
+      return this.selectFromNgSelect(BOOK_SELECT_AUTHOR_ID, first, text);
     }
 
     submit() {
