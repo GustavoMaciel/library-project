@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CrudService } from '../../../shared/services/crud.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthorURL } from 'src/app/shared/url/url.domain';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-author-list',
@@ -21,7 +22,8 @@ export class AuthorListComponent implements OnInit {
 
   constructor(private service: CrudService,
               private router: Router,
-              private activatedRoute: ActivatedRoute) { }
+              private activatedRoute: ActivatedRoute,
+              private notificationService: NotificationService) { }
 
   ngOnInit() {
     this.initProperties();
@@ -91,14 +93,14 @@ export class AuthorListComponent implements OnInit {
 
   setRemove(item: any) {
     this.removeItem = item;
-    // this.remove();
   }
 
   remove() {
     this.service.delete(`${this.getServiceURL()}/${this.removeItem.id}`, {}).subscribe(_res => {
       this.listItems();
     this.removeItem = null;
-    }, (error: any) => {
+    }, (err: any) => {
+      this.notificationService.errorMessage(err.error ? err.error.message : err.message, 'Delete Error');
     })
   }
 

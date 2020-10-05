@@ -1,11 +1,19 @@
 import { by, element } from 'protractor';
 import { BasePageObject } from './base.po';
+import {
+  CREATE_BUTTON, CREATE_MASTER_DETAIL_BUTTON,
+  DELETE_AUTHOR_AT_ID,
+  EDIT_AUTHOR_AT_ID,
+  ID_AUTHOR_AT_ID,
+  NAME_AUTHOR_AT_ID,
+  VIEW_AUTHOR_AT_ID
+} from '../domain/consts';
 
 export class AuthorListPageObject extends BasePageObject {
-  createButton = element(by.id('createButton'));
-  createMasterDetailButton = element(by.id('createMasterDetailButton'));
+  createButton = element(by.id(CREATE_BUTTON));
+  createMasterDetailButton = element(by.id(CREATE_MASTER_DETAIL_BUTTON));
 
-  protected navigateTo() {
+  navigateTo() {
     return super.navigateToAuthors();
   }
 
@@ -28,23 +36,23 @@ export class AuthorListPageObject extends BasePageObject {
   }
 
   getIdAuthorElementAt(index: number) {
-    return element(by.id(`idAuthor-${index}`));
+    return element(by.id(`${ID_AUTHOR_AT_ID}${index}`));
   }
 
   getNameAuthorElementAt(index: number) {
-    return element(by.id(`nameAuthor-${index}`));
+    return element(by.id(`${NAME_AUTHOR_AT_ID}${index}`));
   }
 
   viewAuthorElementAt(index: number) {
-    return element(by.id(`viewAuthor-${index}`));
+    return element(by.id(`${VIEW_AUTHOR_AT_ID}${index}`));
   }
 
   editAuthorElementAt(index: number) {
-    return element(by.id(`editAuthor-${index}`));
+    return element(by.id(`${EDIT_AUTHOR_AT_ID}${index}`));
   }
 
   deleteAuthorElementAt(index: number) {
-    return element(by.id(`deleteAuthor-${index}`));
+    return element(by.id(`${DELETE_AUTHOR_AT_ID}${index}`));
   }
 
 

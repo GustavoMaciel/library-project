@@ -1,13 +1,14 @@
 import { browser, by, element, protractor } from 'protractor';
+import { BASE_URL } from '../domain/consts';
 
 export class BasePageObject {
-  protected baseUrl = 'http://localhost:4200/';
-  authorNavLink = element(by.id('authorNavLink'));
-  bookNavLink = element(by.id('bookNavLink'));
+  toastSuccess = element(by.css('.toast-success'));
+  toastError = element(by.css('.toast-error'));
+  toastMessage = element(by.css('toast-message'));
   EC = protractor.ExpectedConditions;
   protected standardTimeout = 8000;
 
-  protected navigateTo() {
+  navigateTo() {
     return this.navigateToHome();
   }
 
@@ -16,15 +17,7 @@ export class BasePageObject {
   }
 
   navigateToHome() {
-    return browser.get(this.baseUrl);
-  }
-
-  navigateToBooks() {
-    return this.authorNavLink.click();
-  }
-
-  navigateToAuthors() {
-    return this.bookNavLink.click();
+    return browser.get(BASE_URL);
   }
 
   waitForPresence(element, msg: string = 'Element not found') {
@@ -33,6 +26,18 @@ export class BasePageObject {
 
   waitToBeClickable(element, msg: string = 'Element not clickable') {
     browser.wait(this.EC.elementToBeClickable(element), this.standardTimeout, msg);
+  }
+
+  getToastMessage() {
+    return this.toastMessage.getText();
+  }
+
+  hasErrorToast() {
+    return this.toastError.isPresent();
+  }
+
+  hasSuccessToast() {
+    return this.toastSuccess.isPresent();
   }
 
 

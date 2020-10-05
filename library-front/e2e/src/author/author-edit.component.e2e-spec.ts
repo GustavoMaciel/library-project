@@ -6,10 +6,14 @@ describe('AuthorEditComponent', () => {
   const authorEditPage = new AuthorEditPageObject();
 
   beforeAll(() => {
-
+    authorEditPage.navigateTo();
+    authorEditPage.waitForPresence(authorEditPage.nameInput);
   });
 
-  it('should create author successfully', () => {
-
+  it('should create an author successfully', () => {
+    authorEditPage.fillName('Testing');
+    authorEditPage.selectFirstFromBooks();
+    authorEditPage.waitToBeClickable(authorEditPage.submitButton);
+    authorEditPage.submit();
   });
 });

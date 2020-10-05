@@ -104,6 +104,7 @@ export class AuthorEditComponent implements OnInit {
       this.postInsert();
       this.backToList();
     }, (err) => {
+      this.notificationService.errorMessage(err.error ? err.error.message : err.message);
       this.loading = false;
     });
   }
@@ -117,6 +118,7 @@ export class AuthorEditComponent implements OnInit {
         this.postUpdate();
         this.backToList();
       }, (err) => {
+        this.notificationService.errorMessage(err.error ? err.error.message : err.message);
         this.loading = false;
       });
     } else {
@@ -125,6 +127,7 @@ export class AuthorEditComponent implements OnInit {
         this.postUpdate();
         this.backToList();
       }, (err) => {
+        this.notificationService.errorMessage(err.error ? err.error.message : err.message);
         this.loading = false;
       });
     }

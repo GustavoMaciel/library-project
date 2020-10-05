@@ -1,7 +1,3 @@
-// @ts-check
-// Protractor configuration file, see link for more information
-// https://github.com/angular/protractor/blob/master/lib/config.ts
-
 const { SpecReporter } = require('jasmine-spec-reporter');
 
 /**
@@ -10,10 +6,14 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 exports.config = {
   allScriptsTimeout: 11000,
   specs: [
-    './src/**/*.e2e-spec.ts'
+    // './src/**/*.e2e-spec.ts',
+    './src/author/author-edit.component.e2e-spec.ts',
   ],
   capabilities: {
-    browserName: 'chrome'
+    browserName: 'chrome',
+    chromeOptions: {
+      'args': ['--start-maximized']
+    }
   },
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
@@ -24,9 +24,14 @@ exports.config = {
     print: function() {}
   },
   onPrepare() {
+    let globals = require('protractor');
     require('ts-node').register({
       project: require('path').join(__dirname, './tsconfig.json')
     });
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+    globals.by.addLocator('formControlName', function (formName, optParentElement, optRootSelector) {
+      let using = optParentElement || document.querySelector(optRootSelector) || document;
+      return using.querySelector(`[formControlName=${formName}]`);
+    });
   }
 };
