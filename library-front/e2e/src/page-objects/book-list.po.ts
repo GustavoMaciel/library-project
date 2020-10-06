@@ -43,12 +43,24 @@ export class BookListPageObject extends BasePageObject {
         return element(by.id(`${VIEW_BOOK_AT_ID}${index}`));
     }
 
-    editAuthorElementAt(index: number) {
+    editBookElementAt(index: number) {
         return element(by.id(`${EDIT_BOOK_AT_ID}${index}`));
     }
 
-    deleteAuthorElementAt(index: number) {
+    deleteBookElementAt(index: number) {
         return element(by.id(`${DELETE_BOOK_AT_ID}${index}`));
     }
+
+    async getBookAt(index: number) {
+        return {
+          id: await this.getIdBookElementAt(index).getText(),
+          name: await this.getNameBookElementAt(index).getText(),
+          publicationDate: await this.getPublicationDateBookElementAt(index).getText(),
+          synopsis: await this.getSynopsisBookElementAt(index).getText(),
+          view: this.viewBookElementAt(index),
+          edit: this.editBookElementAt(index),
+          delete: this.deleteBookElementAt(index),
+        };
+      }
 
 }
