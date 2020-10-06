@@ -8,7 +8,9 @@ exports.config = {
   specs: [
     // './src/**/*.e2e-spec.ts',
     './src/author/author-edit.component.e2e-spec.ts',
-    './src/book/book-edit.component.e2e-spec.ts'
+    './src/book/book-edit.component.e2e-spec.ts',
+    // './src/author/author-edit.component.e2e-spec.ts',
+    './src/author/author-list.component.e2e-spec.ts',
   ],
   capabilities: {
     browserName: 'chrome',

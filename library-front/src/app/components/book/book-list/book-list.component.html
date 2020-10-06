@@ -8,7 +8,8 @@
                 <i class="material-icons mr-1">add</i>
                 Create
             </button>
-            <button id="createMasterDetailButton" class="btn btn-primary d-flex" type="button" (click)="createMasterDetail()">
+            <button id="createMasterDetailButton" class="btn btn-primary d-flex" type="button"
+                (click)="createMasterDetail()">
                 <i class="material-icons mr-1">add</i>
                 Create Master-Detail
             </button>
@@ -44,14 +45,16 @@
                             </div>
                         </td>
                         <td align="center">
-                            <button id="viewBook-{{i}}" class="btn bg-transparent" type="button" (click)="view(book.id)">
+                            <button id="viewBook-{{i}}" class="btn bg-transparent" type="button"
+                                (click)="view(book.id)">
                                 <i class="material-icons">visibility</i>
                             </button>
-                            <button id="editBook-{{i}}" class="btn bg-transparent" type="button" (click)="edit(book.id)">
+                            <button id="editBook-{{i}}" class="btn bg-transparent" type="button"
+                                (click)="edit(book.id)">
                                 <i class="material-icons text-primary">create</i>
                             </button>
-                            <button id="deleteBook-{{i}}" class="btn bg-transparent" type="button" (click)="confirmDelete(book)"
-                                data-toggle="modal" data-target="#exampleModal">
+                            <button id="deleteBook-{{i}}" class="btn bg-transparent" type="button"
+                                (click)="confirmDelete(book)">
                                 <i class="material-icons text-danger">delete</i>
                             </button>
                         </td>

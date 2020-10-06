@@ -3,6 +3,7 @@ import { CrudService } from 'src/app/shared/services/crud.service';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { BookURL } from 'src/app/shared/url/url.domain';
+import { ModalService } from '../../../shared/services/modal.service';
 
 @Component({
   selector: 'app-book-list',
@@ -23,7 +24,8 @@ export class BookListComponent implements OnInit {
   constructor(
     private crudService: CrudService,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private modalService: ModalService
   ) { }
 
   ngOnInit() {
@@ -80,6 +82,7 @@ export class BookListComponent implements OnInit {
 
   confirmDelete(book: any): void {
     this.removeItem = book;
+    this.modalService.open(ModalService.DELETE_MODAL_ID);
   }
 
   postDelete(): void {

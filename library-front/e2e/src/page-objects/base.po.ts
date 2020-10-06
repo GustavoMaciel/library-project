@@ -1,10 +1,20 @@
 import { browser, by, element, protractor } from 'protractor';
-import { BASE_URL, TOAST_ERROR, TOAST_MESSAGE, TOAST_SUCCESS, VISUAL_WAIT } from '../domain/consts';
+import {
+  BASE_URL,
+  CLOSE_BUTTON,
+  CONFIRM_BUTTON,
+  TOAST_ERROR,
+  TOAST_MESSAGE,
+  TOAST_SUCCESS,
+  VISUAL_WAIT
+} from '../domain/consts';
 
 export class BasePageObject {
   toastSuccess = element(by.css(TOAST_SUCCESS));
   toastError = element(by.css(TOAST_ERROR));
   toastMessage = element(by.css(TOAST_MESSAGE));
+  confirmButton = element(by.id(CONFIRM_BUTTON));
+  closeButton = element(by.id(CLOSE_BUTTON));
   EC = protractor.ExpectedConditions;
   protected standardTimeout = 8000;
 
@@ -65,6 +75,14 @@ export class BasePageObject {
       }
     }
     fail('No element was found');
+  }
+
+  confirmModal() {
+    return this.confirmButton.click();
+  }
+
+  closeModal() {
+    return this.closeButton.click();
   }
 
 }

@@ -1,10 +1,10 @@
+// URLs
 export const BASE_URL = 'http://localhost:4200';
 
-// URLs
 // AUTHOR
 export const AUTHORS_URL = BASE_URL + '/authors';
 export const AUTHORS_CREATE_URL = AUTHORS_URL + '/create';
-export const AUTHORS_EDIT_URL = AUTHORS_URL + '/create/edit/';
+export const AUTHORS_EDIT_URL = AUTHORS_URL + '/edit/';
 
 // BOOK
 export const BOOKS_URL = BASE_URL + '/books';

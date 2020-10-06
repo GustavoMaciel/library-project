@@ -1,24 +1,20 @@
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Confirmation Required</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-      <div class="modal-body">
-        This action is permanent, are you sure you want to proceed?
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeButton" #closeButton>Close</button>
-        <button (click)="onDeleteOk()" type="button" data-dismiss="modal" id="confirmButton" class="btn btn-primary">Ok</button>
-      </div>
-
-    </div>
+<ngx-smart-modal [identifier]="identifier" [id]="identifier" [closable]="false" (onAnyCloseEvent)="closeModal()"
+                 [customClass]="'nsm-dialog-animation-fade nsm-centered'">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Confirmation Required</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-</div>
+
+  <div class="modal-body">
+    This action is permanent, are you sure you want to proceed?
+  </div>
+
+  <div class="modal-footer">
+    <button (click)="closeModal()" type="button" class="btn btn-secondary" data-dismiss="modal" id="closeButton">Close</button>
+    <button (click)="onDeleteOk()" type="button" data-dismiss="modal" id="confirmButton" class="btn btn-primary">Ok</button>
+  </div>
+
+
+</ngx-smart-modal>
