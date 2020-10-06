@@ -1,7 +1,6 @@
 import { AuthorEditPageObject } from '../page-objects/author-edit.po';
 import { generateRandomString } from '../utils/string.utils';
-import { AUTHORS_EDIT_URL, VISUAL_WAIT } from '../domain/consts';
-import { browser } from 'protractor';
+import { AUTHORS_EDIT_URL } from '../domain/consts';
 
 describe('AuthorEditComponent', () => {
   const authorEditPage = new AuthorEditPageObject();

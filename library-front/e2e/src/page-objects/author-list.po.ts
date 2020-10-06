@@ -1,6 +1,7 @@
-import { by, element } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { BasePageObject } from './base.po';
 import {
+  AUTHORS_URL,
   CREATE_BUTTON, CREATE_MASTER_DETAIL_BUTTON,
   DELETE_AUTHOR_AT_ID,
   EDIT_AUTHOR_AT_ID,
@@ -14,7 +15,7 @@ export class AuthorListPageObject extends BasePageObject {
   createMasterDetailButton = element(by.id(CREATE_MASTER_DETAIL_BUTTON));
 
   navigateTo() {
-    return super.navigateToAuthors();
+    return browser.get(AUTHORS_URL);
   }
 
   clickCreateNewAuthor() {
