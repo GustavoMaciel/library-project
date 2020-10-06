@@ -1,7 +1,7 @@
 
 import { AuthorListPageObject } from '../page-objects/author-list.po';
 import { browser } from 'protractor';
-import { AUTHORS_CREATE_URL } from '../domain/consts';
+import { AUTHORS_CREATE_URL, VISUAL_WAIT } from '../domain/consts';
 
 describe('AuthorEditComponent', () => {
   const authorListPage = new AuthorListPageObject();
@@ -16,7 +16,17 @@ describe('AuthorEditComponent', () => {
     expect(author).toBeDefined();
   });
 
+  it('should delete an author', async function () {
+    const author = await authorListPage.getAuthorAt(0);
+    author.delete.click();
+    authorListPage.waitForPresence(authorListPage.confirmButton, 'Modal didn\'t open');
+    authorListPage.confirmModal();
+    authorListPage.waitForPresence(authorListPage.createButton);
+    browser.sleep(VISUAL_WAIT);
+  });
+
   it('should go to create author', () => {
+    authorListPage.waitToBeClickable(authorListPage.createButton);
     authorListPage.clickCreateNewAuthor();
     expect(browser.getCurrentUrl()).toContain(AUTHORS_CREATE_URL);
   });
