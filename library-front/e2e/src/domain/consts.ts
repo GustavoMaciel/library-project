@@ -8,6 +8,8 @@ export const AUTHORS_EDIT_URL = AUTHORS_URL + '/create/edit/';
 
 // BOOK
 export const BOOKS_URL = BASE_URL + '/books';
+export const BOOKS_CREATE_URL = BOOKS_URL + '/create';
+export const BOOKS_EDIT_URL = BOOKS_URL + '/edit';
 
 // IDs
 // COMMONS
@@ -38,3 +40,18 @@ export const BOOK_SELECT_AUTHOR_ID = 'booksAuthor';
 
 // BOOK
 export const BOOK_NAV_LINK_ID = 'bookNavLink';
+
+// BOOK LIST
+export const ID_BOOK_AT_ID = 'idBook-';
+export const NAME_BOOK_AT_ID = 'nameBook-';
+export const SYNOPSIS_BOOK_AT_ID = 'synopsisBook-';
+export const PUBLICATION_DATE_BOOK_AT_ID = 'publicationDateBook-';
+export const VIEW_BOOK_AT_ID = 'viewBook-';
+export const EDIT_BOOK_AT_ID = 'editBook-';
+export const DELETE_BOOK_AT_ID = 'deleteBook-';
+
+// BOOK EDIT
+export const NAME_BOOK_ID = 'nameBook';
+export const AUTHOR_SELECT_BOOK_ID = 'authorsBook';
+export const PUBLICATION_DATE_BOOK_ID = 'publicationDateBook';
+export const SYNOPSIS_BOOK_ID = 'synopsisBook';

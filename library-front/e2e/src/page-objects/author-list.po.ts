@@ -14,7 +14,7 @@ export class AuthorListPageObject extends BasePageObject {
   createMasterDetailButton = element(by.id(CREATE_MASTER_DETAIL_BUTTON));
 
   navigateTo() {
-    return super.navigateToAuthors();
+    return super.navigateToUrl('authors');
   }
 
   clickCreateNewAuthor() {

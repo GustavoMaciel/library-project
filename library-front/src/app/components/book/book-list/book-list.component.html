@@ -4,11 +4,11 @@
         <div class="card-header-elements">
             <app-simple-search [pageSize]="pageSize" [currentPage]="currentPage" (searchEvent)="onSearch($event)">
             </app-simple-search>
-            <button class="btn btn-primary d-flex mr-1" type="button" (click)="create()">
+            <button id="createButton" class="btn btn-primary d-flex mr-1" type="button" (click)="create()">
                 <i class="material-icons mr-1">add</i>
                 Create
             </button>
-            <button class="btn btn-primary d-flex" type="button" (click)="createMasterDetail()">
+            <button id="createMasterDetailButton" class="btn btn-primary d-flex" type="button" (click)="createMasterDetail()">
                 <i class="material-icons mr-1">add</i>
                 Create Master-Detail
             </button>
@@ -34,23 +34,23 @@
                         <td colspan="100">No books found.</td>
                     </tr>
                     <tr *ngFor="let book of books">
-                        <td>{{ book.id }}</td>
-                        <td>{{ book.name }}</td>
-                        <td>{{ book.synopsis }}</td>
-                        <td>{{ book.publicationDate | date:'dd/MM/yyyy':'UTC' }}</td>
+                        <td id="idBook-{{i}}">{{ book.id }}</td>
+                        <td id="nameBook-{{i}}">{{ book.name }}</td>
+                        <td id="synopsisBook-{{i}}">{{ book.synopsis }}</td>
+                        <td id="publicationDateBook-{{i}}">{{ book.publicationDate | date:'dd/MM/yyyy':'UTC' }}</td>
                         <td>
                             <div *ngFor="let author of book.authors">
                                 {{ author.name }}
                             </div>
                         </td>
                         <td align="center">
-                            <button class="btn bg-transparent" type="button" (click)="view(book.id)">
+                            <button id="viewBook-{{i}}" class="btn bg-transparent" type="button" (click)="view(book.id)">
                                 <i class="material-icons">visibility</i>
                             </button>
-                            <button class="btn bg-transparent" type="button" (click)="edit(book.id)">
+                            <button id="editBook-{{i}}" class="btn bg-transparent" type="button" (click)="edit(book.id)">
                                 <i class="material-icons text-primary">create</i>
                             </button>
-                            <button class="btn bg-transparent" type="button" (click)="confirmDelete(book)"
+                            <button id="deleteBook-{{i}}" class="btn bg-transparent" type="button" (click)="confirmDelete(book)"
                                 data-toggle="modal" data-target="#exampleModal">
                                 <i class="material-icons text-danger">delete</i>
                             </button>
