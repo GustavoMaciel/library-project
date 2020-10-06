@@ -55,3 +55,9 @@ export const NAME_BOOK_ID = 'nameBook';
 export const AUTHOR_SELECT_BOOK_ID = 'authorsBook';
 export const PUBLICATION_DATE_BOOK_ID = 'publicationDateBook';
 export const SYNOPSIS_BOOK_ID = 'synopsisBook';
+
+
+// BOOK MASTER DETAIL
+export const CREATE_AUTHOR_BUTTON_ID = 'createAuthor';
+export const ADD_AUTHOR_BUTOTN_ID = 'addAuthorButton';
+

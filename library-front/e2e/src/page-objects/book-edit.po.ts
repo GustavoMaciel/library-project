@@ -2,7 +2,7 @@ import { BasePageObject } from './base.po';
 import { element, by, browser } from 'protractor';
 import {
     SUBMIT_BUTTON, BACK_BUTTON, NAME_BOOK_ID, AUTHOR_SELECT_BOOK_ID,
-    PUBLICATION_DATE_BOOK_ID, SYNOPSIS_BOOK_ID, BOOK_NAV_LINK_ID, BOOKS_CREATE_URL
+    PUBLICATION_DATE_BOOK_ID, SYNOPSIS_BOOK_ID, BOOK_NAV_LINK_ID, BOOKS_CREATE_URL, CREATE_AUTHOR_BUTTON_ID
 } from '../domain/consts';
 
 export class BookEditPageObject extends BasePageObject {
@@ -13,6 +13,7 @@ export class BookEditPageObject extends BasePageObject {
     publicationDateInput = element(by.id(PUBLICATION_DATE_BOOK_ID));
     synopsisInput = element(by.id(SYNOPSIS_BOOK_ID));
     bookNavLink = element(by.id(BOOK_NAV_LINK_ID));
+    createAuthorButton = element(by.id(CREATE_AUTHOR_BUTTON_ID));
 
     navigateToBooks() {
         return this.bookNavLink.click();
@@ -40,6 +41,10 @@ export class BookEditPageObject extends BasePageObject {
 
     fillSynopsisInput(synopsis: string) {
         return this.synopsisInput.sendKeys(synopsis);
+    }
+
+    clickCreateAuthor() {
+        return this.createAuthorButton.click();
     }
 
     submit() {

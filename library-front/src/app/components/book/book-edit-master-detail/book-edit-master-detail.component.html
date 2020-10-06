@@ -14,7 +14,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input formControlName="name" type="text" class="form-control" id="name"
+                        <input id="nameBook" formControlName="name" type="text" class="form-control"
                             placeholder="Enter a name">
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="date">Publication Date</label>
-                        <input formControlName="publicationDate" type="date" class="form-control" id="date"
+                        <input id="publicationDateBook" formControlName="publicationDate" type="date" class="form-control"
                             placeholder="Date of publication">
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="synopsis">Synopsis</label>
-                        <textarea formControlName="synopsis" class="form-control" id="synopsis" rows="3"></textarea>
+                        <textarea formControlName="synopsis" class="form-control" id="synopsisBook" rows="3"></textarea>
                     </div>
                 </div>
             </div>
@@ -49,12 +49,12 @@
                             <div class="card-title d-flex align-items-center">Authors</div>
                             <div class="d-flex">
                                 <div class="book-select mr-2">
-                                    <ng-select [items]="authors" bindLabel="name" [multiple]="false"
+                                    <ng-select id="authorsBook" [items]="authors" bindLabel="name" [multiple]="false"
                                         [typeToSearchText]="'Select an author'" placeholder="Select an author"
                                         formControlName="selectedAuthor" (change)="onAuthorSelected($event)">
                                     </ng-select>
                                 </div>
-                                <button class="btn btn-primary d-flex" type="button" (click)="openCreateAuthorModal()">
+                                <button id="createAuthor" class="btn btn-primary d-flex" type="button" (click)="openCreateAuthorModal()">
                                     <i class="material-icons mr-1">add</i>
                                     Create New
                                 </button>
@@ -89,7 +89,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="d-flex justify-content-end">
-                        <button class="btn btn-success" type="submit"
+                        <button id="submitButton" class="btn btn-success" type="submit"
                             [disabled]="!form.valid">{{ isEditMode ? 'Update' : 'Create' }}</button>
                     </div>
                 </div>
