@@ -22,7 +22,6 @@ describe('AuthorEditComponent', () => {
     authorListPage.waitForPresence(authorListPage.confirmButton, 'Modal didn\'t open');
     authorListPage.confirmModal();
     authorListPage.waitForPresence(authorListPage.createButton);
-    browser.sleep(VISUAL_WAIT);
   });
 
   it('should go to create author', () => {
