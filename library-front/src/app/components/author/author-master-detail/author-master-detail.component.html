@@ -14,8 +14,8 @@
       <div class="row justify-content-around">
         <div class="col-md-4">
           <div class="form-group">
-            <label for="name">Name</label>
-            <input formControlName="name" type="text" class="form-control" id="name"
+            <label for="nameAuthor">Name</label>
+            <input formControlName="name" type="text" class="form-control" id="nameAuthor"
                    placeholder="Enter a name">
           </div>
         </div>
@@ -30,10 +30,10 @@
                 <div class="book-select mr-2">
                   <ng-select [items]="books" bindLabel="name" [multiple]="false" [typeToSearchText]="'Select a book'"
                              placeholder="Select a book" formControlName="selectedBook" (change)="onBookSelected($event)"
-                             [loading]="booksLoading" (search)="searchBooks($event)">
+                             [loading]="booksLoading" (search)="searchBooks($event)" id="booksAuthor">
                   </ng-select>
                 </div>
-                <button (click)="openCreateBookModal()" class="btn btn-primary d-flex" type="button">
+                <button id="createNewBookButton" (click)="openCreateBookModal()" class="btn btn-primary d-flex" type="button">
                   <i class="material-icons mr-1">add</i>
                   Create New
                 </button>
@@ -47,10 +47,10 @@
                 </thead>
 
                 <tbody>
-                  <tr *ngFor="let book of selectedBooks">
+                  <tr *ngFor="let book of selectedBooks; let i = index">
                     <td>{{book.name}}</td>
                     <td class="text-right text-danger">
-                      <i class="material-icons hover-link" (click)="removeBook(book)">close</i>
+                      <i id="removeAddedBook-{{i}}" class="material-icons hover-link" (click)="removeBook(book)">close</i>
                     </td>
                   </tr>
                 </tbody>
@@ -69,7 +69,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="d-flex justify-content-end">
-            <button class="btn btn-success" type="submit" [disabled]="!form.valid">Submit</button>
+            <button id="submitButton" class="btn btn-success" type="submit" [disabled]="!form.valid">Submit</button>
           </div>
         </div>
       </div>

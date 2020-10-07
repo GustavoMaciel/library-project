@@ -3,7 +3,7 @@ import { AuthorListPageObject } from '../page-objects/author-list.po';
 import { browser } from 'protractor';
 import { AUTHORS_CREATE_URL, VISUAL_WAIT } from '../domain/consts';
 
-describe('AuthorEditComponent', () => {
+describe('AuthorListComponent', () => {
   const authorListPage = new AuthorListPageObject();
 
   beforeAll(() => {

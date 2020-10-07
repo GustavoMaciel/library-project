@@ -12,15 +12,15 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="name">Name</label>
-            <input formControlName="name" type="text" class="form-control" id="name"
+            <label for="bookName">Name</label>
+            <input formControlName="name" type="text" class="form-control" id="bookName"
                    placeholder="Enter a name">
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label for="date">Publication Date</label>
-            <input formControlName="publicationDate" type="date" class="form-control" id="date"
+            <label for="bookPublicationDate">Publication Date</label>
+            <input formControlName="publicationDate" type="date" class="form-control" id="bookPublicationDate"
                    placeholder="Date of publication">
           </div>
         </div>
@@ -28,15 +28,15 @@
       <div class="row">
         <div class="col-md-12">
           <div class="form-group">
-            <label for="synopsis">Synopsis</label>
-            <textarea formControlName="synopsis" class="form-control" id="synopsis" rows="3"></textarea>
+            <label for="bookSynopsis">Synopsis</label>
+            <textarea formControlName="synopsis" class="form-control" id="bookSynopsis" rows="3"></textarea>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
           <div class="d-flex justify-content-end">
-            <button class="btn btn-success" type="submit" [disabled]="!form.valid">{{ isEditMode ? 'Update' : 'Create' }}</button>
+            <button id="submitBookButton" class="btn btn-success" type="submit" [disabled]="!form.valid">{{ isEditMode ? 'Update' : 'Create' }}</button>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { AuthorEditPageObject } from '../page-objects/author-edit.po';
 import { generateRandomString } from '../utils/string.utils';
-import { AUTHORS_EDIT_URL } from '../domain/consts';
+import { AUTHORS_CREATE_URL, AUTHORS_EDIT_URL } from '../domain/consts';
 
 describe('AuthorEditComponent', () => {
   const authorEditPage = new AuthorEditPageObject();
@@ -19,7 +19,7 @@ describe('AuthorEditComponent', () => {
     expect(authorEditPage.hasSuccessToast()).toBeTruthy('No success toast');
   });
 
-  fit('should edit an author successfully', async function () {
+  it('should edit an author successfully', async function () {
     authorEditPage.navigateToUrl(AUTHORS_EDIT_URL + '1');
     authorEditPage.waitForPresence(authorEditPage.nameInput);
     let currentName = await authorEditPage.nameInput.getText();
@@ -29,5 +29,11 @@ describe('AuthorEditComponent', () => {
     authorEditPage.submit();
     authorEditPage.waitForPresence(authorEditPage.toastMessage);
     expect(authorEditPage.hasSuccessToast()).toBeTruthy('No success toast');
+  });
+
+  fit('should create an author through master-detail', function () {
+    authorEditPage.navigateToUrl(AUTHORS_CREATE_URL + '/master-detail');
+    authorEditPage.waitForPresence(authorEditPage.nameInput);
+    authorEditPage.fillName(generateRandomString(30, false));
   });
 });

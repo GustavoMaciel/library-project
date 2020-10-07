@@ -38,3 +38,7 @@ export const BOOK_SELECT_AUTHOR_ID = 'booksAuthor';
 
 // BOOK
 export const BOOK_NAV_LINK_ID = 'bookNavLink';
+export const BOOK_NAME = 'bookName';
+export const BOOK_PUBLICATION_DATE = 'bookPublicationDate';
+export const BOOK_SYNOPSIS = 'bookSynopsis';
+export const SUBMIT_BOOK_BUTTON = 'submitBookButton';
