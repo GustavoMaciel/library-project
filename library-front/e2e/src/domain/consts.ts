@@ -8,6 +8,8 @@ export const AUTHORS_EDIT_URL = AUTHORS_URL + '/edit/';
 
 // BOOK
 export const BOOKS_URL = BASE_URL + '/books';
+export const BOOKS_CREATE_URL = BOOKS_URL + '/create';
+export const BOOKS_EDIT_URL = BOOKS_URL + '/edit';
 
 // IDs
 // COMMONS
@@ -15,9 +17,9 @@ export const SUBMIT_BUTTON = 'submitButton';
 export const BACK_BUTTON = 'backButton';
 export const CLOSE_BUTTON = 'closeButton';
 export const CONFIRM_BUTTON = 'confirmButton';
-export const TOAST_SUCCESS = '.toast-success'
-export const TOAST_ERROR = '.toast-error'
-export const TOAST_MESSAGE = '.toast-message'
+export const TOAST_SUCCESS = '.toast-success';
+export const TOAST_ERROR = '.toast-error';
+export const TOAST_MESSAGE = '.toast-message';
 export const VISUAL_WAIT = 2000;
 
 // AUTHOR
@@ -38,7 +40,24 @@ export const BOOK_SELECT_AUTHOR_ID = 'booksAuthor';
 
 // BOOK
 export const BOOK_NAV_LINK_ID = 'bookNavLink';
-export const BOOK_NAME = 'bookName';
-export const BOOK_PUBLICATION_DATE = 'bookPublicationDate';
-export const BOOK_SYNOPSIS = 'bookSynopsis';
-export const SUBMIT_BOOK_BUTTON = 'submitBookButton';
+
+// BOOK LIST
+export const ID_BOOK_AT_ID = 'idBook-';
+export const NAME_BOOK_AT_ID = 'nameBook-';
+export const SYNOPSIS_BOOK_AT_ID = 'synopsisBook-';
+export const PUBLICATION_DATE_BOOK_AT_ID = 'publicationDateBook-';
+export const VIEW_BOOK_AT_ID = 'viewBook-';
+export const EDIT_BOOK_AT_ID = 'editBook-';
+export const DELETE_BOOK_AT_ID = 'deleteBook-';
+
+// BOOK EDIT
+export const NAME_BOOK_ID = 'nameBook';
+export const AUTHOR_SELECT_BOOK_ID = 'authorsBook';
+export const PUBLICATION_DATE_BOOK_ID = 'publicationDateBook';
+export const SYNOPSIS_BOOK_ID = 'synopsisBook';
+
+
+// BOOK MASTER DETAIL
+export const CREATE_AUTHOR_BUTTON_ID = 'createAuthor';
+export const ADD_AUTHOR_BUTTON_ID = 'addAuthorButton';
+

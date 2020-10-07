@@ -9,13 +9,13 @@
 
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input formControlName="name" type="text" class="form-control" id="name" placeholder="Enter a name">
+                    <input formControlName="name" type="text" class="form-control" id="nameAuthor" placeholder="Enter a name">
                 </div>
 
             </div>
             <div class="smart-modal-footer">
                 <button class="btn btn-secondary" (click)="close()">Close</button>
-                <button class="btn btn-success" [disabled]="!form.valid" type="submit">Create</button>
+                <button id="addAuthorButton" class="btn btn-success" [disabled]="!form.valid" type="submit">Create</button>
             </div>
         </div>
     </form>
