@@ -62,7 +62,7 @@ export const SYNOPSIS_BOOK_ID = 'synopsisBook';
 
 // BOOK MASTER DETAIL
 export const CREATE_AUTHOR_BUTTON_ID = 'createAuthor';
-export const ADD_AUTHOR_BUTOTN_ID = 'addAuthorButton';
+export const ADD_AUTHOR_BUTTON_ID = 'addAuthorButton';
 
 // AUTHOR-BOOK (ASSOCIATE)
 export const AUTHORS_SELECT = 'authorsSelect';

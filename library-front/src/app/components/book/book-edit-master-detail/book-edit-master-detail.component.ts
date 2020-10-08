@@ -81,7 +81,7 @@ export class BookEditMasterDetailComponent implements OnInit {
       this.form.get('authors').setValue(this.selectedAuthors);
       this.form.get('selectedAuthor').setValue(undefined);
     } else {
-      this.notificationService.errorMessage('Auhtor is already added.');
+      this.notificationService.errorMessage('Author is already added.');
     }
   }
 

@@ -178,10 +178,24 @@ export class AuthorMasterDetailComponent implements OnInit {
     }
   }
 
+  alreadyIncluded(book: any): boolean {
+    for (const b of this.selectedBooks) {
+      if ((book.id && b.id) && (book.id === b.id)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   onBookSelected(book): void {
-    this.selectedBooks.push(book);
-    this.selectedBookControl.setValue(undefined);
-    this.searchBooks('');
+    if (!this.alreadyIncluded(book)) {
+      this.selectedBooks.push(book);
+      this.selectedBookControl.setValue(undefined);
+      this.searchBooks('');
+    } else {
+      this.selectedBookControl.setValue(undefined);
+      this.notificationService.errorMessage('Book is already added.');
+    }
   }
 
   removeBook(book): void {

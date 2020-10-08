@@ -1,4 +1,4 @@
-import { browser, by, element, protractor } from 'protractor';
+import { browser, by, element, ElementFinder, protractor } from 'protractor';
 import {
   BASE_URL,
   CLOSE_BUTTON,
@@ -50,6 +50,10 @@ export class BasePageObject {
     return this.toastSuccess.isPresent();
   }
 
+  clickToast() {
+    return this.toastMessage.click();
+  }
+
   async selectFirstFromNgSelect(id: string) {
     return this.selectFromNgSelect(id, true);
   }
@@ -59,12 +63,12 @@ export class BasePageObject {
     await this.waitForPresence(ngSelect, 'Ng select not found');
     await this.waitToBeClickable(ngSelect, 'Ng select not clickable');
     await ngSelect.click();
-    await this.waitForPresence(element.all(by.css('.ng-option')), 'ng-option not found');
-    await this.selectNgSelectOption(first, text);
+    await this.selectNgSelectOption(ngSelect, first, text);
   }
 
-  async selectNgSelectOption(first: boolean = false, text: string = '') {
-    const options = element.all(by.css('.ng-option'));
+  async selectNgSelectOption(ngSelect: ElementFinder, first: boolean = false, text: string = '') {
+    const options = ngSelect.all(by.css('.ng-option'));
+    await this.waitForPresence(options, 'ng-option not found');
     if (first) {
       return options.first().click();
     } else {

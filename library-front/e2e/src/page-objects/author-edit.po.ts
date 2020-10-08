@@ -6,7 +6,7 @@ import {
   BACK_BUTTON,
   BOOK_SELECT_AUTHOR_ID,
   NAME_AUTHOR_ID,
-  SUBMIT_BUTTON, VISUAL_WAIT, ADD_AUTHOR_BUTOTN_ID
+  SUBMIT_BUTTON, VISUAL_WAIT, ADD_AUTHOR_BUTTON_ID
 } from '../domain/consts';
 
 export class AuthorEditPageObject extends BasePageObject {
@@ -15,7 +15,7 @@ export class AuthorEditPageObject extends BasePageObject {
     nameInput = element(by.id(NAME_AUTHOR_ID));
     booksNgSelect = element(by.id(BOOK_SELECT_AUTHOR_ID));
     authorNavLink = element(by.id(AUTHOR_NAV_LINK_ID));
-    addAuthorButton = element(by.id(ADD_AUTHOR_BUTOTN_ID));
+    addAuthorButton = element(by.id(ADD_AUTHOR_BUTTON_ID));
 
     navigateToAuthors() {
       return this.authorNavLink.click();
@@ -29,11 +29,11 @@ export class AuthorEditPageObject extends BasePageObject {
       return this.nameInput.sendKeys(name);
     }
 
-    async selectFirstFromBooks() {
+    selectFirstFromBooks() {
       return this.selectFromNgSelect(BOOK_SELECT_AUTHOR_ID, true);
     }
 
-    async selectFromBooks(first: boolean = true, text: string = '') {
+    selectFromBooks(first: boolean = true, text: string = '') {
       return this.selectFromNgSelect(BOOK_SELECT_AUTHOR_ID, first, text);
     }
 
@@ -43,5 +43,13 @@ export class AuthorEditPageObject extends BasePageObject {
 
     clickAddAuthorButton() {
       return this.addAuthorButton.click();
+    }
+
+    getDeleteBookButtonElement(index: number) {
+      return element(by.id(`removeAddedBook-${index}`));
+    }
+
+    deleteAddedBook(index: number) {
+      return this.getDeleteBookButtonElement(index).click();
     }
 }
