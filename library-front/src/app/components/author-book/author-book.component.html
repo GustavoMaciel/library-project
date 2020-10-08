@@ -8,7 +8,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="name">Authors</label>
-                        <ng-select [items]="authors" bindLabel="name" [multiple]="true"
+                        <ng-select id="authorsSelect"[items]="authors" bindLabel="name" [multiple]="true"
                             formControlName="authors" [typeToSearchText]="'Digite para buscar'"
                             placeholder="Enter a name"></ng-select>
                     </div>
@@ -16,7 +16,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="name">Books</label>
-                        <ng-select [items]="books" bindLabel="name" [multiple]="true"
+                        <ng-select id="booksSelect" [items]="books" bindLabel="name" [multiple]="true"
                             formControlName="books" [typeToSearchText]="'Digite para buscar'"
                             placeholder="Enter a name"></ng-select>
                     </div>
@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="d-flex justify-content-end">
-                        <button class="btn btn-success" type="submit" [disabled]="!form.valid">Associate</button>
+                        <button id="associate" class="btn btn-success" type="submit" [disabled]="!form.valid">Associate</button>
                     </div>
                 </div>
             </div>
