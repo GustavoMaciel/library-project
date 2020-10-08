@@ -29,11 +29,11 @@ export class AuthorEditPageObject extends BasePageObject {
       return this.nameInput.sendKeys(name);
     }
 
-    async selectFirstFromBooks() {
+    selectFirstFromBooks() {
       return this.selectFromNgSelect(BOOK_SELECT_AUTHOR_ID, true);
     }
 
-    async selectFromBooks(first: boolean = true, text: string = '') {
+    selectFromBooks(first: boolean = true, text: string = '') {
       return this.selectFromNgSelect(BOOK_SELECT_AUTHOR_ID, first, text);
     }
 
@@ -43,5 +43,13 @@ export class AuthorEditPageObject extends BasePageObject {
 
     clickAddAuthorButton() {
       return this.addAuthorButton.click();
+    }
+
+    getDeleteBookButtonElement(index: number) {
+      return element(by.id(`removeAddedBook-${index}`));
+    }
+
+    deleteAddedBook(index: number) {
+      return this.getDeleteBookButtonElement(index).click();
     }
 }
