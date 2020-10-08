@@ -1,4 +1,4 @@
-import { browser, by, element, protractor } from 'protractor';
+import { browser, by, element, ElementFinder, protractor } from 'protractor';
 import {
   BASE_URL,
   CLOSE_BUTTON,
@@ -66,8 +66,8 @@ export class BasePageObject {
     await this.selectNgSelectOption(ngSelect, first, text);
   }
 
-  async selectNgSelectOption(ngSelect, first: boolean = false, text: string = '') {
-    const options = ngSelect.element.all(by.css('.ng-option'));
+  async selectNgSelectOption(ngSelect: ElementFinder, first: boolean = false, text: string = '') {
+    const options = ngSelect.all(by.css('.ng-option'));
     await this.waitForPresence(options, 'ng-option not found');
     if (first) {
       return options.first().click();
