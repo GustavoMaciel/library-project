@@ -1,8 +1,16 @@
 import { BasePageObject } from './base.po';
 import { element, by, browser } from 'protractor';
 import {
-    SUBMIT_BUTTON, BACK_BUTTON, NAME_BOOK_ID, AUTHOR_SELECT_BOOK_ID,
-    PUBLICATION_DATE_BOOK_ID, SYNOPSIS_BOOK_ID, BOOK_NAV_LINK_ID, BOOKS_CREATE_URL, CREATE_AUTHOR_BUTTON_ID
+  SUBMIT_BUTTON,
+  BACK_BUTTON,
+  NAME_BOOK_ID,
+  AUTHOR_SELECT_BOOK_ID,
+  PUBLICATION_DATE_BOOK_ID,
+  SYNOPSIS_BOOK_ID,
+  BOOK_NAV_LINK_ID,
+  BOOKS_CREATE_URL,
+  CREATE_AUTHOR_BUTTON_ID,
+  SUBMIT_BOOK_BUTTON_ID
 } from '../domain/consts';
 
 export class BookEditPageObject extends BasePageObject {
@@ -14,6 +22,7 @@ export class BookEditPageObject extends BasePageObject {
     synopsisInput = element(by.id(SYNOPSIS_BOOK_ID));
     bookNavLink = element(by.id(BOOK_NAV_LINK_ID));
     createAuthorButton = element(by.id(CREATE_AUTHOR_BUTTON_ID));
+    submitBookButton = element(by.id(SUBMIT_BOOK_BUTTON_ID));
 
     navigateToBooks() {
         return this.bookNavLink.click();
@@ -49,5 +58,9 @@ export class BookEditPageObject extends BasePageObject {
 
     submit() {
         return this.submitButton.click();
+    }
+
+    submitNewBook() {
+      return this.submitBookButton.click();
     }
 }

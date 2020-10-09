@@ -37,27 +37,23 @@ describe('AuthorEditComponent', () => {
     expect(authorEditPage.hasSuccessToast()).toBeTruthy('No success toast');
   });
 
-  fit('should create an author without adding new books through master-detail', function () {
-    browser.waitForAngular();
-    authorEditPage.waitForPresence(authorEditPage.nameInput);
-    authorEditPage.fillName(generateRandomString(30, false));
-    authorEditPage.selectFirstFromBooks();
-    authorEditPage.waitForPresence(authorEditPage.getDeleteBookButtonElement(0), 'No book was added');
-    authorEditPage.waitToBeClickable(authorEditPage.submitButton);
-    authorEditPage.submit();
-    authorEditPage.waitForPresence(authorEditPage.toastMessage);
-    expect(authorEditPage.hasSuccessToast()).toBeTruthy('No success toast');
-    authorEditPage.clickToast();
-  });
-
-  fit('should delete from the list a selected book', function () {
-    authorEditPage.waitForPresence(authorListPage.createMasterDetailButton);
-    authorListPage.createMasterDetailButton.click();
-    authorEditPage.waitForPresence(authorEditPage.nameInput);
-    authorEditPage.fillName(generateRandomString(30, false));
-    authorEditPage.selectFirstFromBooks();
-    authorEditPage.waitForPresence(authorEditPage.getDeleteBookButtonElement(0), 'No book was added');
-    authorEditPage.deleteAddedBook(0);
-    expect(authorEditPage.getDeleteBookButtonElement(0).isPresent()).toBeFalsy();
+  fit('should create an author without adding new books through master-detail', async function () {
+    await browser.waitForAngular();
+    await authorEditPage.waitForPresence(authorEditPage.nameInput);
+    await authorEditPage.fillName(generateRandomString(30, false));
+    await authorEditPage.selectFirstFromBooks();
+    await authorEditPage.waitForPresence(authorEditPage.getDeleteBookButtonElement(0), 'No book was added 1');
+    await authorEditPage.openNewBookModal();
+    await bookEditPage.waitForPresence(bookEditPage.nameInput);
+    await bookEditPage.fillName(generateRandomString(30, false));
+    await bookEditPage.fillPublicationDate('10/10/2019');
+    await bookEditPage.fillSynopsisInput(generateRandomString(60, true));
+    await bookEditPage.submitNewBook();
+    await authorEditPage.waitForPresence(authorEditPage.getDeleteBookButtonElement(1), 'No book was added 2');
+    // await authorEditPage.waitToBeClickable(authorEditPage.submitButton, 'Submit button not clickable');
+    await authorEditPage.submit();
+    await authorEditPage.waitForPresence(authorEditPage.toastMessage, 'No toast was found');
+    await expect(authorEditPage.hasSuccessToast()).toBeTruthy('No success toast');
+    await authorEditPage.clickToast();
   });
 });
