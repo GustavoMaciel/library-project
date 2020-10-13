@@ -3,6 +3,7 @@ import { CrudService } from '../../../shared/services/crud.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { AuthorURL } from 'src/app/shared/url/url.domain';
+import { ViewContext } from 'src/app/shared/helpers/view-context';
 
 @Component({
   selector: 'app-author-view',
@@ -11,13 +12,10 @@ import { AuthorURL } from 'src/app/shared/url/url.domain';
 })
 export class AuthorViewComponent implements OnInit {
 
-  loading: boolean;
-  author: any;
+  viewContext: ViewContext;
 
-  constructor(private crudService: CrudService,
-              private activatedRoute: ActivatedRoute,
-              private router: Router,
-              private notificationService: NotificationService) {
+  constructor(private activatedRoute: ActivatedRoute) {
+    this.viewContext = new ViewContext(AuthorURL.BASE, AuthorURL.BASE);
   }
 
   hasBooks(author) {
@@ -25,40 +23,15 @@ export class AuthorViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initProperties();
-    this.fetchItem();
+   this.viewContext.getItem(this.getParamId());
   }
 
-  initProperties() {
-    this.loading = false;
-    this.author = {}
+  getParamId() {
+    return this.activatedRoute.snapshot.paramMap.get('id');
   }
 
-  getUrlParam(param: string) {
-    return this.activatedRoute.snapshot.paramMap.get(param);
-  }
+  postGetItem(): void {
 
-  fetchItem() {
-    this.loading = true;
-    this.crudService.getOne(this.getServiceUrl(), this.getUrlParam('id')).subscribe((res: any) => {
-      this.author = res;
-      this.loading = false;
-    }, (err: any) => {
-      this.loading = false;
-      this.notificationService.errorMessage(err.error ? err.error.message : err.message);
-    })
-  }
-
-  backToList() {
-    return this.router.navigate([this.getRouterUrl()]);
-  }
-
-  getServiceUrl(): string {
-    return AuthorURL.BASE;
-  }
-
-  getRouterUrl(): string {
-    return `authors`;
   }
 
 }

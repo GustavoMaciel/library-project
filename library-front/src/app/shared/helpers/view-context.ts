@@ -5,9 +5,10 @@ import { AppInjector } from './app.injector';
 export class ViewContext {
 
     item: any;
+    loading: boolean;
     service: CrudService;
     router: Router;
-    postGetItem: (item: any) => void;
+    postGetItem = (item: any) => {};
 
     constructor(
         private serviceUrl: string,
@@ -15,6 +16,7 @@ export class ViewContext {
     ) {
         this.service = AppInjector.get(CrudService);
         this.router = AppInjector.get(Router);
+        this.loading = false;
     }
 
     getServiceURL(): string {
@@ -30,10 +32,14 @@ export class ViewContext {
     }
 
     getItem(id: any): void {
+        this.loading = true;
         this.service.getOne(this.getServiceURL(), id).subscribe((res => {
+            this.loading = false;
             this.item = res;
             this.postGetItem(this.item);
-        }));
+        }), (err) => {
+            this.loading = false;
+        });
     }
 
 }
