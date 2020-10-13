@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthorURL } from 'src/app/shared/url/url.domain';
-import { ListContext } from '../../../shared/utils/list-context';
+import { ListContext } from '../../../shared/helpers/list-context';
 
 @Component({
   selector: 'app-author-list',

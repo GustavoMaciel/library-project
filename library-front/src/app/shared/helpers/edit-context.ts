@@ -2,7 +2,7 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CrudService } from '../services/crud.service';
 import { NotificationService } from '../services/notification.service';
-import { AppInjector } from '../services/app.injector';
+import { AppInjector } from './app.injector';
 
 export class EditContext {
   service: CrudService;

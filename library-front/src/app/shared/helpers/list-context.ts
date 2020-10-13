@@ -2,7 +2,7 @@ import { CrudService } from '../services/crud.service';
 import { ModalService } from '../services/modal.service';
 import { NotificationService } from '../services/notification.service';
 import { Router } from '@angular/router';
-import { AppInjector } from '../services/app.injector';
+import { AppInjector } from './app.injector';
 
 export class ListContext {
   service: CrudService;

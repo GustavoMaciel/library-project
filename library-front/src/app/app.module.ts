@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
-import { setAppInjector } from './shared/services/app.injector';
+import { setAppInjector } from './shared/helpers/app.injector';
 
 
 @NgModule({
