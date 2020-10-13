@@ -1,28 +1,33 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CrudService } from '../services/crud.service';
 import { NotificationService } from '../services/notification.service';
+import { AppInjector } from '../services/app.injector';
 
 export class EditContext {
+  service: CrudService;
+  router: Router;
+  notificationService: NotificationService;
+
   isEditMode: boolean;
   form: FormGroup;
   item: any;
   loading = false;
   isUpdatePartial = false;
+
   postUpdate: Function = () => {};
   postInsert: Function = () => {};
+  postGetItem: Function = () => {};
   preInsert: Function = () => {};
   preUpdate: Function = () => {};
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder,
-    private crudService: CrudService,
-    private router: Router,
-    private notificationService: NotificationService,
     private serviceUrl,
     private routerUrl
   ) {
+    this.service = AppInjector.get(CrudService);
+    this.router = AppInjector.get(Router);
+    this.notificationService = AppInjector.get(NotificationService);
   }
 
   getFormControlFromObject(controls, obj): any {
@@ -40,9 +45,10 @@ export class EditContext {
 
   getItem(id: any) {
     if (this.isEditMode) {
-      this.crudService.getOne(this.serviceUrl, id).subscribe(result => {
+      this.service.getOne(this.serviceUrl, id).subscribe(result => {
         this.item = result;
         this.getFormControlFromObject(this.form.controls, this.item);
+        this.postGetItem();
       }, (err: any) => {
         this.notificationService.errorMessage(err.error ? err.error.message : err.message);
       });
@@ -63,7 +69,7 @@ export class EditContext {
 
   insert() {
     this.preInsert();
-    this.crudService.post(this.serviceUrl, this.form.value).subscribe(_res => {
+    this.service.post(this.serviceUrl, this.form.value).subscribe(_res => {
       this.loading = false;
       this.postInsert();
       this.backToList();
@@ -77,7 +83,7 @@ export class EditContext {
     this.loading = true;
     this.preUpdate();
     if (this.isUpdatePartial) {
-      this.crudService.updatePartial(this.serviceUrl, this.form.value).subscribe(_res => {
+      this.service.updatePartial(this.serviceUrl, this.form.value).subscribe(_res => {
         this.loading = false;
         this.postUpdate();
         this.backToList();
@@ -86,7 +92,7 @@ export class EditContext {
         this.loading = false;
       });
     } else {
-      this.crudService.update(this.serviceUrl, this.form.value).subscribe(_res => {
+      this.service.update(this.serviceUrl, this.form.value).subscribe(_res => {
         this.loading = false;
         this.postUpdate();
         this.backToList();

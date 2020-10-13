@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
+import { setAppInjector } from './shared/services/app.injector';
 
 
 @NgModule({
@@ -29,10 +30,14 @@ import { ToastrModule } from 'ngx-toastr';
       maxOpened: 1,
       autoDismiss: true,
       preventDuplicates: true
-    }), // ToastrModule added
+    })
   ],
   providers: [],
   exports: [RouterModule],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(injector: Injector) {
+    setAppInjector(injector);
+  }
+}

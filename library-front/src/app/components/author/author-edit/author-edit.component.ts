@@ -22,16 +22,9 @@ export class AuthorEditComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private crudService: CrudService,
-    private router: Router,
     private notificationService: NotificationService
   ) {
-    this.editContext = new EditContext(activatedRoute,
-      formBuilder,
-      crudService,
-      router,
-      notificationService,
-      AuthorURL.BASE,
-      AuthorURL.BASE);
+    this.editContext = new EditContext(AuthorURL.BASE, AuthorURL.BASE);
   }
 
   ngOnInit() {
