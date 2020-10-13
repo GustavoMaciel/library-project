@@ -1,4 +1,4 @@
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CrudService } from '../services/crud.service';
 import { NotificationService } from '../services/notification.service';
@@ -8,26 +8,36 @@ export class EditContext {
   service: CrudService;
   router: Router;
   notificationService: NotificationService;
+  formBuilder: FormBuilder;
 
   isEditMode: boolean;
   form: FormGroup;
   item: any;
   loading = false;
-  isUpdatePartial = false;
 
-  postUpdate: Function = () => {};
-  postInsert: Function = () => {};
+  postUpdate: Function = () => {
+    this.notificationService.updateSucess();
+  };
+  postInsert: Function = () => {
+    this.notificationService.insertedSuccess();
+  };
   postGetItem: Function = () => {};
   preInsert: Function = () => {};
   preUpdate: Function = () => {};
 
   constructor(
-    private serviceUrl,
-    private routerUrl
+    private serviceUrl: string,
+    private routerUrl: string,
+    private isUpdatePartial: boolean
   ) {
     this.service = AppInjector.get(CrudService);
     this.router = AppInjector.get(Router);
     this.notificationService = AppInjector.get(NotificationService);
+    this.formBuilder = AppInjector.get(FormBuilder);
+  }
+
+  getFormBuilder() {
+    return this.formBuilder;
   }
 
   getFormControlFromObject(controls, obj): any {
