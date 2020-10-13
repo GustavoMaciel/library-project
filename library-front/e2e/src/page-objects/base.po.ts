@@ -63,7 +63,7 @@ export class BasePageObject {
     await this.waitForPresence(ngSelect, 'Ng select not found');
     await this.waitToBeClickable(ngSelect, 'Ng select not clickable');
     await ngSelect.click();
-    await this.selectNgSelectOption(ngSelect, first, text);
+    return this.selectNgSelectOption(ngSelect, first, text);
   }
 
   async selectNgSelectOption(ngSelect: ElementFinder, first: boolean = false, text: string = '') {

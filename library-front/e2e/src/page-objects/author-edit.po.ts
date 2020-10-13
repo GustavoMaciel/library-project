@@ -6,14 +6,14 @@ import {
   BACK_BUTTON,
   BOOK_SELECT_AUTHOR_ID,
   NAME_AUTHOR_ID,
-  SUBMIT_BUTTON, VISUAL_WAIT, ADD_AUTHOR_BUTTON_ID
+  SUBMIT_BUTTON, VISUAL_WAIT, ADD_AUTHOR_BUTTON_ID, NEW_BOOK_BUTTON_ID
 } from '../domain/consts';
 
 export class AuthorEditPageObject extends BasePageObject {
     submitButton = element(by.id(SUBMIT_BUTTON));
     backButton = element(by.id(BACK_BUTTON));
     nameInput = element(by.id(NAME_AUTHOR_ID));
-    booksNgSelect = element(by.id(BOOK_SELECT_AUTHOR_ID));
+    newBookButton = element(by.id(NEW_BOOK_BUTTON_ID));
     authorNavLink = element(by.id(AUTHOR_NAV_LINK_ID));
     addAuthorButton = element(by.id(ADD_AUTHOR_BUTTON_ID));
 
@@ -51,5 +51,9 @@ export class AuthorEditPageObject extends BasePageObject {
 
     deleteAddedBook(index: number) {
       return this.getDeleteBookButtonElement(index).click();
+    }
+
+    openNewBookModal() {
+      return this.newBookButton.click();
     }
 }

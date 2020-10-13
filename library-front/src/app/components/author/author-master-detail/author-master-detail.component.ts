@@ -114,8 +114,9 @@ export class AuthorMasterDetailComponent implements OnInit {
       this.loading = false;
       this.postInsert();
       this.backToList();
-    }, (_err) => {
+    }, (err) => {
       this.loading = false;
+      this.notificationService.errorMessage(err.error ? err.error.message : err.message);
     });
   }
 
@@ -127,16 +128,18 @@ export class AuthorMasterDetailComponent implements OnInit {
         this.loading = false;
         this.postUpdate();
         this.backToList();
-      }, (_err) => {
+      }, (err) => {
         this.loading = false;
+        this.notificationService.errorMessage(err.error ? err.error.message : err.message);
       });
     } else {
       this.crudService.update(this.getServiceURL(), this.form.value).subscribe((_res: any) => {
         this.loading = false;
         this.postUpdate();
         this.backToList();
-      }, (_err) => {
+      }, (err) => {
         this.loading = false;
+        this.notificationService.errorMessage(err.error ? err.error.message : err.message);
       });
     }
   }
@@ -207,6 +210,7 @@ export class AuthorMasterDetailComponent implements OnInit {
   }
 
   newBookSubmitted(book: any) {
+    console.log(book);
     this.selectedBooks.push(book);
   }
 }

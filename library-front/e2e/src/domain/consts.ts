@@ -40,6 +40,7 @@ export const NAME_AUTHOR_AT_ID = 'nameAuthor-';
 // AUTHOR EDIT
 export const NAME_AUTHOR_ID = 'nameAuthor';
 export const BOOK_SELECT_AUTHOR_ID = 'booksAuthor';
+export const NEW_BOOK_BUTTON_ID = 'createNewBookButton'
 
 // BOOK
 export const BOOK_NAV_LINK_ID = 'bookNavLink';
@@ -58,6 +59,7 @@ export const NAME_BOOK_ID = 'nameBook';
 export const AUTHOR_SELECT_BOOK_ID = 'authorsBook';
 export const PUBLICATION_DATE_BOOK_ID = 'publicationDateBook';
 export const SYNOPSIS_BOOK_ID = 'synopsisBook';
+export const SUBMIT_BOOK_BUTTON_ID = 'submitBookButton';
 
 
 // BOOK MASTER DETAIL
