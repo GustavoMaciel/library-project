@@ -3,7 +3,7 @@ import { ModalService } from '../services/modal.service';
 import { NotificationService } from '../services/notification.service';
 import { Router } from '@angular/router';
 
-export class ListUtils {
+export class ListContext {
 
   loading: boolean;
   items: any[];

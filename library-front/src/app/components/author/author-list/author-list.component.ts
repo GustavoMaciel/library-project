@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthorURL } from 'src/app/shared/url/url.domain';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { ModalService } from '../../../shared/services/modal.service';
-import { ListUtils } from '../../../shared/utils/list-utils';
+import { ListContext } from '../../../shared/utils/list-context';
 
 @Component({
   selector: 'app-author-list',
@@ -13,7 +13,7 @@ import { ListUtils } from '../../../shared/utils/list-utils';
 })
 export class AuthorListComponent implements OnInit {
 
-  listUtils: ListUtils;
+  listContext: ListContext;
 
   constructor(
       private service: CrudService,
@@ -21,11 +21,11 @@ export class AuthorListComponent implements OnInit {
       private notificationService: NotificationService,
       private modalService: ModalService
     ) {
-    this.listUtils = new ListUtils(service, router, notificationService, modalService, AuthorURL.BASE, AuthorURL.BASE)
+    this.listContext = new ListContext(service, router, notificationService, modalService, AuthorURL.BASE, AuthorURL.BASE)
   }
 
   ngOnInit() {
-    this.listUtils.listItems();
+    this.listContext.listItems();
   }
 
   createMasterDetail() {
