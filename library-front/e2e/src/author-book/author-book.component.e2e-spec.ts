@@ -14,12 +14,9 @@ describe('AuthorEditComponent', () => {
     authorBookPage.waitForPresence(authorBookPage.booksSelect);
   });
 
-  it('should associate an author with a book', () => {
-    browser.sleep(80000);
-    authorBookPage.selectFirstFromAuthors();
-    browser.sleep(80000);
-    authorBookPage.selectFirstFromBooks();
-    browser.sleep(80000);
+  it('should associate an author with a book', async () => {
+    await authorBookPage.selectFirstFromAuthors();
+    await authorBookPage.selectFirstFromBooks();
     authorBookPage.waitToBeClickable(authorBookPage.associateButton);
     authorBookPage.submit();
     authorBookPage.waitForPresence(authorBookPage.toastMessage);
