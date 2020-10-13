@@ -1,35 +1,35 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between">
-        <h5 class="card-title">{{ isEditMode ? 'Edit' : 'Create' }} a Book</h5>
+        <h5 class="card-title">{{ editContext.isEditMode ? 'Edit' : 'Create' }} a Book</h5>
         <div class="card-header-elements">
-            <button id="backButton" class="btn btn-primary d-flex" type="button" (click)="backToList()">
+            <button id="backButton" class="btn btn-primary d-flex" type="button" (click)="editContext.backToList()">
                 <i class="material-icons mr-1">keyboard_backspace</i>
                 Back
             </button>
         </div>
     </div>
     <div class="card-body">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form [formGroup]="editContext.form" (ngSubmit)="editContext.onSubmit()">
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="nameBook">Name</label>
                         <input formControlName="name" type="text" class="form-control" id="nameBook"
                             placeholder="Enter a name">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="name">Authors</label>
+                        <label for="authorsBook">Authors</label>
                         <!-- <input type="text" class="form-control" id="name" placeholder="Enter a name"> -->
                         <ng-select id="authorsBook" [items]="authors" bindLabel="name" [multiple]="true"
-                            formControlName="authors" [typeToSearchText]="'Digite para buscar'"
-                            placeholder="Enter a name"></ng-select>
+                            formControlName="authors" [typeToSearchText]="'Type to search'" (search)="searchAuthors($event)"
+                            placeholder="Enter a name" [loading]="authorsLoading"></ng-select>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="date">Publication Date</label>
+                        <label for="publicationDateBook">Publication Date</label>
                         <input formControlName="publicationDate" type="date" class="form-control" id="publicationDateBook"
                             placeholder="Date of publication">
                     </div>
@@ -38,7 +38,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="synopsis">Synopsis</label>
+                        <label for="synopsisBook">Synopsis</label>
                         <textarea formControlName="synopsis" class="form-control" id="synopsisBook" rows="3"></textarea>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="d-flex justify-content-end">
-                        <button id="submitButton" class="btn btn-success" type="submit" [disabled]="!form.valid">{{ isEditMode ? 'Update' : 'Create' }}</button>
+                        <button id="submitButton" class="btn btn-success" type="submit" [disabled]="!editContext.form.valid">{{ editContext.isEditMode ? 'Update' : 'Create' }}</button>
                     </div>
                 </div>
             </div>

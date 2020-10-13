@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { CrudService } from '../../../shared/services/crud.service';
-import { NotificationService } from '../../../shared/services/notification.service';
 import { isNullOrUndefined } from 'util';
 import { AuthorURL } from 'src/app/shared/url/url.domain';
 import { EditContext } from '../../../shared/helpers/edit-context';
@@ -20,11 +19,9 @@ export class AuthorEditComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder,
-    private crudService: CrudService,
-    private notificationService: NotificationService
+    private crudService: CrudService
   ) {
-    this.editContext = new EditContext(AuthorURL.BASE, AuthorURL.BASE);
+    this.editContext = new EditContext(AuthorURL.BASE, AuthorURL.BASE, true);
   }
 
   ngOnInit() {
@@ -32,15 +29,13 @@ export class AuthorEditComponent implements OnInit {
     this.initForm();
     this.editContext.getItem(this.getParamId());
     this.searchBooks('');
-    this.editContext.postInsert = this.postInsert;
-    this.editContext.postUpdate = this.postUpdate;
   }
 
   initForm() {
-    this.editContext.form = this.formBuilder.group({
-      id: this.formBuilder.control(undefined, []),
-      name: this.formBuilder.control(undefined, [Validators.required]),
-      books: this.formBuilder.control(undefined, [])
+    this.editContext.form = this.editContext.getFormBuilder().group({
+      id: this.editContext.getFormBuilder().control(undefined, []),
+      name: this.editContext.getFormBuilder().control(undefined, [Validators.required]),
+      books: this.editContext.getFormBuilder().control(undefined, [])
     });
   }
 
@@ -48,19 +43,12 @@ export class AuthorEditComponent implements OnInit {
     return this.activatedRoute.snapshot.paramMap.get('id');
   }
 
-  postUpdate(): void {
-    this.notificationService.updateSucess();
-  }
-
-  postInsert(): void {
-    this.notificationService.insertedSuccess();
-  }
-
   searchBooks(term: any) {
     this.booksLoading = true;
-    const filter = this.generateFilter(term);
-    this.crudService.getAll('books', filter).subscribe((res: any) => {
+    this.crudService.getAll('books', this.generateFilter(term)).subscribe((res: any) => {
       this.books = res.items;
+      this.booksLoading = false;
+    }, _err => {
       this.booksLoading = false;
     });
   }
