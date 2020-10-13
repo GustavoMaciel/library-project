@@ -2,8 +2,13 @@ import { CrudService } from '../services/crud.service';
 import { ModalService } from '../services/modal.service';
 import { NotificationService } from '../services/notification.service';
 import { Router } from '@angular/router';
+import { AppInjector } from './app.injector';
 
-export class ListUtils {
+export class ListContext {
+  service: CrudService;
+  router: Router;
+  notificationService: NotificationService;
+  modalService: ModalService;
 
   loading: boolean;
   items: any[];
@@ -14,19 +19,21 @@ export class ListUtils {
   removeItem: any;
   currentSearch: string;
 
+  postGetItems: Function = () => {};
+
   get listIsEmpty() {
     return this.items.length < 0;
   }
 
   constructor(
-      private service: CrudService,
-      private router: Router,
-      private notificationService: NotificationService,
-      private modalService: ModalService,
       private serviceUrl: string,
       private routerUrl: string
     ) {
     this.initProperties();
+    this.service = AppInjector.get(CrudService);
+    this.router = AppInjector.get(Router);
+    this.notificationService = AppInjector.get(NotificationService);
+    this.modalService = AppInjector.get(ModalService);
   }
 
   initProperties() {
@@ -48,6 +55,7 @@ export class ListUtils {
       this.currentPage = res.currentPage;
       this.totalRecords = res.totalRecords;
       this.totalPages = res.totalPages;
+      this.postGetItems();
       this.loading = false;
     }, _err => {
       this.loading = false;
