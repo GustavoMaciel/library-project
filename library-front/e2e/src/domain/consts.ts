@@ -11,6 +11,9 @@ export const BOOKS_URL = BASE_URL + '/books';
 export const BOOKS_CREATE_URL = BOOKS_URL + '/create';
 export const BOOKS_EDIT_URL = BOOKS_URL + '/edit';
 
+// ASSOCIATE
+export const ASSOCIATE_URL = BASE_URL + '/associate';
+
 // IDs
 // COMMONS
 export const SUBMIT_BUTTON = 'submitButton';
@@ -62,4 +65,9 @@ export const SUBMIT_BOOK_BUTTON_ID = 'submitBookButton';
 // BOOK MASTER DETAIL
 export const CREATE_AUTHOR_BUTTON_ID = 'createAuthor';
 export const ADD_AUTHOR_BUTTON_ID = 'addAuthorButton';
+
+// AUTHOR-BOOK (ASSOCIATE)
+export const AUTHORS_SELECT = 'authorsSelect';
+export const BOOKS_SELECT = 'booksSelect';
+export const ASSOCIATE_BUTTON = 'associate';
 
