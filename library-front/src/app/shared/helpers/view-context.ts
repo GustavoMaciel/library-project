@@ -1,20 +1,21 @@
 import { CrudService } from '../services/crud.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NotificationService } from '../services/notification.service';
-import { ModalService } from '../services/modal.service';
+import { AppInjector } from './app.injector';
 
 export class ViewContext {
 
     item: any;
+    service: CrudService;
+    router: Router;
+    postGetItem: (item: any) => void;
 
     constructor(
-        private service: CrudService,
-        private router: Router,
         private serviceUrl: string,
-        private routerUrl: string,
-        private activatedRoute: ActivatedRoute,
-        private postGetItem: (item: any) => void,
-    ) { }
+        private routerUrl: string
+    ) {
+        this.service = AppInjector.get(CrudService);
+        this.router = AppInjector.get(Router);
+    }
 
     getServiceURL(): string {
         return this.serviceUrl;
@@ -28,12 +29,7 @@ export class ViewContext {
         this.router.navigate([this.getRouterURL()]);
     }
 
-    getParamId(): string {
-        return this.activatedRoute.snapshot.paramMap.get('id');
-    }
-
-    getItem(): void {
-        const id = this.getParamId();
+    getItem(id: any): void {
         this.service.getOne(this.getServiceURL(), id).subscribe((res => {
             this.item = res;
             this.postGetItem(this.item);
