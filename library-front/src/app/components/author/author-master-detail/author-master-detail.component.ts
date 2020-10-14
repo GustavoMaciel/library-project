@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { CrudService } from '../../../shared/services/crud.service';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { isNullOrUndefined } from "util";
 import { ModalService } from '../../../shared/services/modal.service';
 import { AuthorURL } from 'src/app/shared/url/url.domain';
+import { EditContext } from '../../../shared/helpers/edit-context';
 
 @Component({
   selector: 'app-author-master-detail',
@@ -14,148 +15,48 @@ import { AuthorURL } from 'src/app/shared/url/url.domain';
 })
 export class AuthorMasterDetailComponent implements OnInit {
 
-  isEditMode: boolean;
-  form: FormGroup;
-  author: any;
   books: any = [];
   booksLoading = false;
   selectedBooks = [];
-  loading = false;
+  editContext: EditContext;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder,
     private crudService: CrudService,
-    private router: Router,
     private notificationService: NotificationService,
     private modalService: ModalService
-  ) { }
+  ) {
+    this.editContext = new EditContext(AuthorURL.BASE, AuthorURL.BASE, true);
+  }
 
   ngOnInit() {
-    this.isEditMode = !isNullOrUndefined(this.getParamId());
+    this.editContext.isEditMode = !isNullOrUndefined(this.getParamId());
     this.initForm();
-    this.getItem();
+    this.editContext.getItem(this.getParamId());
     this.searchBooks('');
-  }
-
-  getServiceURL(): string {
-    return AuthorURL.BASE;
-  }
-
-  getRouterURL(): string {
-    return 'authors';
-  }
-
-  updatePartial() {
-    return true;
+    this.editContext.preInsert = this.preInsert;
+    this.editContext.callingContext = this;
   }
 
   initForm() {
-    this.form = this.formBuilder.group({
-      id: this.formBuilder.control(undefined, []),
-      name: this.formBuilder.control(undefined, [Validators.required]),
-      books: this.formBuilder.control(undefined, []),
-      selectedBook: this.formBuilder.control(undefined, [])
+    this.editContext.form = this.editContext.getFormBuilder().group({
+      id: this.editContext.getFormBuilder().control(undefined, []),
+      name: this.editContext.getFormBuilder().control(undefined, [Validators.required]),
+      books: this.editContext.getFormBuilder().control(undefined, []),
+      selectedBook: this.editContext.getFormBuilder().control(undefined, [])
     });
   }
 
   get selectedBookControl () {
-    return this.form.get('selectedBook');
-  }
-
-  get booksControl() {
-    return this.form.get('books');
-  }
-
-  getItem() {
-    if (this.isEditMode) {
-      const paramId = this.getParamId();
-      this.crudService.getOne(this.getServiceURL(), paramId).subscribe(result => {
-        this.author = result;
-        this.getFormControlFromObject(this.form.controls, this.author);
-      }, (err: any) => {
-        this.notificationService.errorMessage(err.error ? err.error.message : err.message);
-      });
-    }
+    return this.editContext.form.get('selectedBook');
   }
 
   getParamId(): string {
     return this.activatedRoute.snapshot.paramMap.get('id');
   }
 
-  getFormControlFromObject(controls, obj): any {
-    Object.keys(controls).forEach(key => {
-      if (controls[key] instanceof FormGroup) {
-        if (obj[key]) {
-          this.getFormControlFromObject(controls[key].controls, obj[key]);
-        }
-      } else {
-        controls[key].patchValue(obj[key]);
-      }
-    });
-    return controls;
-  }
-
-  backToList() {
-    this.router.navigate([this.getRouterURL()]).then(_res => {});
-  }
-
-  onSubmit() {
-    if (this.isEditMode) {
-      this.update();
-    } else {
-      this.insert();
-    }
-  }
-
-  insert() {
-    this.preInsert();
-    this.crudService.post(this.getServiceURL(), this.form.value).subscribe((_res: any) => {
-      this.loading = false;
-      this.postInsert();
-      this.backToList();
-    }, (err) => {
-      this.loading = false;
-      this.notificationService.errorMessage(err.error ? err.error.message : err.message);
-    });
-  }
-
-  update() {
-    this.loading = true;
-    this.preUpdate();
-    if (this.updatePartial()) {
-      this.crudService.updatePartial(this.getServiceURL(), this.form.value).subscribe((_res: any) => {
-        this.loading = false;
-        this.postUpdate();
-        this.backToList();
-      }, (err) => {
-        this.loading = false;
-        this.notificationService.errorMessage(err.error ? err.error.message : err.message);
-      });
-    } else {
-      this.crudService.update(this.getServiceURL(), this.form.value).subscribe((_res: any) => {
-        this.loading = false;
-        this.postUpdate();
-        this.backToList();
-      }, (err) => {
-        this.loading = false;
-        this.notificationService.errorMessage(err.error ? err.error.message : err.message);
-      });
-    }
-  }
-
-  preInsert(): void {
-    this.booksControl.setValue(this.selectedBooks);
-  }
-
-  preUpdate(): void { }
-
-  postUpdate(): void {
-    this.notificationService.updateSucess();
-  }
-
-  postInsert(): void {
-    this.notificationService.insertedSuccess();
+  preInsert(callingContext: any): void {
+    callingContext.editContext.form.get('books').setValue(callingContext.selectedBooks);
   }
 
   searchBooks(term: any) {
@@ -210,7 +111,6 @@ export class AuthorMasterDetailComponent implements OnInit {
   }
 
   newBookSubmitted(book: any) {
-    console.log(book);
     this.selectedBooks.push(book);
   }
 }

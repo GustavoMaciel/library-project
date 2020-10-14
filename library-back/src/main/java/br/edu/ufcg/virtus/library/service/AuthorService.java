@@ -61,7 +61,6 @@ public class AuthorService {
     }
 
     private void validateInsert(Author model) throws BusinessException {
-        // SonarLint
         if (repository.existsByName(model.getName())) {
             throw new BusinessException("author.name.exists");
         }

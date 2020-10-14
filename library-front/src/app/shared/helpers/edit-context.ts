@@ -5,6 +5,7 @@ import { NotificationService } from '../services/notification.service';
 import { AppInjector } from './app.injector';
 
 export class EditContext {
+  callingContext: any;
   service: CrudService;
   router: Router;
   notificationService: NotificationService;
@@ -22,8 +23,8 @@ export class EditContext {
     this.notificationService.insertedSuccess();
   };
   postGetItem: Function = () => {};
-  preInsert: Function = () => {};
-  preUpdate: Function = () => {};
+  preInsert: Function = (callingContext: any) => {};
+  preUpdate: Function = (callingContext: any) => {};
 
   constructor(
     private serviceUrl: string,
@@ -66,7 +67,7 @@ export class EditContext {
   }
 
   backToList() {
-    this.router.navigate([this.routerUrl]).then(res => {});
+    this.router.navigate([this.routerUrl]).then(_res => {});
   }
 
   onSubmit() {
@@ -78,7 +79,7 @@ export class EditContext {
   }
 
   insert() {
-    this.preInsert();
+    this.preInsert(this.callingContext);
     this.service.post(this.serviceUrl, this.form.value).subscribe(_res => {
       this.loading = false;
       this.postInsert();
@@ -91,7 +92,7 @@ export class EditContext {
 
   update() {
     this.loading = true;
-    this.preUpdate();
+    this.preUpdate(this.callingContext);
     if (this.isUpdatePartial) {
       this.service.updatePartial(this.serviceUrl, this.form.value).subscribe(_res => {
         this.loading = false;
