@@ -5,6 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { isNullOrUndefined } from 'util';
 import { ModalService } from 'src/app/shared/services/modal.service';
+import { EditContext } from '../../../shared/helpers/edit-context';
+import { BookURL } from '../../../shared/url/url.domain';
 
 @Component({
   selector: 'app-book-edit-master-detail',
@@ -13,38 +15,26 @@ import { ModalService } from 'src/app/shared/services/modal.service';
 })
 export class BookEditMasterDetailComponent implements OnInit {
 
-  form: FormGroup;
-  book: any;
   authors: any = [];
+  authorsLoading = false;
   selectedAuthors: any[] = [];
-  loading = false;
-  isEditMode: boolean;
+  editContext: EditContext;
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     private crudService: CrudService,
     private notificationService: NotificationService,
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
     private modalService: ModalService
-  ) { }
+  ) {
+    this.editContext = new EditContext(BookURL.BASE, BookURL.BASE, true);
+  }
 
   ngOnInit() {
-    this.isEditMode = !isNullOrUndefined(this.getParamId());
+    this.editContext.isEditMode = !isNullOrUndefined(this.getParamId());
     this.initForm();
-    this.getAuthors();
-  }
-
-  getServiceURL(): string {
-    return 'books';
-  }
-
-  getRouterURL(): string {
-    return 'books';
-  }
-
-  updatePartial(): boolean {
-    return true;
+    this.editContext.getItem(this.getParamId());
+    this.searchAuthors('');
+    this.editContext.callingContext = this;
   }
 
   getParamId(): string {
@@ -52,20 +42,36 @@ export class BookEditMasterDetailComponent implements OnInit {
   }
 
   initForm(): void {
-    this.form = this.formBuilder.group({
-      id: this.formBuilder.control(undefined, []),
-      name: this.formBuilder.control(undefined, [Validators.required]),
-      synopsis: this.formBuilder.control(undefined, [Validators.required]),
-      publicationDate: this.formBuilder.control(undefined, [Validators.required]),
-      authors: this.formBuilder.control(undefined, [Validators.required]),
-      selectedAuthor: this.formBuilder.control(undefined, [])
+    this.editContext.form = this.editContext.getFormBuilder().group({
+      id: this.editContext.getFormBuilder().control(undefined, []),
+      name: this.editContext.getFormBuilder().control(undefined, [Validators.required]),
+      synopsis: this.editContext.getFormBuilder().control(undefined, [Validators.required]),
+      publicationDate: this.editContext.getFormBuilder().control(undefined, [Validators.required]),
+      authors: this.editContext.getFormBuilder().control(undefined, [Validators.required]),
+      selectedAuthor: this.editContext.getFormBuilder().control(undefined, [])
     });
   }
 
-  getAuthors(): void {
-    this.crudService.getAll('authors').subscribe((res: any) => {
+  searchAuthors(term: any): void {
+    this.authorsLoading = true;
+    this.crudService.getAll('authors', this.generateFilter(term)).subscribe((res: any) => {
       this.authors = res.items;
+      this.authorsLoading = false;
     });
+  }
+
+  generateFilter(term: any) {
+    if (!term) {
+      term = '';
+    }
+    return {
+      search: term.term,
+      pageSize: 10,
+      currentPage: 0,
+      sort: {
+        order: "ASC"
+      }
+    }
   }
 
   onAuthorSelected(author) {
@@ -78,8 +84,8 @@ export class BookEditMasterDetailComponent implements OnInit {
     });
     if (!exist) {
       this.selectedAuthors.push(author);
-      this.form.get('authors').setValue(this.selectedAuthors);
-      this.form.get('selectedAuthor').setValue(undefined);
+      this.editContext.form.get('authors').setValue(this.selectedAuthors);
+      this.editContext.form.get('selectedAuthor').setValue(undefined);
     } else {
       this.notificationService.errorMessage('Author is already added.');
     }
@@ -89,73 +95,13 @@ export class BookEditMasterDetailComponent implements OnInit {
     this.selectedAuthors = this.selectedAuthors.filter(item => item.id !== author.id);
   }
 
-  backToList(): void {
-    this.router.navigate([this.getRouterURL()]);
-  }
-
-  onSubmit(): void {
-    if (this.isEditMode) {
-      this.update();
-    } else {
-      this.insert();
-    }
-  }
-
-  insert(): void {
-    this.preInsert();
-    this.crudService.post(this.getServiceURL(), this.form.value).subscribe((res: any) => {
-      this.loading = false;
-      this.postInsert();
-      this.backToList();
-    }, (err) => {
-      this.loading = false;
-      this.notificationService.error();
-    });
-  }
-
-  update(): void {
-    this.loading = true;
-    this.preUpdate();
-    if (this.updatePartial()) {
-      this.crudService.updatePartial(this.getServiceURL(), this.form.value).subscribe((res: any) => {
-        this.loading = false;
-        this.postUpdate();
-        this.backToList();
-      }, (err) => {
-        this.loading = false;
-        this.notificationService.error();
-      });
-    } else {
-      this.crudService.update(this.getServiceURL(), this.form.value).subscribe((res: any) => {
-        this.loading = false;
-        this.postUpdate();
-        this.backToList();
-      }, (err) => {
-        this.loading = false;
-        this.notificationService.error();
-      });
-    }
-  }
-
-  preInsert(): void { }
-
-  preUpdate(): void { }
-
-  postUpdate(): void {
-    this.notificationService.updateSucess();
-  }
-
-  postInsert(): void {
-    this.notificationService.insertedSuccess();
-  }
-
   openCreateAuthorModal() {
     this.modalService.open(ModalService.CREATE_AUTHOR_MODAL);
   }
 
   newAuthorSubmitted(author: any) {
     this.selectedAuthors.push(author);
-    this.form.get('authors').setValue(this.selectedAuthors);
+    this.editContext.form.get('authors').setValue(this.selectedAuthors);
   }
 
 }

@@ -1,19 +1,19 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between">
-        <h5 class="card-title">{{ isEditMode ? 'Edit' : 'Create' }} a Book</h5>
+        <h5 class="card-title">{{ editContext.isEditMode ? 'Edit' : 'Create' }} a Book</h5>
         <div class="card-header-elements">
-            <button class="btn btn-primary d-flex" type="button" (click)="backToList()">
+            <button class="btn btn-primary d-flex" type="button" (click)="editContext.backToList()">
                 <i class="material-icons mr-1">keyboard_backspace</i>
                 Back
             </button>
         </div>
     </div>
     <div class="card-body">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form [formGroup]="editContext.form" (ngSubmit)="editContext.onSubmit()">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="nameBook">Name</label>
                         <input id="nameBook" formControlName="name" type="text" class="form-control"
                             placeholder="Enter a name">
                     </div>
@@ -28,7 +28,7 @@
                 </div> -->
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="date">Publication Date</label>
+                        <label for="publicationDateBook">Publication Date</label>
                         <input id="publicationDateBook" formControlName="publicationDate" type="date" class="form-control"
                             placeholder="Date of publication">
                     </div>
@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="synopsis">Synopsis</label>
+                        <label for="synopsisBook">Synopsis</label>
                         <textarea formControlName="synopsis" class="form-control" id="synopsisBook" rows="3"></textarea>
                     </div>
                 </div>
@@ -50,8 +50,8 @@
                             <div class="d-flex">
                                 <div class="book-select mr-2">
                                     <ng-select id="authorsBook" [items]="authors" bindLabel="name" [multiple]="false"
-                                        [typeToSearchText]="'Select an author'" placeholder="Select an author"
-                                        formControlName="selectedAuthor" (change)="onAuthorSelected($event)">
+                                        [typeToSearchText]="'Select an item'" placeholder="Select an author" [loading]="authorsLoading"
+                                        formControlName="selectedAuthor" (change)="onAuthorSelected($event)" (search)="searchAuthors($event)" >
                                     </ng-select>
                                 </div>
                                 <button id="createAuthor" class="btn btn-primary d-flex" type="button" (click)="openCreateAuthorModal()">
@@ -90,7 +90,7 @@
                 <div class="col-md-12">
                     <div class="d-flex justify-content-end">
                         <button id="submitButton" class="btn btn-success" type="submit"
-                            [disabled]="!form.valid">{{ isEditMode ? 'Update' : 'Create' }}</button>
+                            [disabled]="!editContext.form.valid">{{ editContext.isEditMode ? 'Update' : 'Create' }}</button>
                     </div>
                 </div>
             </div>

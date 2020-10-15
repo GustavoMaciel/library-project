@@ -61,8 +61,7 @@ export class AuthorMasterDetailComponent implements OnInit {
 
   searchBooks(term: any) {
     this.booksLoading = true;
-    const filter = this.generateFilter(term);
-    this.crudService.getAll('books', filter).subscribe((res: any) => {
+    this.crudService.getAll('books', this.generateFilter(term)).subscribe((res: any) => {
       this.books = res.items;
       this.booksLoading = false;
     })
