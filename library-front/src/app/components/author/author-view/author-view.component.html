@@ -2,7 +2,7 @@
   <div class="card-header d-flex justify-content-between">
     <div class="card-title d-flex align-items-center">Authors</div>
     <div class="card-header-elements">
-      <button (click)="backToList()" class="btn btn-primary d-flex justify-content-center align-items-center">
+      <button (click)="viewContext.backToList()" class="btn btn-primary d-flex justify-content-center align-items-center">
         <i class="material-icons mr-2">arrow_back</i> Back
       </button>
     </div>
@@ -10,14 +10,14 @@
 
   <hr class="m-0">
   <div class="card-body">
-    <app-loading [loading]="loading"></app-loading>
-    <div class="col-12" *ngIf="!loading">
+    <app-loading [loading]="viewContext.loading"></app-loading>
+    <div class="col-12" *ngIf="!viewContext.loading">
       <div class="row mb-2">
         <div class="col-3 text-center">
           <strong>ID:</strong>
         </div>
         <div class="col-9">
-          <input class="form-control" type="text" value="{{author.id}}" disabled>
+          <input class="form-control" type="text" value="{{viewContext.item.id}}" disabled>
         </div>
       </div>
 
@@ -26,11 +26,11 @@
           <strong>Name:</strong>
         </div>
         <div class="col-9">
-          <input class="form-control" type="text" value="{{author.name}}" disabled>
+          <input class="form-control" type="text" value="{{viewContext.item.name}}" disabled>
         </div>
       </div>
 
-      <div class="row mb-2" *ngIf="hasBooks(author)">
+      <div class="row mb-2" *ngIf="hasBooks(viewContext.item)">
         <div class="col-12 text-center">
           <strong>Books</strong>
         </div>
@@ -43,7 +43,7 @@
             </thead>
 
             <tbody>
-            <tr *ngFor="let book of author.books">
+            <tr *ngFor="let book of viewContext.item.books">
               <td>{{book.id}}</td>
               <td>{{book.name}}</td>
             </tr>
