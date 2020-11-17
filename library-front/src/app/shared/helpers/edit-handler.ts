@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { CrudService } from '../services/crud.service';
 import { NotificationService } from '../services/notification.service';
 import { AppInjector } from './app.injector';
+import { EditHandlerCaller } from './edit-handler-caller';
 
 export class EditHandler {
-  callingContext: any;
   service: CrudService;
   router: Router;
   notificationService: NotificationService;
@@ -18,20 +18,11 @@ export class EditHandler {
   loading = false;
   searchLoading = false;
 
-  postUpdate: Function = () => {
-    this.notificationService.updateSucess();
-  };
-  postInsert: Function = () => {
-    this.notificationService.insertedSuccess();
-  };
-  postGetItem: Function = () => {};
-  preInsert: Function = (callingContext: any) => {};
-  preUpdate: Function = (callingContext: any) => {};
-
   constructor(
     private serviceUrl: string,
     private routerUrl: string,
-    private isUpdatePartial: boolean
+    private isUpdatePartial: boolean,
+    private callingContext: EditHandlerCaller
   ) {
     this.service = AppInjector.get(CrudService);
     this.router = AppInjector.get(Router);
@@ -61,7 +52,9 @@ export class EditHandler {
       this.service.getOne(this.serviceUrl, id).subscribe(result => {
         this.item = result;
         this.getFormControlFromObject(this.form.controls, this.item);
-        this.postGetItem();
+        if (this.callingContext) {
+          this.callingContext.postGetItem();
+        }
       }, (err: any) => {
         this.notificationService.errorMessage(err.error ? err.error.message : err.message);
       });
@@ -81,10 +74,14 @@ export class EditHandler {
   }
 
   insert() {
-    this.preInsert(this.callingContext);
+    if (this.callingContext) {
+      this.callingContext.preInsert();
+    }
     this.service.post(this.serviceUrl, this.form.value).subscribe(_res => {
       this.loading = false;
-      this.postInsert();
+      if (this.callingContext) {
+        this.callingContext.postInsert();
+      }
       this.backToList();
     }, (err: any) => {
       this.notificationService.errorMessage(err.error ? err.error.message : err.message);
@@ -94,25 +91,24 @@ export class EditHandler {
 
   update() {
     this.loading = true;
-    this.preUpdate(this.callingContext);
+    if (this.callingContext) {
+      this.callingContext.preUpdate();
+    }
+    const callback = (_res) => {
+      this.loading = false;
+      if (this.callingContext) {
+        this.callingContext.postUpdate();
+      }
+      this.backToList();
+    }
+    const errCallback = (err: any) => {
+      this.notificationService.errorMessage(err.error ? err.error.message : err.message);
+      this.loading = false;
+    }
     if (this.isUpdatePartial) {
-      this.service.updatePartial(this.serviceUrl, this.form.value).subscribe(_res => {
-        this.loading = false;
-        this.postUpdate();
-        this.backToList();
-      }, (err) => {
-        this.notificationService.errorMessage(err.error ? err.error.message : err.message);
-        this.loading = false;
-      });
+      this.service.updatePartial(this.serviceUrl, this.form.value).subscribe(callback, errCallback);
     } else {
-      this.service.update(this.serviceUrl, this.form.value).subscribe(_res => {
-        this.loading = false;
-        this.postUpdate();
-        this.backToList();
-      }, (err) => {
-        this.notificationService.errorMessage(err.error ? err.error.message : err.message);
-        this.loading = false;
-      });
+      this.service.update(this.serviceUrl, this.form.value).subscribe(callback, errCallback);
     }
   }
 

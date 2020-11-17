@@ -4,20 +4,21 @@ import { ActivatedRoute } from '@angular/router';
 import { isNullOrUndefined } from 'util';
 import { AuthorURL } from 'src/app/shared/url/url.domain';
 import { EditHandler } from '../../../shared/helpers/edit-handler';
+import { EditHandlerCaller } from '../../../shared/helpers/edit-handler-caller';
 
 @Component({
   selector: 'app-author-edit',
   templateUrl: './author-edit.component.html',
   styleUrls: ['./author-edit.component.css']
 })
-export class AuthorEditComponent implements OnInit {
+export class AuthorEditComponent implements OnInit, EditHandlerCaller {
 
   editHandler: EditHandler;
 
   constructor(
     private activatedRoute: ActivatedRoute,
   ) {
-    this.editHandler = new EditHandler(AuthorURL.BASE, AuthorURL.BASE, true);
+    this.editHandler = new EditHandler(AuthorURL.BASE, AuthorURL.BASE, true, this);
   }
 
   ngOnInit() {
@@ -39,4 +40,18 @@ export class AuthorEditComponent implements OnInit {
     return this.activatedRoute.snapshot.paramMap.get('id');
   }
 
+  preInsert(): void {
+  }
+
+  preUpdate() {
+  }
+
+  postGetItem() {
+  }
+
+  postInsert() {
+  }
+
+  postUpdate() {
+  }
 }

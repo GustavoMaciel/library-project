@@ -100,6 +100,7 @@ public class AuthorService {
 
     @Transactional
     public Author patch(Author newModel, Long id) throws BusinessException {
+        this.validateUpdate(newModel, id);
         return update(newModel, id, true);
     }
 
