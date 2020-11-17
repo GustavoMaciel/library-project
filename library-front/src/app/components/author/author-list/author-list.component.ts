@@ -8,7 +8,7 @@ import { ListHandler } from '../../../shared/helpers/list-handler';
   templateUrl: './author-list.component.html',
   styleUrls: ['./author-list.component.css']
 })
-export class AuthorListComponent implements OnInit {
+export class AuthorListComponent implements OnInit /*, ListHandlerCaller */ {
 
   listHandler: ListHandler;
 

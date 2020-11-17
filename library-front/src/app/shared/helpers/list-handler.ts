@@ -3,8 +3,10 @@ import { ModalService } from '../services/modal.service';
 import { NotificationService } from '../services/notification.service';
 import { Router } from '@angular/router';
 import { AppInjector } from './app.injector';
+import { ListHandlerCaller } from './list-handler-caller';
 
-export class ListHandler {
+export class ListHandler{
+
   service: CrudService;
   router: Router;
   notificationService: NotificationService;
@@ -19,15 +21,14 @@ export class ListHandler {
   removeItem: any;
   currentSearch: string;
 
-  postGetItems: Function = () => {};
-
   get listIsEmpty() {
     return this.items.length <= 0;
   }
 
   constructor(
       private serviceUrl: string,
-      private routerUrl: string
+      private routerUrl: string,
+      private callingContext: ListHandlerCaller = undefined
     ) {
     this.initProperties();
     this.service = AppInjector.get(CrudService);
@@ -55,7 +56,9 @@ export class ListHandler {
       this.currentPage = res.currentPage;
       this.totalRecords = res.totalRecords;
       this.totalPages = res.totalPages;
-      this.postGetItems();
+      if (this.callingContext) {
+        this.callingContext.postGetItems();
+      }
       this.loading = false;
     }, _err => {
       this.loading = false;
@@ -89,6 +92,9 @@ export class ListHandler {
 
   remove(customUrl?: string) {
     this.service.delete(customUrl ? customUrl : this.serviceUrl, this.removeItem).subscribe(_res => {
+      if (this.callingContext) {
+        this.callingContext.postDelete();
+      }
       this.listItems();
       this.removeItem = null;
     }, (err: any) => {
