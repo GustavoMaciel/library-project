@@ -28,8 +28,4 @@ export class AuthorViewComponent implements OnInit {
     return this.activatedRoute.snapshot.paramMap.get('id');
   }
 
-  postGetItem(): void {
-
-  }
-
 }

@@ -54,22 +54,6 @@ export class AuthorMasterDetailComponent implements OnInit, EditHandlerCaller {
     return this.activatedRoute.snapshot.paramMap.get('id');
   }
 
-  preInsert(): void {
-    this.editHandler.form.get('books').setValue(this.selectedBooks);
-  }
-
-  preUpdate() {
-  }
-
-  postGetItem() {
-  }
-
-  postInsert() {
-  }
-
-  postUpdate() {
-  }
-
   searchBooks(term: any) {
     this.booksLoading = true;
     this.crudService.getAll('books', this.generateFilter(term)).subscribe((res: any) => {
@@ -122,5 +106,23 @@ export class AuthorMasterDetailComponent implements OnInit, EditHandlerCaller {
 
   newBookSubmitted(book: any) {
     this.selectedBooks.push(book);
+  }
+
+  preInsert(): void {
+    this.editHandler.form.get('books').setValue(this.selectedBooks);
+  }
+
+  preUpdate() {
+  }
+
+  postGetItem() {
+  }
+
+  postInsert() {
+    this.editHandler.notificationService.successMessage('Item created successfully');
+  }
+
+  postUpdate() {
+    this.editHandler.notificationService.successMessage('Item updated successfully');
   }
 }

@@ -1,6 +1,7 @@
 import { CrudService } from '../services/crud.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppInjector } from './app.injector';
+import { ViewHandlerCaller } from './view-handler-caller';
 
 export class ViewHandler {
 
@@ -12,7 +13,8 @@ export class ViewHandler {
 
     constructor(
         private serviceUrl: string,
-        private routerUrl: string
+        private routerUrl: string,
+        private callingContext: ViewHandlerCaller = undefined
     ) {
         this.service = AppInjector.get(CrudService);
         this.router = AppInjector.get(Router);
@@ -36,7 +38,9 @@ export class ViewHandler {
         this.service.getOne(this.getServiceURL(), id).subscribe((res => {
             this.loading = false;
             this.item = res;
-            this.postGetItem(this.item);
+            if (this.callingContext) {
+              this.callingContext.postGetItem();
+            }
         }), (err) => {
             this.loading = false;
         });

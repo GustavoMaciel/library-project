@@ -50,8 +50,10 @@ export class AuthorEditComponent implements OnInit, EditHandlerCaller {
   }
 
   postInsert() {
+    this.editHandler.notificationService.successMessage('Item created successfully');
   }
 
   postUpdate() {
+    this.editHandler.notificationService.successMessage('Item updated successfully');
   }
 }

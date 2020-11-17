@@ -34,6 +34,7 @@ export class BookEditMasterDetailComponent implements OnInit, EditHandlerCaller 
     this.editHandler.isEditMode = !isNullOrUndefined(this.getParamId());
     this.initForm();
     this.editHandler.getItem(this.getParamId());
+    this.editHandler.searchItems('authors', '')
     this.searchAuthors('');
   }
 
@@ -114,9 +115,11 @@ export class BookEditMasterDetailComponent implements OnInit, EditHandlerCaller 
   }
 
   postInsert() {
+    this.editHandler.notificationService.successMessage('Item created successfully');
   }
 
   postUpdate() {
+    this.editHandler.notificationService.successMessage('Item updated successfully');
   }
 
 }
