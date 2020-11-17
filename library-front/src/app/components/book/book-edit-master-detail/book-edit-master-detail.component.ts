@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { CrudService } from 'src/app/shared/services/crud.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { isNullOrUndefined } from 'util';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { EditHandler } from '../../../shared/helpers/edit-handler';
 import { BookURL } from '../../../shared/url/url.domain';
+import { EditHandlerCaller } from '../../../shared/helpers/edit-handler-caller';
 
 @Component({
   selector: 'app-book-edit-master-detail',
   templateUrl: './book-edit-master-detail.component.html',
   styleUrls: ['./book-edit-master-detail.component.css']
 })
-export class BookEditMasterDetailComponent implements OnInit {
+export class BookEditMasterDetailComponent implements OnInit, EditHandlerCaller {
 
   authors: any = [];
   authorsLoading = false;
@@ -26,7 +27,7 @@ export class BookEditMasterDetailComponent implements OnInit {
     private notificationService: NotificationService,
     private modalService: ModalService
   ) {
-    this.editHandler = new EditHandler(BookURL.BASE, BookURL.BASE, true);
+    this.editHandler = new EditHandler(BookURL.BASE, BookURL.BASE, true, this);
   }
 
   ngOnInit() {
@@ -34,7 +35,6 @@ export class BookEditMasterDetailComponent implements OnInit {
     this.initForm();
     this.editHandler.getItem(this.getParamId());
     this.searchAuthors('');
-    this.editHandler.callingContext = this;
   }
 
   getParamId(): string {
@@ -101,7 +101,22 @@ export class BookEditMasterDetailComponent implements OnInit {
 
   newAuthorSubmitted(author: any) {
     this.selectedAuthors.push(author);
+  }
+
+  preUpdate() {
+  }
+
+  preInsert() {
     this.editHandler.form.get('authors').setValue(this.selectedAuthors);
+  }
+
+  postGetItem() {
+  }
+
+  postInsert() {
+  }
+
+  postUpdate() {
   }
 
 }
