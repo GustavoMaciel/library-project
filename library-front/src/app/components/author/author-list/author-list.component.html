@@ -49,8 +49,8 @@
       </table>
     </div>
   </div>
-  <div class="card-footer">
-    <div class="datatable-footer" [hidden]="listContext.listIsEmpty">
+  <div class="card-footer" *ngIf="listContext.listIsEmpty">
+    <div class="datatable-footer">
       <app-pagination [totalRecords]="listContext.totalRecords" [setTotalPages]="listContext.totalPages"
                       (pageChanged)="listContext.onChangePaginator($event)" (pageSizeChanged)="listContext.onChangePageSize($event)"></app-pagination>
     </div>
