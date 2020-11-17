@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CrudService } from '../../../shared/services/crud.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NotificationService } from '../../../shared/services/notification.service';
+import { ActivatedRoute } from '@angular/router';
 import { AuthorURL } from 'src/app/shared/url/url.domain';
-import { ViewContext } from 'src/app/shared/helpers/view-context';
+import { ViewHandler } from 'src/app/shared/helpers/view-handler';
 
 @Component({
   selector: 'app-author-view',
@@ -12,10 +10,10 @@ import { ViewContext } from 'src/app/shared/helpers/view-context';
 })
 export class AuthorViewComponent implements OnInit {
 
-  viewContext: ViewContext;
+  viewHandler: ViewHandler;
 
   constructor(private activatedRoute: ActivatedRoute) {
-    this.viewContext = new ViewContext(AuthorURL.BASE, AuthorURL.BASE);
+    this.viewHandler = new ViewHandler(AuthorURL.BASE, AuthorURL.BASE);
   }
 
   hasBooks(author) {
@@ -23,7 +21,7 @@ export class AuthorViewComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.viewContext.getItem(this.getParamId());
+   this.viewHandler.getItem(this.getParamId());
   }
 
   getParamId() {
