@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { CrudService } from 'src/app/shared/services/crud.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { isNullOrUndefined } from 'util';
 import { ModalService } from 'src/app/shared/services/modal.service';
-import { EditContext } from '../../../shared/helpers/edit-context';
+import { EditHandler } from '../../../shared/helpers/edit-handler';
 import { BookURL } from '../../../shared/url/url.domain';
 import { EditHandlerCaller } from '../../../shared/helpers/edit-handler-caller';
 
@@ -19,7 +19,7 @@ export class BookEditMasterDetailComponent implements OnInit, EditHandlerCaller 
   authors: any = [];
   authorsLoading = false;
   selectedAuthors: any[] = [];
-  editContext: EditContext;
+  editHandler: EditHandler;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -27,13 +27,13 @@ export class BookEditMasterDetailComponent implements OnInit, EditHandlerCaller 
     private notificationService: NotificationService,
     private modalService: ModalService
   ) {
-    this.editContext = new EditContext(BookURL.BASE, BookURL.BASE, true, this);
+    this.editHandler = new EditHandler(BookURL.BASE, BookURL.BASE, true, this);
   }
 
   ngOnInit() {
-    this.editContext.isEditMode = !isNullOrUndefined(this.getParamId());
+    this.editHandler.isEditMode = !isNullOrUndefined(this.getParamId());
     this.initForm();
-    this.editContext.getItem(this.getParamId());
+    this.editHandler.getItem(this.getParamId());
     this.searchAuthors('');
   }
 
@@ -42,13 +42,13 @@ export class BookEditMasterDetailComponent implements OnInit, EditHandlerCaller 
   }
 
   initForm(): void {
-    this.editContext.form = this.editContext.getFormBuilder().group({
-      id: this.editContext.getFormBuilder().control(undefined, []),
-      name: this.editContext.getFormBuilder().control(undefined, [Validators.required]),
-      synopsis: this.editContext.getFormBuilder().control(undefined, [Validators.required]),
-      publicationDate: this.editContext.getFormBuilder().control(undefined, [Validators.required]),
-      authors: this.editContext.getFormBuilder().control(undefined, [Validators.required]),
-      selectedAuthor: this.editContext.getFormBuilder().control(undefined, [])
+    this.editHandler.form = this.editHandler.getFormBuilder().group({
+      id: this.editHandler.getFormBuilder().control(undefined, []),
+      name: this.editHandler.getFormBuilder().control(undefined, [Validators.required]),
+      synopsis: this.editHandler.getFormBuilder().control(undefined, [Validators.required]),
+      publicationDate: this.editHandler.getFormBuilder().control(undefined, [Validators.required]),
+      authors: this.editHandler.getFormBuilder().control(undefined, [Validators.required]),
+      selectedAuthor: this.editHandler.getFormBuilder().control(undefined, [])
     });
   }
 
@@ -84,8 +84,8 @@ export class BookEditMasterDetailComponent implements OnInit, EditHandlerCaller 
     });
     if (!exist) {
       this.selectedAuthors.push(author);
-      this.editContext.form.get('authors').setValue(this.selectedAuthors);
-      this.editContext.form.get('selectedAuthor').setValue(undefined);
+      this.editHandler.form.get('authors').setValue(this.selectedAuthors);
+      this.editHandler.form.get('selectedAuthor').setValue(undefined);
     } else {
       this.notificationService.errorMessage('Author is already added.');
     }
@@ -101,13 +101,13 @@ export class BookEditMasterDetailComponent implements OnInit, EditHandlerCaller 
 
   newAuthorSubmitted(author: any) {
     this.selectedAuthors.push(author);
-    this.editContext.form.get('authors').setValue(this.selectedAuthors);
   }
 
   preUpdate() {
   }
 
   preInsert() {
+    this.editHandler.form.get('authors').setValue(this.selectedAuthors);
   }
 
   postGetItem() {

@@ -2,7 +2,7 @@
   <div class="card-header d-flex justify-content-between">
     <div class="card-title d-flex align-items-center">Authors</div>
     <div class="card-header-elements">
-      <button (click)="viewContext.backToList()" class="btn btn-primary d-flex justify-content-center align-items-center">
+      <button (click)="viewHandler.backToList()" class="btn btn-primary d-flex justify-content-center align-items-center">
         <i class="material-icons mr-2">arrow_back</i> Back
       </button>
     </div>
@@ -10,14 +10,14 @@
 
   <hr class="m-0">
   <div class="card-body">
-    <app-loading [loading]="viewContext.loading"></app-loading>
-    <div class="col-12" *ngIf="!viewContext.loading">
+    <app-loading [loading]="viewHandler.loading"></app-loading>
+    <div class="col-12" *ngIf="!viewHandler.loading">
       <div class="row mb-2">
         <div class="col-3 text-center">
           <strong>ID:</strong>
         </div>
         <div class="col-9">
-          <input class="form-control" type="text" value="{{viewContext.item.id}}" disabled>
+          <input class="form-control" type="text" value="{{viewHandler.item.id}}" disabled>
         </div>
       </div>
 
@@ -26,11 +26,11 @@
           <strong>Name:</strong>
         </div>
         <div class="col-9">
-          <input class="form-control" type="text" value="{{viewContext.item.name}}" disabled>
+          <input class="form-control" type="text" value="{{viewHandler.item.name}}" disabled>
         </div>
       </div>
 
-      <div class="row mb-2" *ngIf="hasBooks(viewContext.item)">
+      <div class="row mb-2" *ngIf="hasBooks(viewHandler.item)">
         <div class="col-12 text-center">
           <strong>Books</strong>
         </div>
@@ -43,7 +43,7 @@
             </thead>
 
             <tbody>
-            <tr *ngFor="let book of viewContext.item.books">
+            <tr *ngFor="let book of viewHandler.item.books">
               <td>{{book.id}}</td>
               <td>{{book.name}}</td>
             </tr>

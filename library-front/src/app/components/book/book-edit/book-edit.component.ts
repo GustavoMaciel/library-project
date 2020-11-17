@@ -4,7 +4,7 @@ import { isNullOrUndefined } from 'util';
 import { Validators } from '@angular/forms';
 import { CrudService } from 'src/app/shared/services/crud.service';
 import { BookURL } from 'src/app/shared/url/url.domain';
-import { EditContext } from '../../../shared/helpers/edit-context';
+import { EditHandler } from '../../../shared/helpers/edit-handler';
 import { EditHandlerCaller } from '../../../shared/helpers/edit-handler-caller';
 
 @Component({
@@ -16,29 +16,29 @@ export class BookEditComponent implements OnInit, EditHandlerCaller {
 
   authors: any = [];
   authorsLoading = false;
-  editContext: EditContext;
+  editHandler: EditHandler;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private crudService: CrudService
   ) {
-    this.editContext = new EditContext(BookURL.BASE, BookURL.BASE, true, this);
+    this.editHandler = new EditHandler(BookURL.BASE, BookURL.BASE, true, this);
   }
 
   ngOnInit() {
-    this.editContext.isEditMode = !isNullOrUndefined(this.getParamId());
+    this.editHandler.isEditMode = !isNullOrUndefined(this.getParamId());
     this.initForm();
-    this.editContext.getItem(this.getParamId());
+    this.editHandler.getItem(this.getParamId());
     this.searchAuthors('');
   }
 
   initForm(): void {
-    this.editContext.form = this.editContext.getFormBuilder().group({
-      id: this.editContext.getFormBuilder().control(undefined, []),
-      name: this.editContext.getFormBuilder().control(undefined, [Validators.required]),
-      synopsis: this.editContext.getFormBuilder().control(undefined, [Validators.required]),
-      publicationDate: this.editContext.getFormBuilder().control(undefined, [Validators.required]),
-      authors: this.editContext.getFormBuilder().control(undefined, [Validators.required])
+    this.editHandler.form = this.editHandler.getFormBuilder().group({
+      id: this.editHandler.getFormBuilder().control(undefined, []),
+      name: this.editHandler.getFormBuilder().control(undefined, [Validators.required]),
+      synopsis: this.editHandler.getFormBuilder().control(undefined, [Validators.required]),
+      publicationDate: this.editHandler.getFormBuilder().control(undefined, [Validators.required]),
+      authors: this.editHandler.getFormBuilder().control(undefined, [Validators.required])
     });
   }
 
@@ -68,7 +68,7 @@ export class BookEditComponent implements OnInit, EditHandlerCaller {
   }
 
   postGetItem(): void {
-    this.editContext.form.get('publicationDate').setValue(new Date(this.editContext.item.publicationDate).toISOString().slice(0, 10));
+    this.editHandler.form.get('publicationDate').setValue(new Date(this.editHandler.item.publicationDate).toISOString().slice(0, 10));
   }
 
 

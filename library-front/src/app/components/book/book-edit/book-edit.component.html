@@ -1,15 +1,15 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between">
-        <h5 class="card-title">{{ editContext.isEditMode ? 'Edit' : 'Create' }} a Book</h5>
+        <h5 class="card-title">{{ editHandler.isEditMode ? 'Edit' : 'Create' }} a Book</h5>
         <div class="card-header-elements">
-            <button id="backButton" class="btn btn-primary d-flex" type="button" (click)="editContext.backToList()">
+            <button id="backButton" class="btn btn-primary d-flex" type="button" (click)="editHandler.backToList()">
                 <i class="material-icons mr-1">keyboard_backspace</i>
                 Back
             </button>
         </div>
     </div>
     <div class="card-body">
-        <form [formGroup]="editContext.form" (ngSubmit)="editContext.onSubmit()">
+        <form [formGroup]="editHandler.form" (ngSubmit)="editHandler.onSubmit()">
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
@@ -46,7 +46,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="d-flex justify-content-end">
-                        <button id="submitButton" class="btn btn-success" type="submit" [disabled]="!editContext.form.valid">{{ editContext.isEditMode ? 'Update' : 'Create' }}</button>
+                        <button id="submitButton" class="btn btn-success" type="submit" [disabled]="!editHandler.form.valid">{{ editHandler.isEditMode ? 'Update' : 'Create' }}</button>
                     </div>
                 </div>
             </div>

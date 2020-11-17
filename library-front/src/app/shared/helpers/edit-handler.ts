@@ -5,7 +5,7 @@ import { NotificationService } from '../services/notification.service';
 import { AppInjector } from './app.injector';
 import { EditHandlerCaller } from './edit-handler-caller';
 
-export class EditContext {
+export class EditHandler {
   service: CrudService;
   router: Router;
   notificationService: NotificationService;

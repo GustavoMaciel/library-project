@@ -2,7 +2,7 @@ import { CrudService } from '../services/crud.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppInjector } from './app.injector';
 
-export class ViewContext {
+export class ViewHandler {
 
     item: any;
     loading: boolean;

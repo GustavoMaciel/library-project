@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { CrudService } from 'src/app/shared/services/crud.service';
+import { ActivatedRoute } from '@angular/router';
 import { BookURL } from 'src/app/shared/url/url.domain';
-import { ViewContext } from 'src/app/shared/helpers/view-context';
+import { ViewHandler } from 'src/app/shared/helpers/view-handler';
 
 @Component({
   selector: 'app-book-view',
@@ -11,15 +10,15 @@ import { ViewContext } from 'src/app/shared/helpers/view-context';
 })
 export class BookViewComponent implements OnInit {
 
-  viewContext: ViewContext;
+  viewHandler: ViewHandler;
 
   constructor(private activatedRoute: ActivatedRoute) {
-    this.viewContext = new ViewContext(BookURL.BASE, BookURL.BASE);
+    this.viewHandler = new ViewHandler(BookURL.BASE, BookURL.BASE);
   }
 
   ngOnInit() {
-    this.viewContext.getItem(this.getParamId());
-    this.viewContext.postGetItem = this.postGetItem;
+    this.viewHandler.getItem(this.getParamId());
+    this.viewHandler.postGetItem = this.postGetItem;
   }
 
   postGetItem(item): void {
