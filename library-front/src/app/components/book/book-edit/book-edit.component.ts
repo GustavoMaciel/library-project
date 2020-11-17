@@ -15,6 +15,10 @@ export class BookEditComponent implements OnInit, EditHandlerCaller {
 
   editHandler: EditHandler;
 
+  // Authors
+  authorsLoading = false;
+  authors: any[] = []
+
   constructor(
     private activatedRoute: ActivatedRoute
   ) {
@@ -25,7 +29,7 @@ export class BookEditComponent implements OnInit, EditHandlerCaller {
     this.editHandler.isEditMode = !isNullOrUndefined(this.getParamId());
     this.initForm();
     this.editHandler.getItem(this.getParamId());
-    this.editHandler.searchItems('authors', '');
+    this.searchAuthors('');
   }
 
   initForm(): void {
@@ -59,5 +63,14 @@ export class BookEditComponent implements OnInit, EditHandlerCaller {
 
   postUpdate() {
     this.editHandler.notificationService.successMessage('Item updated successfully');
+  }
+
+  searchAuthors(term: any): void {
+    this.authorsLoading = true;
+    this.editHandler.getCrudService().getAll('authors', this.editHandler.generateFilter(term))
+      .subscribe((res: any) => {
+        this.authors = res.items;
+        this.authorsLoading = false;
+      });
   }
 }

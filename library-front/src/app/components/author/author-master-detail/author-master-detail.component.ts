@@ -56,24 +56,10 @@ export class AuthorMasterDetailComponent implements OnInit, EditHandlerCaller {
 
   searchBooks(term: any) {
     this.booksLoading = true;
-    this.crudService.getAll('books', this.generateFilter(term)).subscribe((res: any) => {
+    this.editHandler.getCrudService().getAll('books', this.editHandler.generateFilter(term)).subscribe((res: any) => {
       this.books = res.items;
       this.booksLoading = false;
     })
-  }
-
-  generateFilter(term: any) {
-    if (!term) {
-      term = '';
-    }
-    return {
-      search: term.term,
-      pageSize: 10,
-      currentPage: 0,
-      sort: {
-        order: "ASC"
-      }
-    }
   }
 
   alreadyIncluded(book: any): boolean {

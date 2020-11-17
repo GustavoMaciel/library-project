@@ -22,10 +22,10 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="booksAuthor">Books</label>
-            <ng-select id="booksAuthor" [items]="editHandler.items" bindLabel="name" [multiple]="true" formControlName="books"
-                       [loading]="editHandler.searchLoading" [typeToSearchText]="'Type to search'" placeholder="Type to search"
+            <ng-select id="booksAuthor" [items]="books" bindLabel="name" [multiple]="true" formControlName="books"
+                       [loading]="booksLoading" [typeToSearchText]="'Type to search'" placeholder="Type to search"
                        (search)="searchBooks($event)">
-            </ng-select> 
+            </ng-select>
           </div>
         </div>
       </div>

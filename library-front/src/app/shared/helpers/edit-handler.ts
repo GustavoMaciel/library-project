@@ -14,9 +14,7 @@ export class EditHandler {
   isEditMode: boolean;
   form: FormGroup;
   item: any;
-  items: any[] = [];
   loading = false;
-  searchLoading = false;
 
   constructor(
     private serviceUrl: string,
@@ -112,24 +110,18 @@ export class EditHandler {
     }
   }
 
-  searchItems(url: string, term: any, pageSize?: number, currentPage?: number, order?: string): void {
-    this.searchLoading = true;
-    this.service.getAll(url, this.generateFilter(term, pageSize, currentPage, order)).subscribe((res: any) => {
-      this.items = res.items;
-      this.searchLoading = false;
-    }, _err => {
-      this.searchLoading = false;
-    });
-  }
-
   generateFilter(term: any, pageSize = 10, currentPage = 0, order = 'ASC') {
     return {
       search: term.term,
-      pageSize,
-      currentPage,
+      pageSie: pageSize,
+      currentPage: currentPage,
       sort: {
-        order
+        order: order
       }
     };
+  }
+
+  getCrudService(): CrudService {
+    return this.service;
   }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { CrudService } from 'src/app/shared/services/crud.service';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { isNullOrUndefined } from 'util';
@@ -23,7 +22,6 @@ export class BookEditMasterDetailComponent implements OnInit, EditHandlerCaller 
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private crudService: CrudService,
     private notificationService: NotificationService,
     private modalService: ModalService
   ) {
@@ -34,7 +32,6 @@ export class BookEditMasterDetailComponent implements OnInit, EditHandlerCaller 
     this.editHandler.isEditMode = !isNullOrUndefined(this.getParamId());
     this.initForm();
     this.editHandler.getItem(this.getParamId());
-    this.editHandler.searchItems('authors', '')
     this.searchAuthors('');
   }
 
@@ -55,24 +52,11 @@ export class BookEditMasterDetailComponent implements OnInit, EditHandlerCaller 
 
   searchAuthors(term: any): void {
     this.authorsLoading = true;
-    this.crudService.getAll('authors', this.generateFilter(term)).subscribe((res: any) => {
-      this.authors = res.items;
-      this.authorsLoading = false;
+    this.editHandler.getCrudService().getAll('authors', this.editHandler.generateFilter(term))
+      .subscribe((res: any) => {
+        this.authors = res.items;
+        this.authorsLoading = false;
     });
-  }
-
-  generateFilter(term: any) {
-    if (!term) {
-      term = '';
-    }
-    return {
-      search: term.term,
-      pageSize: 10,
-      currentPage: 0,
-      sort: {
-        order: "ASC"
-      }
-    }
   }
 
   onAuthorSelected(author) {

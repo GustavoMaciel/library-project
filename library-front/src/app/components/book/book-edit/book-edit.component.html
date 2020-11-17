@@ -22,9 +22,9 @@
                     <div class="form-group">
                         <label for="authorsBook">Authors</label>
                         <!-- <input type="text" class="form-control" id="name" placeholder="Enter a name"> -->
-                        <ng-select id="authorsBook" [items]="editHandler.items" bindLabel="name" [multiple]="true"
+                        <ng-select id="authorsBook" [items]="authors" bindLabel="name" [multiple]="true"
                             formControlName="authors" [typeToSearchText]="'Type to search'" (search)="searchAuthors($event)"
-                            placeholder="Enter a name" [loading]="editHandler.searchLoading"></ng-select>
+                            placeholder="Enter a name" [loading]="authorsLoading"></ng-select>
                     </div>
                 </div>
                 <div class="col-md-4">
