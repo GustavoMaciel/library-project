@@ -4,7 +4,7 @@ import { CrudService } from '../services/crud.service';
 import { NotificationService } from '../services/notification.service';
 import { AppInjector } from './app.injector';
 
-export class EditContext {
+export class EditHandler {
   callingContext: any;
   service: CrudService;
   router: Router;

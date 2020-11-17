@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CrudService } from '../../../shared/services/crud.service';
 import { isNullOrUndefined } from 'util';
 import { AuthorURL } from 'src/app/shared/url/url.domain';
-import { EditContext } from '../../../shared/helpers/edit-context';
+import { EditHandler } from '../../../shared/helpers/edit-handler';
 
 @Component({
   selector: 'app-author-edit',
@@ -15,27 +15,27 @@ export class AuthorEditComponent implements OnInit {
 
   books: any = [];
   booksLoading = false;
-  editContext: EditContext;
+  editHandler: EditHandler;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private crudService: CrudService
   ) {
-    this.editContext = new EditContext(AuthorURL.BASE, AuthorURL.BASE, true);
+    this.editHandler = new EditHandler(AuthorURL.BASE, AuthorURL.BASE, true);
   }
 
   ngOnInit() {
-    this.editContext.isEditMode = !isNullOrUndefined(this.getParamId());
+    this.editHandler.isEditMode = !isNullOrUndefined(this.getParamId());
     this.initForm();
-    this.editContext.getItem(this.getParamId());
+    this.editHandler.getItem(this.getParamId());
     this.searchBooks('');
   }
 
   initForm() {
-    this.editContext.form = this.editContext.getFormBuilder().group({
-      id: this.editContext.getFormBuilder().control(undefined, []),
-      name: this.editContext.getFormBuilder().control(undefined, [Validators.required]),
-      books: this.editContext.getFormBuilder().control(undefined, [])
+    this.editHandler.form = this.editHandler.getFormBuilder().group({
+      id: this.editHandler.getFormBuilder().control(undefined, []),
+      name: this.editHandler.getFormBuilder().control(undefined, [Validators.required]),
+      books: this.editHandler.getFormBuilder().control(undefined, [])
     });
   }
 

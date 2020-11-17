@@ -6,7 +6,7 @@ import { NotificationService } from '../../../shared/services/notification.servi
 import { isNullOrUndefined } from "util";
 import { ModalService } from '../../../shared/services/modal.service';
 import { AuthorURL } from 'src/app/shared/url/url.domain';
-import { EditContext } from '../../../shared/helpers/edit-context';
+import { EditHandler } from '../../../shared/helpers/edit-handler';
 
 @Component({
   selector: 'app-author-master-detail',
@@ -18,7 +18,7 @@ export class AuthorMasterDetailComponent implements OnInit {
   books: any = [];
   booksLoading = false;
   selectedBooks = [];
-  editContext: EditContext;
+  editHandler: EditHandler;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -26,29 +26,29 @@ export class AuthorMasterDetailComponent implements OnInit {
     private notificationService: NotificationService,
     private modalService: ModalService
   ) {
-    this.editContext = new EditContext(AuthorURL.BASE, AuthorURL.BASE, true);
+    this.editHandler = new EditHandler(AuthorURL.BASE, AuthorURL.BASE, true);
   }
 
   ngOnInit() {
-    this.editContext.isEditMode = !isNullOrUndefined(this.getParamId());
+    this.editHandler.isEditMode = !isNullOrUndefined(this.getParamId());
     this.initForm();
-    this.editContext.getItem(this.getParamId());
+    this.editHandler.getItem(this.getParamId());
     this.searchBooks('');
-    this.editContext.preInsert = this.preInsert;
-    this.editContext.callingContext = this;
+    this.editHandler.preInsert = this.preInsert;
+    this.editHandler.callingContext = this;
   }
 
   initForm() {
-    this.editContext.form = this.editContext.getFormBuilder().group({
-      id: this.editContext.getFormBuilder().control(undefined, []),
-      name: this.editContext.getFormBuilder().control(undefined, [Validators.required]),
-      books: this.editContext.getFormBuilder().control(undefined, []),
-      selectedBook: this.editContext.getFormBuilder().control(undefined, [])
+    this.editHandler.form = this.editHandler.getFormBuilder().group({
+      id: this.editHandler.getFormBuilder().control(undefined, []),
+      name: this.editHandler.getFormBuilder().control(undefined, [Validators.required]),
+      books: this.editHandler.getFormBuilder().control(undefined, []),
+      selectedBook: this.editHandler.getFormBuilder().control(undefined, [])
     });
   }
 
   get selectedBookControl () {
-    return this.editContext.form.get('selectedBook');
+    return this.editHandler.form.get('selectedBook');
   }
 
   getParamId(): string {
