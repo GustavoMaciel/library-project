@@ -12,7 +12,7 @@ import { EditHandlerCaller } from '../../../shared/helpers/edit-handler-caller';
   templateUrl: './author-edit.component.html',
   styleUrls: ['./author-edit.component.css']
 })
-export class AuthorEditComponent implements OnInit {
+export class AuthorEditComponent implements OnInit, EditHandlerCaller {
 
   books: any = [];
   booksLoading = false;
@@ -22,7 +22,7 @@ export class AuthorEditComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private crudService: CrudService
   ) {
-    this.editContext = new EditContext(AuthorURL.BASE, AuthorURL.BASE, true);
+    this.editContext = new EditContext(AuthorURL.BASE, AuthorURL.BASE, true, this);
   }
 
   ngOnInit() {
@@ -63,5 +63,21 @@ export class AuthorEditComponent implements OnInit {
         order: 'ASC'
       }
     };
+  }
+
+
+  preInsert(): void {
+  }
+
+  preUpdate() {
+  }
+
+  postGetItem() {
+  }
+
+  postInsert() {
+  }
+
+  postUpdate() {
   }
 }

@@ -92,28 +92,21 @@ export class EditContext {
     if (this.callingContext) {
       this.callingContext.preUpdate();
     }
+    const callback = (_res) => {
+      this.loading = false;
+      if (this.callingContext) {
+        this.callingContext.postUpdate();
+      }
+      this.backToList();
+    }
+    const errCallback = (err: any) => {
+      this.notificationService.errorMessage(err.error ? err.error.message : err.message);
+      this.loading = false;
+    }
     if (this.isUpdatePartial) {
-      this.service.updatePartial(this.serviceUrl, this.form.value).subscribe(_res => {
-        this.loading = false;
-        if (this.callingContext) {
-          this.callingContext.postUpdate();
-        }
-        this.backToList();
-      }, (err) => {
-        this.notificationService.errorMessage(err.error ? err.error.message : err.message);
-        this.loading = false;
-      });
+      this.service.updatePartial(this.serviceUrl, this.form.value).subscribe(callback, errCallback);
     } else {
-      this.service.update(this.serviceUrl, this.form.value).subscribe(_res => {
-        this.loading = false;
-        if (this.callingContext) {
-          this.callingContext.postUpdate();
-        }
-        this.backToList();
-      }, (err) => {
-        this.notificationService.errorMessage(err.error ? err.error.message : err.message);
-        this.loading = false;
-      });
+      this.service.update(this.serviceUrl, this.form.value).subscribe(callback, errCallback);
     }
   }
 }

@@ -5,13 +5,14 @@ import { Validators } from '@angular/forms';
 import { CrudService } from 'src/app/shared/services/crud.service';
 import { BookURL } from 'src/app/shared/url/url.domain';
 import { EditContext } from '../../../shared/helpers/edit-context';
+import { EditHandlerCaller } from '../../../shared/helpers/edit-handler-caller';
 
 @Component({
   selector: 'app-book-edit',
   templateUrl: './book-edit.component.html',
   styleUrls: ['./book-edit.component.css']
 })
-export class BookEditComponent implements OnInit {
+export class BookEditComponent implements OnInit, EditHandlerCaller {
 
   authors: any = [];
   authorsLoading = false;
@@ -21,7 +22,7 @@ export class BookEditComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private crudService: CrudService
   ) {
-    this.editContext = new EditContext(BookURL.BASE, BookURL.BASE, true);
+    this.editContext = new EditContext(BookURL.BASE, BookURL.BASE, true, this);
   }
 
   ngOnInit() {
@@ -29,7 +30,6 @@ export class BookEditComponent implements OnInit {
     this.initForm();
     this.editContext.getItem(this.getParamId());
     this.searchAuthors('');
-    this.editContext.postGetItem = this.postGetItem;
   }
 
   initForm(): void {
@@ -69,5 +69,18 @@ export class BookEditComponent implements OnInit {
 
   postGetItem(): void {
     this.editContext.form.get('publicationDate').setValue(new Date(this.editContext.item.publicationDate).toISOString().slice(0, 10));
+  }
+
+
+  preInsert(): void {
+  }
+
+  preUpdate() {
+  }
+
+  postInsert() {
+  }
+
+  postUpdate() {
   }
 }

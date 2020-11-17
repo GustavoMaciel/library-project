@@ -49,8 +49,8 @@ public class AuthorController {
     }
 
     @PostMapping
-    public ResponseEntity<AuthorDTO> insert(@RequestBody AuthorDTO bookDTO) throws BusinessException {
-        Author model = service.insert(MappingUtil.mapTo(bookDTO, Author.class));
+    public ResponseEntity<AuthorDTO> insert(@RequestBody AuthorDTO authorDTO) throws BusinessException {
+        Author model = service.insert(MappingUtil.mapTo(authorDTO, Author.class));
         return ResponseEntity.status(HttpStatus.CREATED).body(MappingUtil.mapTo(model, AuthorDTO.class));
     }
 
