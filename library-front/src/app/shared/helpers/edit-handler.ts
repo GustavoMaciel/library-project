@@ -14,7 +14,9 @@ export class EditHandler {
   isEditMode: boolean;
   form: FormGroup;
   item: any;
+  items: any[] = [];
   loading = false;
+  searchLoading = false;
 
   postUpdate: Function = () => {
     this.notificationService.updateSucess();
@@ -112,5 +114,26 @@ export class EditHandler {
         this.loading = false;
       });
     }
+  }
+
+  searchItems(url: string, term: any, pageSize?: number, currentPage?: number, order?: string): void {
+    this.searchLoading = true;
+    this.service.getAll(url, this.generateFilter(term, pageSize, currentPage, order)).subscribe((res: any) => {
+      this.items = res.items;
+      this.searchLoading = false;
+    }, _err => {
+      this.searchLoading = false;
+    });
+  }
+
+  generateFilter(term: any, pageSize = 10, currentPage = 0, order = 'ASC') {
+    return {
+      search: term.term,
+      pageSize,
+      currentPage,
+      sort: {
+        order
+      }
+    };
   }
 }

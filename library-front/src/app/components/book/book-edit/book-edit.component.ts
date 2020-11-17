@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { isNullOrUndefined } from 'util';
 import { Validators } from '@angular/forms';
-import { CrudService } from 'src/app/shared/services/crud.service';
 import { BookURL } from 'src/app/shared/url/url.domain';
 import { EditHandler } from '../../../shared/helpers/edit-handler';
 
@@ -13,13 +12,10 @@ import { EditHandler } from '../../../shared/helpers/edit-handler';
 })
 export class BookEditComponent implements OnInit {
 
-  authors: any = [];
-  authorsLoading = false;
   editHandler: EditHandler;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private crudService: CrudService
+    private activatedRoute: ActivatedRoute
   ) {
     this.editHandler = new EditHandler(BookURL.BASE, BookURL.BASE, true);
   }
@@ -28,7 +24,7 @@ export class BookEditComponent implements OnInit {
     this.editHandler.isEditMode = !isNullOrUndefined(this.getParamId());
     this.initForm();
     this.editHandler.getItem(this.getParamId());
-    this.searchAuthors('');
+    this.editHandler.searchItems('authors', '');
     this.editHandler.postGetItem = this.postGetItem;
   }
 
@@ -44,27 +40,6 @@ export class BookEditComponent implements OnInit {
 
   getParamId(): string {
     return this.activatedRoute.snapshot.paramMap.get('id');
-  }
-
-  searchAuthors(term: any): void {
-    this.authorsLoading = true;
-    this.crudService.getAll('authors', this.generateFilter(term)).subscribe((res: any) => {
-      this.authors = res.items;
-      this.authorsLoading = false;
-    }, _err => {
-      this.authorsLoading = false;
-    });
-  }
-
-  generateFilter(term: any) {
-    return {
-      search: term.term,
-      pageSize: 10,
-      currentPage: 0,
-      sort: {
-        order: 'ASC'
-      }
-    };
   }
 
   postGetItem(): void {
