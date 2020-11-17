@@ -2,9 +2,9 @@
   <div class="card-header d-flex align-items-center justify-content-between">
     <div class="card-title d-flex align-items-center">Authors</div>
     <div class="card-header-elements d-flex">
-      <app-simple-search (searchEvent)="listContext.onSearch($event)" [pageSize]="listContext.pageSize" [currentPage]="listContext.currentPage">
+      <app-simple-search (searchEvent)="listHandler.onSearch($event)" [pageSize]="listHandler.pageSize" [currentPage]="listHandler.currentPage">
       </app-simple-search>
-      <button id="createButton" class="btn btn-primary d-flex mr-2" type="button" (click)="listContext.create()">
+      <button id="createButton" class="btn btn-primary d-flex mr-2" type="button" (click)="listHandler.create()">
         <i class="material-icons mr-1">add</i>
         Create
       </button>
@@ -17,8 +17,8 @@
   <hr class="m-0">
   <div class="card-body">
     <div id="table">
-      <app-loading [loading]="listContext.loading"></app-loading>
-      <table *ngIf="!listContext.loading" class="table table-hover">
+      <app-loading [loading]="listHandler.loading"></app-loading>
+      <table *ngIf="!listHandler.loading" class="table table-hover">
         <thead>
           <tr>
             <th scope="col">ID</th>
@@ -27,20 +27,20 @@
           </tr>
         </thead>
         <tbody>
-          <tr align="center" *ngIf="listContext.listIsEmpty">
+          <tr align="center" *ngIf="listHandler.listIsEmpty">
             <td colspan="100">No authors found.</td>
           </tr>
-          <tr *ngFor="let author of listContext.items; let i = index">
+          <tr *ngFor="let author of listHandler.items; let i = index">
             <td id="idAuthor-{{i}}">{{ author.id }}</td>
             <td id="nameAuthor-{{i}}">{{ author.name }}</td>
             <td align="center">
-              <button id="viewAuthor-{{i}}" class="btn bg-transparent" type="button" (click)="listContext.view(author)">
+              <button id="viewAuthor-{{i}}" class="btn bg-transparent" type="button" (click)="listHandler.view(author)">
                 <i class="material-icons">visibility</i>
               </button>
-              <button id="editAuthor-{{i}}" class="btn bg-transparent" type="button" (click)="listContext.edit(author)">
+              <button id="editAuthor-{{i}}" class="btn bg-transparent" type="button" (click)="listHandler.edit(author)">
                 <i class="material-icons text-primary">create</i>
               </button>
-              <button id="deleteAuthor-{{i}}" class="btn bg-transparent" type="button" (click)="listContext.setRemove(author)">
+              <button id="deleteAuthor-{{i}}" class="btn bg-transparent" type="button" (click)="listHandler.setRemove(author)">
                 <i class="material-icons text-danger">delete</i>
               </button>
             </td>
@@ -49,12 +49,12 @@
       </table>
     </div>
   </div>
-  <div class="card-footer" *ngIf="listContext.listIsEmpty">
+  <div class="card-footer" *ngIf="!listHandler.listIsEmpty">
     <div class="datatable-footer">
-      <app-pagination [totalRecords]="listContext.totalRecords" [setTotalPages]="listContext.totalPages"
-                      (pageChanged)="listContext.onChangePaginator($event)" (pageSizeChanged)="listContext.onChangePageSize($event)"></app-pagination>
+      <app-pagination [totalRecords]="listHandler.totalRecords" [setTotalPages]="listHandler.totalPages"
+                      (pageChanged)="listHandler.onChangePaginator($event)" (pageSizeChanged)="listHandler.onChangePageSize($event)"></app-pagination>
     </div>
   </div>
 </div>
 
-<app-delete-confirmation (onOk)="listContext.remove()"></app-delete-confirmation>
+<app-delete-confirmation (onOk)="listHandler.remove()"></app-delete-confirmation>

@@ -4,7 +4,7 @@ import { NotificationService } from '../services/notification.service';
 import { Router } from '@angular/router';
 import { AppInjector } from './app.injector';
 
-export class ListContext {
+export class ListHandler {
   service: CrudService;
   router: Router;
   notificationService: NotificationService;
@@ -22,7 +22,7 @@ export class ListContext {
   postGetItems: Function = () => {};
 
   get listIsEmpty() {
-    return this.items.length < 0;
+    return this.items.length <= 0;
   }
 
   constructor(

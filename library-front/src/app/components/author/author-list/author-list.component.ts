@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthorURL } from 'src/app/shared/url/url.domain';
-import { ListContext } from '../../../shared/helpers/list-context';
+import { ListHandler } from '../../../shared/helpers/list-handler';
 
 @Component({
   selector: 'app-author-list',
@@ -10,14 +10,14 @@ import { ListContext } from '../../../shared/helpers/list-context';
 })
 export class AuthorListComponent implements OnInit {
 
-  listContext: ListContext;
+  listHandler: ListHandler;
 
   constructor(private router: Router) {
-    this.listContext = new ListContext(AuthorURL.BASE, AuthorURL.BASE)
+    this.listHandler = new ListHandler(AuthorURL.BASE, AuthorURL.BASE)
   }
 
   ngOnInit() {
-    this.listContext.listItems();
+    this.listHandler.listItems();
   }
 
   createMasterDetail() {
