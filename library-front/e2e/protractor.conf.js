@@ -7,12 +7,12 @@ exports.config = {
   allScriptsTimeout: 11000,
   specs: [
     // './src/**/*.e2e-spec.ts',
-    // './src/author/author-edit.component.e2e-spec.ts',
+    './src/author/author-edit.component.e2e-spec.ts',
     // './src/book/book-edit.component.e2e-spec.ts',
     // './src/author/author-list.component.e2e-spec.ts',
     // './src/book/book-list.component.e2e-spec.ts',
     // './src/book/book-master-detail.component.e2e.ts',
-    './src/author-book/author-book.component.e2e-spec.ts'
+    // './src/author-book/author-book.component.e2e-spec.ts'
   ],
   capabilities: {
     browserName: 'chrome',

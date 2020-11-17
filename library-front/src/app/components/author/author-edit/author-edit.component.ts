@@ -5,6 +5,7 @@ import { CrudService } from '../../../shared/services/crud.service';
 import { isNullOrUndefined } from 'util';
 import { AuthorURL } from 'src/app/shared/url/url.domain';
 import { EditContext } from '../../../shared/helpers/edit-context';
+import { EditHandlerCaller } from '../../../shared/helpers/edit-handler-caller';
 
 @Component({
   selector: 'app-author-edit',
@@ -15,7 +16,7 @@ export class AuthorEditComponent implements OnInit {
 
   books: any = [];
   booksLoading = false;
-  editContext: EditContext;
+  editContext: EditContext; // EditHandler
 
   constructor(
     private activatedRoute: ActivatedRoute,

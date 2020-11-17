@@ -7,13 +7,14 @@ import { isNullOrUndefined } from 'util';
 import { ModalService } from 'src/app/shared/services/modal.service';
 import { EditContext } from '../../../shared/helpers/edit-context';
 import { BookURL } from '../../../shared/url/url.domain';
+import { EditHandlerCaller } from '../../../shared/helpers/edit-handler-caller';
 
 @Component({
   selector: 'app-book-edit-master-detail',
   templateUrl: './book-edit-master-detail.component.html',
   styleUrls: ['./book-edit-master-detail.component.css']
 })
-export class BookEditMasterDetailComponent implements OnInit {
+export class BookEditMasterDetailComponent implements OnInit, EditHandlerCaller {
 
   authors: any = [];
   authorsLoading = false;
@@ -26,7 +27,7 @@ export class BookEditMasterDetailComponent implements OnInit {
     private notificationService: NotificationService,
     private modalService: ModalService
   ) {
-    this.editContext = new EditContext(BookURL.BASE, BookURL.BASE, true);
+    this.editContext = new EditContext(BookURL.BASE, BookURL.BASE, true, this);
   }
 
   ngOnInit() {
@@ -34,7 +35,6 @@ export class BookEditMasterDetailComponent implements OnInit {
     this.initForm();
     this.editContext.getItem(this.getParamId());
     this.searchAuthors('');
-    this.editContext.callingContext = this;
   }
 
   getParamId(): string {
@@ -102,6 +102,21 @@ export class BookEditMasterDetailComponent implements OnInit {
   newAuthorSubmitted(author: any) {
     this.selectedAuthors.push(author);
     this.editContext.form.get('authors').setValue(this.selectedAuthors);
+  }
+
+  preUpdate() {
+  }
+
+  preInsert() {
+  }
+
+  postGetItem() {
+  }
+
+  postInsert() {
+  }
+
+  postUpdate() {
   }
 
 }

@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { CrudService } from '../services/crud.service';
 import { NotificationService } from '../services/notification.service';
 import { AppInjector } from './app.injector';
+import { EditHandlerCaller } from './edit-handler-caller';
 
 export class EditContext {
-  callingContext: any;
   service: CrudService;
   router: Router;
   notificationService: NotificationService;
@@ -16,20 +16,11 @@ export class EditContext {
   item: any;
   loading = false;
 
-  postUpdate: Function = () => {
-    this.notificationService.updateSucess();
-  };
-  postInsert: Function = () => {
-    this.notificationService.insertedSuccess();
-  };
-  postGetItem: Function = () => {};
-  preInsert: Function = (callingContext: any) => {};
-  preUpdate: Function = (callingContext: any) => {};
-
   constructor(
     private serviceUrl: string,
     private routerUrl: string,
-    private isUpdatePartial: boolean
+    private isUpdatePartial: boolean,
+    private callingContext: EditHandlerCaller
   ) {
     this.service = AppInjector.get(CrudService);
     this.router = AppInjector.get(Router);
@@ -59,7 +50,9 @@ export class EditContext {
       this.service.getOne(this.serviceUrl, id).subscribe(result => {
         this.item = result;
         this.getFormControlFromObject(this.form.controls, this.item);
-        this.postGetItem();
+        if (this.callingContext) {
+          this.callingContext.postGetItem();
+        }
       }, (err: any) => {
         this.notificationService.errorMessage(err.error ? err.error.message : err.message);
       });
@@ -79,10 +72,14 @@ export class EditContext {
   }
 
   insert() {
-    this.preInsert(this.callingContext);
+    if (this.callingContext) {
+      this.callingContext.preInsert();
+    }
     this.service.post(this.serviceUrl, this.form.value).subscribe(_res => {
       this.loading = false;
-      this.postInsert();
+      if (this.callingContext) {
+        this.callingContext.postInsert();
+      }
       this.backToList();
     }, (err: any) => {
       this.notificationService.errorMessage(err.error ? err.error.message : err.message);
@@ -92,11 +89,15 @@ export class EditContext {
 
   update() {
     this.loading = true;
-    this.preUpdate(this.callingContext);
+    if (this.callingContext) {
+      this.callingContext.preUpdate();
+    }
     if (this.isUpdatePartial) {
       this.service.updatePartial(this.serviceUrl, this.form.value).subscribe(_res => {
         this.loading = false;
-        this.postUpdate();
+        if (this.callingContext) {
+          this.callingContext.postUpdate();
+        }
         this.backToList();
       }, (err) => {
         this.notificationService.errorMessage(err.error ? err.error.message : err.message);
@@ -105,7 +106,9 @@ export class EditContext {
     } else {
       this.service.update(this.serviceUrl, this.form.value).subscribe(_res => {
         this.loading = false;
-        this.postUpdate();
+        if (this.callingContext) {
+          this.callingContext.postUpdate();
+        }
         this.backToList();
       }, (err) => {
         this.notificationService.errorMessage(err.error ? err.error.message : err.message);
